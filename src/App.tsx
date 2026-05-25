@@ -426,33 +426,16 @@ function App() {
       const url = URL.createObjectURL(blob);
       const fileName = `Scouting_Health_Form_${data.fullName.replace(/\s+/g, '_')}.pdf`;
 
-      // Check if it's iOS or mobile Safari/Chrome to use a safer mobile path
-      const isMobile = /iPad|iPhone|iPod|Android/i.test(navigator.userAgent);
+      // Unified download path for both desktop and mobile
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-      if (isMobile) {
-        // On mobile, opening in a new tab is much more reliable
-        const newWindow = window.open(url, '_blank');
-        if (!newWindow) {
-          // If popup blocker blocked the tab, fall back to standard download anchor
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = fileName;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }
-      } else {
-        // Desktop download path
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-
-      // Delay revoking the object URL so the mobile/desktop
-      // download managers have time to retrieve the PDF data.
+      // Delay revoking the object URL so that mobile and desktop download managers
+      // have enough time to retrieve the PDF data before the link is destroyed.
       setTimeout(() => {
         URL.revokeObjectURL(url);
       }, 20000);
