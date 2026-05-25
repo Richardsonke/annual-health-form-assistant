@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Download, FileText, CheckCircle2, AlertCircle, X, CreditCard, PenLine } from 'lucide-react';
+import { Download, CheckCircle2, AlertCircle, X, CreditCard, PenLine } from 'lucide-react';
 import { formSchema, type HealthFormData } from './schema/formSchema';
 import { FormSectionPartA } from './components/FormSectionPartA';
 import { FormSectionPartB } from './components/FormSectionPartB';
@@ -459,7 +459,7 @@ function App() {
       )}
       <div className="app-container">
         <header className="header">
-          <FileText size={48} color="var(--primary-color)" style={{ marginBottom: '1rem' }} />
+          <img src="./headericon.png" width="64" height="64" style={{ marginBottom: '1rem' }} />
           <h1>Health Form Filler</h1>
           <p>Complete the Scouting America Medical Release Form (Parts A & B) locally and securely.</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem' }}>
