@@ -424,15 +424,39 @@ function App() {
 
       const blob = await generateHealthFormPDF(data);
       const url = URL.createObjectURL(blob);
+      const fileName = `Scouting_Health_Form_${data.fullName.replace(/\s+/g, '_')}.pdf`;
 
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `Scouting_Health_Form_${data.fullName.replace(/\s+/g, '_')}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // Check if it's iOS or mobile Safari/Chrome to use a safer mobile path
+      const isMobile = /iPad|iPhone|iPod|Android/i.test(navigator.userAgent);
 
-      URL.revokeObjectURL(url);
+      if (isMobile) {
+        // On mobile, opening in a new tab is much more reliable
+        const newWindow = window.open(url, '_blank');
+        if (!newWindow) {
+          // If popup blocker blocked the tab, fall back to standard download anchor
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = fileName;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      } else {
+        // Desktop download path
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      // Delay revoking the object URL so the mobile/desktop
+      // download managers have time to retrieve the PDF data.
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+      }, 20000);
+
       setIsSuccess(true);
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (error) {
