@@ -1,0 +1,730 @@
+[
+  {
+    "name": "Name of authorized",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Name of not authorized",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Name of not authorized 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Phone of not authorized 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Phone of not authorized",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Phone of authorized",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Name of authorized 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Phone of authorized 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Parent's signature date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Participant's Signature",
+    "type": "PDFSignature"
+  },
+  {
+    "name": "Parent/guardian signature",
+    "type": "PDFSignature"
+  },
+  {
+    "name": "Date of birth 3",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Date of birth 1",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 1",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 2",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Full name",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Date of birth",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Expedition/crew No",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Age",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Address",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "City",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Unit leader's mobile #",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Unit No",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Council Name/No",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Health/Accident Insurance Company",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Emergency Name",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Emergency Alternate contact name",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Emergency Relationship",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Emergency Address",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Emergency Home phone",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Emergency alternate's phone",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Emergency Other phone",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Policy No",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Unit leader",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "State",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "ZIP code",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Phone",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Height",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Weight",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "staff position",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Last HbA1c",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Last attack date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Last seizure date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Sleep explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Hypertension explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Heart explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Heart disease explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Stroke explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Lung explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "COPD explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "EENS explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "MSM explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Head explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Altitude sickness explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Psychiatric explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Neurological explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Blood explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Fainting explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Kidney explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Stomach explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Thyroid explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Skin explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Last surgery date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Other explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Diabetes",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Insuliln",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Stroke",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Blood disorders",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Respiratory",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Kidney",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Head injury",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Skin issues",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "EENSP",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Stomach",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Psychiatric",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Surgeries",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Heart disease",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Hypertension",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Asthma",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Fainting",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "COPD",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Seizures",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Altitude",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Sleep",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Muscular/skeletal",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Neurological",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Other",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Family history",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Thyroid",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "CPAP 2",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Autoinjector exp date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Medication explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Plants explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Bugs explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Food explanation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Medication 1",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Reason 1",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Frequency 1",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Dose 1",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Medication 3",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Reason 3",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Frequency 3",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Dose 3",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Medication 4",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Reason 4",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Frequency 4",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Dose 4",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Medication 5",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Reason 5",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Frequency 5",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Dose 5",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Medication 6",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Reason 6",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Pertussis date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Med history 1",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "MMR date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Polio date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Chicken pox date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Diphtheria date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Non-prescrip exceptions",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Frequency 6",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Dose 6",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Medication 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Reason 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Frequency 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Dose 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Inhaler exp date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Parent/guardian medications",
+    "type": "PDFSignature"
+  },
+  {
+    "name": "MD/DO NP PA",
+    "type": "PDFSignature"
+  },
+  {
+    "name": "Med history 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Med history 3",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Med history 4",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Med history 5",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Med history 6",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Med history 7",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Tetanus date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Reviewed by",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Reviewed by date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Reason",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Approved by",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Approved by date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Had tetanus",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Had pertussis",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Had diphtheria",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Had MMR",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Had Polio",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Had chicken pox",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Had HA",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Had HB",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Had Pertussis",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Had Meningitis",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Had other",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Exemption to other",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "No medications",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Epinephrine",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Non-prescription exceptions",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Additional space",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Rescue inhaler",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Chicken Pox",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Hepatitis B",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Pertussis",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Exemption to immunizations",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Influenza",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Measles/mumps/rubella",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Hepatitis A",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Meningitis",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Diphtheria",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Tetanus",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Other (i.e. HIB)",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Polio",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Hep A date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Meningitis date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Influenza date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Other date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Hep B date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Exemption date",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Further approval",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Medication",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Food",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Plants",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Bugs",
+    "type": "PDFCheckBox"
+  }
+]
