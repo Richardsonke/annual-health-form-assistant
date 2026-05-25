@@ -45,11 +45,32 @@ function wrapText(text: string, maxLineLength: number = 70): string[] {
 }
 
 export async function generateHealthFormPDF(data: HealthFormData): Promise<Blob> {
-  const url = '/680-001_AB.pdf';
-  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer());
+  const url = './680-001_AB.pdf';
+  
+  let existingPdfBytes: ArrayBuffer;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+    }
+    existingPdfBytes = await res.arrayBuffer();
+  } catch (err: any) {
+    throw new Error(`Failed to load PDF template from '${url}': ${err?.message || err}`);
+  }
 
-  const pdfDoc = await PDFDocument.load(existingPdfBytes);
-  const form = pdfDoc.getForm();
+  let pdfDoc;
+  try {
+    pdfDoc = await PDFDocument.load(existingPdfBytes);
+  } catch (err: any) {
+    throw new Error(`Failed to parse PDF document. The template file might be corrupted or invalid: ${err?.message || err}`);
+  }
+
+  let form;
+  try {
+    form = pdfDoc.getForm();
+  } catch (err: any) {
+    throw new Error(`Failed to access interactive form fields: ${err?.message || err}`);
+  }
 
   const setText = (fieldName: string, value: string) => {
     try {
@@ -389,8 +410,8 @@ export async function generateHealthFormPDF(data: HealthFormData): Promise<Blob>
             height,
           });
         }
-      } catch (e) {
-        console.error(`Error drawing signature for ${fieldName}`, e);
+      } catch (e: any) {
+        throw new Error(`Error embedding signature '${fieldName}' on page ${pageNum + 1}: ${e?.message || e}`);
       }
     }
   };
@@ -412,6 +433,10 @@ export async function generateHealthFormPDF(data: HealthFormData): Promise<Blob>
     setText("Parent's signature date", data.participantSignatureDate || '');
   }
 
-  const pdfBytes = await pdfDoc.save();
-  return new Blob([pdfBytes.buffer as BlobPart], { type: 'application/pdf' });
+  try {
+    const pdfBytes = await pdfDoc.save();
+    return new Blob([pdfBytes.buffer as BlobPart], { type: 'application/pdf' });
+  } catch (err: any) {
+    throw new Error(`Failed to compile and save PDF document: ${err?.message || err}`);
+  }
 }

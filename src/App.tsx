@@ -459,9 +459,10 @@ function App() {
 
       setIsSuccess(true);
       setTimeout(() => setIsSuccess(false), 5000);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to generate PDF", error);
-      alert("An error occurred while generating the PDF. Please try again.");
+      const errMsg = error instanceof Error ? error.message : String(error);
+      alert(`An error occurred while generating the PDF:\n\n${errMsg}\n\nPlease try again.`);
     } finally {
       setIsGenerating(false);
     }
