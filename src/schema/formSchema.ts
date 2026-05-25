@@ -248,6 +248,71 @@ export const formSchema = z.object({
       });
     }
   }
+
+  // 6. Immunization dates required when Yes is checked (must be a valid 4-digit year)
+  const immDatePairs: [string, string][] = [
+    ['immTetanus', 'immTetanusDate'],
+    ['immPertussis', 'immPertussisDate'],
+    ['immDiphtheria', 'immDiphtheriaDate'],
+    ['immPolio', 'immPolioDate'],
+    ['immMMR', 'immMMRDate'],
+    ['immChickenPox', 'immChickenPoxDate'],
+    ['immHepA', 'immHepADate'],
+    ['immHepB', 'immHepBDate'],
+    ['immMeningitis', 'immMeningitisDate'],
+    ['immInfluenza', 'immInfluenzaDate'],
+    ['immOther', 'immOtherDate'],
+  ];
+  for (const [checkField, dateField] of immDatePairs) {
+    if ((data as any)[checkField] === true) {
+      const yearStr = (data as any)[dateField];
+      const year = parseInt(yearStr, 10);
+      if (!yearStr || isNaN(year) || yearStr.toString().length !== 4) {
+        // Skip immTetanus here — handled separately below with a more specific message
+        if (checkField !== 'immTetanus') {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'Year is required (YYYY)',
+            path: [dateField]
+          });
+        }
+      }
+    }
+  }
+
+  // 7. Tetanus must be current (within 10 years) unless exemption is marked Yes
+  //    Compare today against Dec 31 of the entered year (most lenient)
+  if (data.exemptionToImmunizations !== true) {
+    if (data.immTetanus !== true) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Tetanus vaccination is required (or mark Exemption to immunizations)',
+        path: ['immTetanus']
+      });
+    } else {
+      const yearStr = data.immTetanusDate;
+      const year = parseInt(yearStr || '', 10);
+      if (!yearStr || isNaN(year) || yearStr.toString().length !== 4) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Tetanus year is required (YYYY)',
+          path: ['immTetanusDate']
+        });
+      } else {
+        // Dec 31 of the entered year is the most lenient end date
+        const dec31OfYear = new Date(year, 11, 31);
+        const tenYearsAgo = new Date();
+        tenYearsAgo.setFullYear(tenYearsAgo.getFullYear() - 10);
+        if (dec31OfYear < tenYearsAgo) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'Tetanus must have been within the last 10 years',
+            path: ['immTetanusDate']
+          });
+        }
+      }
+    }
+  }
 });
 
 export type HealthFormData = z.infer<typeof formSchema>;

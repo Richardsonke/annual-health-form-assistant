@@ -8,23 +8,30 @@ export const FormSectionImmunizations = () => {
     name, 
     label, 
     dateName, 
-    hadDiseaseName 
+    hadDiseaseName,
+    extraTriggerFields
   }: { 
     name: string, 
     label: string, 
     dateName?: string, 
-    hadDiseaseName?: string 
+    hadDiseaseName?: string,
+    extraTriggerFields?: string[]
   }) => {
     const isChecked = useWatch({ name });
-    const { formState: { errors } } = useFormContext();
+    const { formState: { errors }, trigger, register } = useFormContext();
     const hasError = !!(errors as any)[name];
+    const errorMsg: string | undefined = (errors as any)[name]?.message;
+    const hasDateError = dateName ? !!(errors as any)[dateName] : false;
+    const dateErrorMsg = dateName ? (errors as any)[dateName]?.message : undefined;
 
     const handleYesChange = () => {
-      setValue(name, isChecked === true ? undefined : true, { shouldDirty: true });
+      setValue(name, isChecked === true ? undefined : true, { shouldDirty: true, shouldValidate: true });
+      if (extraTriggerFields?.length) trigger(extraTriggerFields as any);
     };
 
     const handleNoChange = () => {
-      setValue(name, isChecked === false ? undefined : false, { shouldDirty: true });
+      setValue(name, isChecked === false ? undefined : false, { shouldDirty: true, shouldValidate: true });
+      if (extraTriggerFields?.length) trigger(extraTriggerFields as any);
     };
 
     return (
@@ -45,12 +52,35 @@ export const FormSectionImmunizations = () => {
             onChange={handleNoChange} 
           />
         </td>
-        <td style={{ fontWeight: 500, width: '30%' }}>{label}</td>
+        <td style={{ fontWeight: 500, width: '30%' }}>
+          {label}
+          {hasError && errorMsg && (
+            <span style={{ display: 'block', color: 'var(--error-color)', fontSize: '0.8rem', fontWeight: 400, marginTop: '0.25rem' }}>
+              {errorMsg}
+            </span>
+          )}
+        </td>
         <td style={{ width: '30%' }}>
           {dateName && isChecked === true ? (
-            <FormField name={dateName} type="date" containerClass="form-table-group" />
+            <div>
+              <input
+                type="number"
+                inputMode="numeric"
+                placeholder="YYYY"
+                min={1900}
+                max={new Date().getFullYear()}
+                className={`form-input form-table-group${hasDateError ? ' error' : ''}`}
+                style={{ padding: '0.4rem 0.75rem' }}
+                {...register(dateName, { valueAsNumber: false })}
+              />
+              {hasDateError && (
+                <span style={{ color: 'var(--error-color)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
+                  {dateErrorMsg}
+                </span>
+              )}
+            </div>
           ) : (
-            <div style={{ background: 'var(--border-color)', height: '42px', borderRadius: 'var(--radius-md)', opacity: 0.25 }}></div>
+            <div style={{ background: hasDateError ? 'rgba(239,68,68,0.09)' : 'var(--border-color)', height: '42px', borderRadius: 'var(--radius-md)', opacity: hasDateError ? 1 : 0.25 }}></div>
           )}
         </td>
         <td style={{ width: '30%' }}>
@@ -74,7 +104,7 @@ export const FormSectionImmunizations = () => {
             <th style={{ width: '60px', textAlign: 'center' }}>Yes</th>
             <th style={{ width: '60px', textAlign: 'center' }}>No</th>
             <th>Immunization</th>
-            <th>Date (MM/DD/YYYY)</th>
+            <th>Year</th>
             <th>Had Disease (Details)</th>
           </tr>
         </thead>
@@ -90,7 +120,7 @@ export const FormSectionImmunizations = () => {
           <ImmRow name="immMeningitis" label="Meningitis" dateName="immMeningitisDate" hadDiseaseName="hadMeningitis" />
           <ImmRow name="immInfluenza" label="Influenza" dateName="immInfluenzaDate" hadDiseaseName="hadInfluenza" />
           <ImmRow name="immOther" label="Other (i.e. HIB)" dateName="immOtherDate" hadDiseaseName="hadOther" />
-          <ImmRow name="exemptionToImmunizations" label="Exemption to immunizations (form required)" dateName="immOtherExemptionDate" hadDiseaseName="immOtherExemption" />
+          <ImmRow name="exemptionToImmunizations" label="Exemption to immunizations (form required)" dateName="immOtherExemptionDate" hadDiseaseName="immOtherExemption" extraTriggerFields={['immTetanus', 'immTetanusDate']} />
         </tbody>
       </table>
     </div>

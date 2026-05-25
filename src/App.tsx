@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Download, FileText, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Download, FileText, CheckCircle2, AlertCircle, X, CreditCard, PenLine } from 'lucide-react';
 import { formSchema, type HealthFormData } from './schema/formSchema';
 import { FormSectionPartA } from './components/FormSectionPartA';
 import { FormSectionPartB } from './components/FormSectionPartB';
@@ -19,9 +19,132 @@ const getTodayDateString = () => {
   return `${year}-${month}-${day}`;
 };
 
+// --- Pre-download Reminder Modal ---
+interface ReminderModalProps {
+  pendingData: HealthFormData;
+  onConfirm: (data: HealthFormData) => void;
+  onCancel: () => void;
+}
+
+function ReminderModal({ pendingData, onConfirm, onCancel }: ReminderModalProps) {
+  const isAdult = pendingData.participantType === 'adult';
+  const signLaterItems: string[] = [];
+  if (!isAdult && pendingData.willSignLater) {
+    signLaterItems.push('Parent/Guardian Consent — sign on the first page of the printed form');
+  }
+  if ((pendingData as any).willParticipantSignLater) {
+    signLaterItems.push('Participant Consent — sign on the first page of the printed form');
+  }
+  if (!isAdult && (pendingData as any).willSignMedsLater) {
+    signLaterItems.push('Medications Authorization — sign on the medications page of the printed form');
+  }
+
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, zIndex: 1000,
+      background: 'rgba(15, 23, 42, 0.6)',
+      backdropFilter: 'blur(4px)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: '1rem',
+      animation: 'fadeInUp 0.2s ease-out'
+    }}>
+      <div style={{
+        background: 'var(--surface-color)',
+        borderRadius: 'var(--radius-lg)',
+        boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
+        width: '100%',
+        maxWidth: '520px',
+        overflow: 'hidden'
+      }}>
+        {/* Header */}
+        <div style={{
+          background: 'linear-gradient(135deg, var(--primary-color), #7C3AED)',
+          padding: '1.5rem 2rem',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <Download size={22} color="white" />
+            <h2 style={{ color: 'white', fontSize: '1.2rem', fontWeight: 600, margin: 0 }}>
+              Before You Download
+            </h2>
+          </div>
+          <button
+            onClick={onCancel}
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center' }}
+            aria-label="Close"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          {/* Insurance card reminder — always shown */}
+          <div style={{
+            display: 'flex', gap: '1rem', alignItems: 'flex-start',
+            background: '#EFF6FF', borderRadius: 'var(--radius-md)',
+            padding: '1rem 1.25rem', border: '1px solid #BFDBFE'
+          }}>
+            <CreditCard size={22} color="#2563EB" style={{ flexShrink: 0, marginTop: '2px' }} />
+            <div>
+              <p style={{ fontWeight: 600, color: '#1E40AF', marginBottom: '0.25rem' }}>Include a copy of your insurance card</p>
+              <p style={{ fontSize: '0.9rem', color: '#3B82F6' }}>
+                Attach a photocopy of the front <strong>and</strong> back of your insurance card to the completed form.
+              </p>
+            </div>
+          </div>
+
+          {/* Sign-later reminders — only shown when relevant */}
+          {signLaterItems.length > 0 && (
+            <div style={{
+              display: 'flex', gap: '1rem', alignItems: 'flex-start',
+              background: '#FFFBEB', borderRadius: 'var(--radius-md)',
+              padding: '1rem 1.25rem', border: '1px solid #FDE68A'
+            }}>
+              <PenLine size={22} color="#D97706" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <p style={{ fontWeight: 600, color: '#92400E', marginBottom: '0.5rem' }}>Don't forget to sign with a pen</p>
+                <ul style={{ paddingLeft: '1.1rem', margin: 0, display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                  {signLaterItems.map((item, i) => (
+                    <li key={i} style={{ fontSize: '0.9rem', color: '#B45309' }}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Footer buttons */}
+        <div style={{
+          padding: '1rem 2rem 1.5rem',
+          display: 'flex', gap: '0.75rem', justifyContent: 'flex-end'
+        }}>
+          <button
+            onClick={onCancel}
+            className="btn btn-secondary"
+            style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
+          >
+            Go Back
+          </button>
+          <button
+            onClick={() => onConfirm(pendingData)}
+            className="btn btn-primary"
+            style={{ width: 'auto', padding: '0.75rem 1.75rem', background: 'var(--primary-color)' }}
+          >
+            <Download size={18} style={{ marginRight: '0.4rem' }} />
+            Download PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// --- Main App ---
 function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [pendingFormData, setPendingFormData] = useState<HealthFormData | null>(null);
 
   const methods = useForm<HealthFormData>({
     resolver: zodResolver(formSchema) as any,
@@ -294,20 +417,21 @@ function App() {
     });
   };
 
-  const onSubmit = async (data: HealthFormData) => {
+  const executePdfDownload = useCallback(async (data: HealthFormData) => {
+    setPendingFormData(null);
     try {
       setIsGenerating(true);
-      
+
       const blob = await generateHealthFormPDF(data);
       const url = URL.createObjectURL(blob);
-      
+
       const link = document.createElement('a');
       link.href = url;
       link.download = `Scouting_Health_Form_${data.fullName.replace(/\s+/g, '_')}.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      
+
       URL.revokeObjectURL(url);
       setIsSuccess(true);
       setTimeout(() => setIsSuccess(false), 5000);
@@ -317,81 +441,95 @@ function App() {
     } finally {
       setIsGenerating(false);
     }
-  };
+  }, []);
+
+  // Intercept submit to show reminder modal first
+  const onSubmit = useCallback((data: HealthFormData) => {
+    setPendingFormData(data);
+  }, []);
 
   return (
-    <div className="app-container">
-      <header className="header">
-        <FileText size={48} color="var(--primary-color)" style={{ marginBottom: '1rem' }} />
-        <h1>Health Form Filler</h1>
-        <p>Complete the Scouting America Medical Release Form (Parts A & B) locally and securely.</p>
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem' }}>
-          <button 
-            type="button" 
-            onClick={handleLoadTestData}
-            className="btn btn-secondary" 
-            style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
-          >
-            Load Test Data (Yes)
-          </button>
-          <button 
-            type="button" 
-            onClick={handleLoadTestDataNo}
-            className="btn btn-secondary" 
-            style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
-          >
-            Load Test Data (No)
-          </button>
-        </div>
-      </header>
-
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <FormSectionPartA />
-          <FormSectionPartB />
-          <FormSectionMedications />
-          <FormSectionImmunizations />
-          <FormSectionSignature />
-          
-          <div className="form-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <button 
-              type="submit" 
-              className="btn btn-primary"
-              disabled={isGenerating}
-              style={{ fontSize: '1.125rem', padding: '1.25rem 2rem' }}
+    <>
+      {pendingFormData && (
+        <ReminderModal
+          pendingData={pendingFormData}
+          onConfirm={executePdfDownload}
+          onCancel={() => setPendingFormData(null)}
+        />
+      )}
+      <div className="app-container">
+        <header className="header">
+          <FileText size={48} color="var(--primary-color)" style={{ marginBottom: '1rem' }} />
+          <h1>Health Form Filler</h1>
+          <p>Complete the Scouting America Medical Release Form (Parts A & B) locally and securely.</p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem' }}>
+            <button
+              type="button"
+              onClick={handleLoadTestData}
+              className="btn btn-secondary"
+              style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
             >
-              <Download size={24} style={{ marginRight: '0.5rem' }} />
-              {isGenerating ? 'Generating PDF...' : 'Download Completed PDF'}
+              Load Test Data (Yes)
             </button>
-            
-            {isSuccess && (
-              <div style={{ marginTop: '1rem', color: 'var(--secondary-color)', display: 'flex', alignItems: 'center', gap: '0.5rem', animation: 'fadeInUp 0.3s ease-out' }}>
-                <CheckCircle2 size={20} />
-                <span>PDF generated successfully!</span>
-              </div>
-            )}
-            
-            {Object.keys(methods.formState.errors).length > 0 && (
-              <div style={{ marginTop: '1rem', color: 'var(--error-color)', display: 'flex', alignItems: 'center', gap: '0.5rem', animation: 'fadeInUp 0.3s ease-out' }}>
-                <AlertCircle size={20} />
-                <span>Please fix the errors above before downloading.</span>
-              </div>
-            )}
+            <button
+              type="button"
+              onClick={handleLoadTestDataNo}
+              className="btn btn-secondary"
+              style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
+            >
+              Load Test Data (No)
+            </button>
           </div>
-        </form>
-      </FormProvider>
+        </header>
 
-      <footer style={{ 
-        marginTop: '3rem', 
-        textAlign: 'center', 
-        color: 'var(--text-muted)', 
-        fontSize: '0.9rem', 
-        padding: '1.5rem 0', 
-        borderTop: '1px solid var(--border-color)' 
-      }}>
-        This page is not in any way sponsored or approved by Scouting America.
-      </footer>
-    </div>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <FormSectionPartA />
+            <FormSectionPartB />
+            <FormSectionMedications />
+            <FormSectionImmunizations />
+            <FormSectionSignature />
+
+            <div className="form-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={isGenerating}
+                style={{ fontSize: '1.125rem', padding: '1.25rem 2rem' }}
+              >
+                <Download size={24} style={{ marginRight: '0.5rem' }} />
+                {isGenerating ? 'Generating PDF...' : 'Download Completed PDF'}
+              </button>
+
+              {isSuccess && (
+                <div style={{ marginTop: '1rem', color: 'var(--secondary-color)', display: 'flex', alignItems: 'center', gap: '0.5rem', animation: 'fadeInUp 0.3s ease-out' }}>
+                  <CheckCircle2 size={20} />
+                  <span>PDF generated successfully!</span>
+                </div>
+              )}
+
+              {Object.keys(methods.formState.errors).length > 0 && (
+                <div style={{ marginTop: '1rem', color: 'var(--error-color)', display: 'flex', alignItems: 'center', gap: '0.5rem', animation: 'fadeInUp 0.3s ease-out' }}>
+                  <AlertCircle size={20} />
+                  <span>Please fix the errors above before downloading.</span>
+                </div>
+              )}
+            </div>
+          </form>
+        </FormProvider>
+
+        <footer style={{
+          marginTop: '3rem',
+          textAlign: 'center',
+          color: 'var(--text-muted)',
+          fontSize: '0.9rem',
+          padding: '1.5rem 0',
+          borderTop: '1px solid var(--border-color)'
+        }}>
+          This application is not affiliated with, sponsored by, or endorsed by Scouting America. It is an independent, volunteer-created utility.
+        </footer>
+      </div>
+    </>
   );
 }
 

@@ -27,11 +27,11 @@ export const FormSectionPartB = () => {
     const hasError = !!(errors as any)[name];
 
     const handleYesChange = () => {
-      setValue(name, isChecked === true ? undefined : true, { shouldDirty: true });
+      setValue(name, isChecked === true ? undefined : true, { shouldDirty: true, shouldValidate: true });
     };
 
     const handleNoChange = () => {
-      setValue(name, isChecked === false ? undefined : false, { shouldDirty: true });
+      setValue(name, isChecked === false ? undefined : false, { shouldDirty: true, shouldValidate: true });
     };
 
     return (
@@ -132,6 +132,9 @@ export const FormSectionPartB = () => {
       <h3 className="section-title" style={{ fontSize: '1.2rem', marginTop: '2.5rem', color: 'var(--text-main)', borderBottom: '1px solid var(--border-color)' }}>
         Medical Conditions
       </h3>
+      <p style={{ marginBottom: '1rem', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+        Do you currently have or have you ever been treated for any of the following?
+      </p>
       <table className="form-table">
         <thead>
           <tr>

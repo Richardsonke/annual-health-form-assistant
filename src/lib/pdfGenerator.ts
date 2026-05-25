@@ -290,17 +290,19 @@ export async function generateHealthFormPDF(data: HealthFormData): Promise<Blob>
 
   // Medications
   setCheck('No medications', data.noMedications);
-  setYesNoCheck('Non-prescription exceptions', data.nonPrescriptionExceptions);
 
-  setText('Non-prescrip exceptions', data.nonPrescriptionExceptionsText || '');
-  setCheck('Additional space', data.medicationsAdditionalSpace);
+  if (!data.noMedications) {
+    setYesNoCheck('Non-prescription exceptions', data.nonPrescriptionExceptions);
+    setText('Non-prescrip exceptions', data.nonPrescriptionExceptionsText || '');
+    setCheck('Additional space', data.medicationsAdditionalSpace);
 
-  for (let idx = 1; idx <= 6; idx++) {
-    const med = data.medications?.[idx - 1];
-    setText(`Medication ${idx}`, med?.medication || '');
-    setText(`Dose ${idx}`, med?.dose || '');
-    setText(`Frequency ${idx}`, med?.frequency || '');
-    setText(`Reason ${idx}`, med?.reason || '');
+    for (let idx = 1; idx <= 6; idx++) {
+      const med = data.medications?.[idx - 1];
+      setText(`Medication ${idx}`, med?.medication || '');
+      setText(`Dose ${idx}`, med?.dose || '');
+      setText(`Frequency ${idx}`, med?.frequency || '');
+      setText(`Reason ${idx}`, med?.reason || '');
+    }
   }
 
   // Immunizations
