@@ -461,7 +461,8 @@ function App() {
         <header className="header">
           <img src="./headericon.png" width="64" height="64" style={{ marginBottom: '1rem' }} />
           <h1>Health Form Filler</h1>
-          <p>Complete the Scouting America Medical Release Form (Parts A & B) locally and securely.</p>
+          <p>Complete the Scouting America Medical Release Form (Parts A & B).</p>
+          <p><strong>Private & Secure:</strong> All data is processed entirely in your browser. Nothing is ever sent to any server. Secure storage of the generated PDF is your responsiblity.</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem' }}>
             <button
               type="button"
