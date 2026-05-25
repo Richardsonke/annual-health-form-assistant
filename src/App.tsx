@@ -277,37 +277,37 @@ function App() {
       inhalerExpDate: '10/27',
       exemptionToImmunizations: false,
       immTetanus: true,
-      immTetanusDate: '2020-01-01',
+      immTetanusDate: '2022',
       hadTetanus: 'Had Tetanus',
       immPertussis: true,
-      immPertussisDate: '2020-01-02',
+      immPertussisDate: '2020',
       hadPertussis: 'Had Pertussis',
       immDiphtheria: true,
-      immDiphtheriaDate: '2020-01-03',
+      immDiphtheriaDate: '2020',
       hadDiphtheria: 'Had Diphtheria',
       immPolio: true,
-      immPolioDate: '2020-01-04',
+      immPolioDate: '2005',
       hadPolio: 'Had Polio',
       immMMR: true,
-      immMMRDate: '2020-01-05',
+      immMMRDate: '2010',
       hadMMR: 'Had MMR',
       immChickenPox: true,
-      immChickenPoxDate: '2020-01-06',
+      immChickenPoxDate: '2008',
       hadChickenPox: 'Had Chicken Pox',
       immHepA: true,
-      immHepADate: '2020-01-07',
+      immHepADate: '2015',
       hadHepA: 'Had Hep A',
       immHepB: true,
-      immHepBDate: '2020-01-08',
+      immHepBDate: '2012',
       hadHepB: 'Had Hep B',
       immMeningitis: true,
-      immMeningitisDate: '2020-01-09',
+      immMeningitisDate: '2018',
       hadMeningitis: 'Had Meningitis',
       immInfluenza: true,
-      immInfluenzaDate: '2025-10-10',
+      immInfluenzaDate: '2025',
       hadInfluenza: 'Had Influenza',
       immOther: true,
-      immOtherDate: '2020-01-11',
+      immOtherDate: '2003',
       hadOther: 'Had Other (HIB)',
       additionalMedicalHistory: 'Frequent mild asthma symptoms during heavy physical exercise. Uses rescue albuterol inhaler. Past history of seasonal grass allergies but no anaphylaxis. Underwent uncomplicated minor appendectomy in August 2024. All vitals normal. No other history of hospitalization, blood transfusions, or serious chronic illnesses. Participant maintains an active lifestyle, participating in weekly hiking, swimming, and outdoor scouts camping trips without restriction.',
       signatureData: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAA8CAYAAAAjW/WRAAABWklEQVR42u3cUQ6DMAwE0b3/pekJgkoIECdvJP+WeOUxpVLJAaBJRAAQBCAIQBCAIABBAIIABAEIAhAEAEEAggAEAQiyYvDJ5QJBCEEYgpCCLAQhxpDhJgpBthKj0nVAkFcGdtVrEwTdw+k8BCHHpINIEoIYPqIQpMLAOTdBhLTAJnY3IYjt625CEBtXbwSxZfVJEJtVzyXyEYhtqv+TTARiOORwkoWtaSDk0ux/10DIIZ+/nsd2C4QY8rrSZ3YKhBxyu9pbdgjET5ky7J3zrL45iCHPOz1k1c3hriHbEefOaqEQQ9Yjz5kRF5ohFH83lfsTZ0v1UIhBlCfPkoqheJNHTVG+nIvuz3w6EO+CIkrlucibgXibIFGqzUVmCMX7aIky60ykWiggy5tzkQrBgCxfzYTpA84FzqGUapYQlCKIUj3lWybgIR0gCEAQgCAAQQCCAAQBCALsxw+7B4PgHhlX+wAAAABJRU5ErkJggg==',
@@ -461,8 +461,9 @@ function App() {
         <header className="header">
           <img src="./headericon.png" width="64" height="64" style={{ marginBottom: '1rem' }} />
           <h1>Health Form Filler</h1>
-          <p>Complete the Scouting America Medical Release Form (Parts A & B).</p>
-          <p><strong>Private & Secure:</strong> All data is processed entirely in your browser. Nothing is ever sent to any server. Secure storage of the generated PDF is your responsiblity.</p>
+          <p>Complete the Scouting America Medical Release Form (Parts A & B).<br /><br /></p>
+          <p><strong>Private & Secure:</strong> All data is processed entirely in your browser. Nothing is ever sent to any server.</p>
+          <p>Secure storage of the generated PDF is your responsiblity.</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem' }}>
             <button
               type="button"
