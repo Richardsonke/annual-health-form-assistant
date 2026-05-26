@@ -2,79 +2,81 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { FormField } from './FormField';
 import { AlertCircle } from 'lucide-react';
 
+interface ConditionRowProps {
+  name: string;
+  label: string;
+  expName?: string;
+  dateName?: string;
+  datePlaceholder?: string;
+  extraContent?: React.ReactNode;
+}
+
+const ConditionRow: React.FC<ConditionRowProps> = ({
+  name,
+  label,
+  expName,
+  dateName,
+  datePlaceholder,
+  extraContent
+}) => {
+  const isChecked = useWatch({ name });
+  const { setValue, formState: { errors } } = useFormContext();
+  const hasError = !!(errors as any)[name];
+
+  const handleYesChange = () => {
+    setValue(name, isChecked === true ? undefined : true, { shouldDirty: true, shouldValidate: true });
+  };
+
+  const handleNoChange = () => {
+    setValue(name, isChecked === false ? undefined : false, { shouldDirty: true, shouldValidate: true });
+  };
+
+  return (
+    <tr>
+      <td className={`text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
+        <input
+          type="checkbox"
+          className="checkbox-input"
+          checked={isChecked === true}
+          onChange={handleYesChange}
+        />
+      </td>
+      <td className={`text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
+        <input
+          type="checkbox"
+          className="checkbox-input"
+          checked={isChecked === false}
+          onChange={handleNoChange}
+        />
+      </td>
+      <td style={{ fontWeight: 500, width: '40%' }}>{label}</td>
+      <td>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          {dateName && isChecked === true && (
+            <FormField
+              name={dateName}
+              placeholder={datePlaceholder || "Date/Result"}
+              containerClass="form-table-group"
+            />
+          )}
+          {expName && isChecked === true && (
+            <FormField
+              name={expName}
+              placeholder={`Explain...`}
+              containerClass="form-table-group"
+            />
+          )}
+          {extraContent && isChecked === true && extraContent}
+        </div>
+      </td>
+    </tr>
+  );
+};
+
 export const FormSectionPartB = () => {
   const { setValue, formState: { errors } } = useFormContext();
   const isInsulinChecked = useWatch({ name: 'condInsulin' });
   const isCPAPChecked = useWatch({ name: 'condCPAP' });
-
-  const ConditionRow = ({
-    name,
-    label,
-    expName,
-    dateName,
-    datePlaceholder,
-    extraContent
-  }: {
-    name: string,
-    label: string,
-    expName?: string,
-    dateName?: string,
-    datePlaceholder?: string,
-    extraContent?: React.ReactNode
-  }) => {
-    const isChecked = useWatch({ name });
-    const { formState: { errors } } = useFormContext();
-    const hasError = !!(errors as any)[name];
-
-    const handleYesChange = () => {
-      setValue(name, isChecked === true ? undefined : true, { shouldDirty: true, shouldValidate: true });
-    };
-
-    const handleNoChange = () => {
-      setValue(name, isChecked === false ? undefined : false, { shouldDirty: true, shouldValidate: true });
-    };
-
-    return (
-      <tr>
-        <td className={`text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
-          <input
-            type="checkbox"
-            className="checkbox-input"
-            checked={isChecked === true}
-            onChange={handleYesChange}
-          />
-        </td>
-        <td className={`text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
-          <input
-            type="checkbox"
-            className="checkbox-input"
-            checked={isChecked === false}
-            onChange={handleNoChange}
-          />
-        </td>
-        <td style={{ fontWeight: 500, width: '40%' }}>{label}</td>
-        <td>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {dateName && isChecked === true && (
-              <FormField
-                name={dateName}
-                placeholder={datePlaceholder || "Date/Result"}
-                containerClass="form-table-group"
-              />
-            )}
-            {expName && isChecked === true && (
-              <FormField
-                name={expName}
-                placeholder={`Explain...`}
-                containerClass="form-table-group"
-              />
-            )}
-            {extraContent && isChecked === true && extraContent}
-          </div>
-        </td>
-      </tr>
-    );
-  };
 
   return (
     <div className="form-card">

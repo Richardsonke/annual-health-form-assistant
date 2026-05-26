@@ -1,99 +1,99 @@
 import { useFormContext, useWatch } from 'react-hook-form';
 import { FormField } from './FormField';
 
-export const FormSectionImmunizations = () => {
-  const { setValue } = useFormContext();
+interface ImmRowProps {
+  name: string;
+  label: string;
+  dateName?: string;
+  hadDiseaseName?: string;
+  extraTriggerFields?: string[];
+}
 
-  const ImmRow = ({ 
-    name, 
-    label, 
-    dateName, 
-    hadDiseaseName,
-    extraTriggerFields
-  }: { 
-    name: string, 
-    label: string, 
-    dateName?: string, 
-    hadDiseaseName?: string,
-    extraTriggerFields?: string[]
-  }) => {
-    const isChecked = useWatch({ name });
-    const { formState: { errors }, trigger, register } = useFormContext();
-    const hasError = !!(errors as any)[name];
-    const errorMsg: string | undefined = (errors as any)[name]?.message;
-    const hasDateError = dateName ? !!(errors as any)[dateName] : false;
-    const dateErrorMsg = dateName ? (errors as any)[dateName]?.message : undefined;
+const ImmRow: React.FC<ImmRowProps> = ({ 
+  name, 
+  label, 
+  dateName, 
+  hadDiseaseName,
+  extraTriggerFields
+}) => {
+  const isChecked = useWatch({ name });
+  const { setValue, formState: { errors }, trigger, register } = useFormContext();
+  const hasError = !!(errors as any)[name];
+  const errorMsg: string | undefined = (errors as any)[name]?.message;
+  const hasDateError = dateName ? !!(errors as any)[dateName] : false;
+  const dateErrorMsg = dateName ? (errors as any)[dateName]?.message : undefined;
 
-    const handleYesChange = () => {
-      setValue(name, isChecked === true ? undefined : true, { shouldDirty: true, shouldValidate: true });
-      if (extraTriggerFields?.length) trigger(extraTriggerFields as any);
-    };
-
-    const handleNoChange = () => {
-      setValue(name, isChecked === false ? undefined : false, { shouldDirty: true, shouldValidate: true });
-      if (extraTriggerFields?.length) trigger(extraTriggerFields as any);
-    };
-
-    return (
-      <tr>
-        <td className={`text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
-          <input 
-            type="checkbox" 
-            className="checkbox-input" 
-            checked={isChecked === true} 
-            onChange={handleYesChange} 
-          />
-        </td>
-        <td className={`text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
-          <input 
-            type="checkbox" 
-            className="checkbox-input" 
-            checked={isChecked === false} 
-            onChange={handleNoChange} 
-          />
-        </td>
-        <td style={{ fontWeight: 500, width: '30%' }}>
-          {label}
-          {hasError && errorMsg && (
-            <span style={{ display: 'block', color: 'var(--error-color)', fontSize: '0.8rem', fontWeight: 400, marginTop: '0.25rem' }}>
-              {errorMsg}
-            </span>
-          )}
-        </td>
-        <td style={{ width: '30%' }}>
-          {dateName && isChecked === true ? (
-            <div>
-              <input
-                type="number"
-                inputMode="numeric"
-                placeholder="YYYY"
-                min={1900}
-                max={new Date().getFullYear()}
-                className={`form-input form-table-group${hasDateError ? ' error' : ''}`}
-                style={{ padding: '0.4rem 0.75rem' }}
-                {...register(dateName, { valueAsNumber: false })}
-              />
-              {hasDateError && (
-                <span style={{ color: 'var(--error-color)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                  {dateErrorMsg}
-                </span>
-              )}
-            </div>
-          ) : (
-            <div style={{ background: hasDateError ? 'rgba(239,68,68,0.09)' : 'var(--border-color)', height: '42px', borderRadius: 'var(--radius-md)', opacity: hasDateError ? 1 : 0.25 }}></div>
-          )}
-        </td>
-        <td style={{ width: '30%' }}>
-          {hadDiseaseName && isChecked === true ? (
-            <FormField name={hadDiseaseName} placeholder="Detail / Year" containerClass="form-table-group" />
-          ) : (
-            <div style={{ background: 'var(--border-color)', height: '42px', borderRadius: 'var(--radius-md)', opacity: 0.25 }}></div>
-          )}
-        </td>
-      </tr>
-    );
+  const handleYesChange = () => {
+    setValue(name, isChecked === true ? undefined : true, { shouldDirty: true, shouldValidate: true });
+    if (extraTriggerFields?.length) trigger(extraTriggerFields as any);
   };
 
+  const handleNoChange = () => {
+    setValue(name, isChecked === false ? undefined : false, { shouldDirty: true, shouldValidate: true });
+    if (extraTriggerFields?.length) trigger(extraTriggerFields as any);
+  };
+
+  return (
+    <tr>
+      <td className={`text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
+        <input 
+          type="checkbox" 
+          className="checkbox-input" 
+          checked={isChecked === true} 
+          onChange={handleYesChange} 
+        />
+      </td>
+      <td className={`text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
+        <input 
+          type="checkbox" 
+          className="checkbox-input" 
+          checked={isChecked === false} 
+          onChange={handleNoChange} 
+        />
+      </td>
+      <td style={{ fontWeight: 500, width: '30%' }}>
+        {label}
+        {hasError && errorMsg && (
+          <span style={{ display: 'block', color: 'var(--error-color)', fontSize: '0.8rem', fontWeight: 400, marginTop: '0.25rem' }}>
+            {errorMsg}
+          </span>
+        )}
+      </td>
+      <td style={{ width: '30%' }}>
+        {dateName && isChecked === true ? (
+          <div>
+            <input
+              type="number"
+              inputMode="numeric"
+              placeholder="YYYY"
+              min={1900}
+              max={new Date().getFullYear()}
+              className={`form-input form-table-group${hasDateError ? ' error' : ''}`}
+              style={{ padding: '0.4rem 0.75rem' }}
+              {...register(dateName, { valueAsNumber: false })}
+            />
+            {hasDateError && (
+              <span style={{ color: 'var(--error-color)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
+                {dateErrorMsg}
+              </span>
+            )}
+          </div>
+        ) : (
+          <div style={{ background: hasDateError ? 'rgba(239,68,68,0.09)' : 'var(--border-color)', height: '42px', borderRadius: 'var(--radius-md)', opacity: hasDateError ? 1 : 0.25 }}></div>
+        )}
+      </td>
+      <td style={{ width: '30%' }}>
+        {hadDiseaseName && isChecked === true ? (
+          <FormField name={hadDiseaseName} placeholder="Detail / Year" containerClass="form-table-group" />
+        ) : (
+          <div style={{ background: 'var(--border-color)', height: '42px', borderRadius: 'var(--radius-md)', opacity: 0.25 }}></div>
+        )}
+      </td>
+    </tr>
+  );
+};
+
+export const FormSectionImmunizations = () => {
   return (
     <div className="form-card">
       <h2 className="section-title">Immunizations</h2>

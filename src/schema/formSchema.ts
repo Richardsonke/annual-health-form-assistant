@@ -127,7 +127,7 @@ export const formSchema = z.object({
 
   // Medications
   noMedications: z.boolean().default(false),
-  nonPrescriptionExceptions: z.boolean().default(false),
+  nonPrescriptionExceptions: z.boolean().optional(),
   nonPrescriptionExceptionsText: z.string().optional(),
   medicationsAdditionalSpace: z.boolean().default(false),
   medications: z.array(z.object({
@@ -215,6 +215,45 @@ export const formSchema = z.object({
     });
   }
 
+  // 3.5. Non-prescription authorization is required for youth
+  if (data.participantType !== 'adult' && data.nonPrescriptionExceptions === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Non-prescription authorization is required",
+      path: ["nonPrescriptionExceptions"]
+    });
+  }
+
+  // 3.6. Either at least one medication must be added or noMedications checked
+  if (!data.noMedications) {
+    const hasAtLeastOneMed = data.medications && data.medications.length > 0 && data.medications.some(m => m.medication && m.medication.trim() !== "");
+    if (!hasAtLeastOneMed) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Please add at least one medication or check 'Participant takes NO medications'",
+        path: ["noMedications"]
+      });
+    }
+
+    // Validate that all 4 columns are filled for every row in the array
+    if (data.medications && data.medications.length > 0) {
+      data.medications.forEach((med, idx) => {
+        if (!med.medication || med.medication.trim() === "") {
+          ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Medication name is required", path: ["medications", idx, "medication"] });
+        }
+        if (!med.dose || med.dose.trim() === "") {
+          ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Dose is required", path: ["medications", idx, "dose"] });
+        }
+        if (!med.frequency || med.frequency.trim() === "") {
+          ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Frequency is required", path: ["medications", idx, "frequency"] });
+        }
+        if (!med.reason || med.reason.trim() === "") {
+          ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Reason is required", path: ["medications", idx, "reason"] });
+        }
+      });
+    }
+  }
+
   // 4. Required Yes/No table fields — must have either Yes or No selected
   const requiredYesNoFields = [
     // Allergies table
@@ -270,15 +309,13 @@ export const formSchema = z.object({
       const yearStr = String((data as any)[dateField] ?? '');
       const year = parseInt(yearStr, 10);
       const isValidFormat = yearStr.length === 4 && !isNaN(year);
-      // Skip immTetanus — handled separately below with a more specific message
-      if (checkField !== 'immTetanus') {
-        if (!yearStr || !isValidFormat) {
-          ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Year is required (YYYY)', path: [dateField] });
-        } else if (year > currentYear) {
-          ctx.addIssue({ code: z.ZodIssueCode.custom, message: `Year cannot be in the future`, path: [dateField] });
-        } else if (year < minYear) {
-          ctx.addIssue({ code: z.ZodIssueCode.custom, message: `Year cannot be more than 120 years ago`, path: [dateField] });
-        }
+      if (!yearStr || !isValidFormat) {
+        const customMsg = checkField === 'immTetanus' ? 'Tetanus year is required (YYYY)' : 'Year is required (YYYY)';
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: customMsg, path: [dateField] });
+      } else if (year > currentYear) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: `Year cannot be in the future`, path: [dateField] });
+      } else if (year < minYear) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: `Year cannot be more than 120 years ago`, path: [dateField] });
       }
     }
   }
@@ -296,13 +333,7 @@ export const formSchema = z.object({
       const yearStr = String(data.immTetanusDate ?? '');
       const year = parseInt(yearStr, 10);
       const isValidFormat = yearStr.length === 4 && !isNaN(year);
-      if (!yearStr || !isValidFormat) {
-        ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Tetanus year is required (YYYY)', path: ['immTetanusDate'] });
-      } else if (year > currentYear) {
-        ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Year cannot be in the future', path: ['immTetanusDate'] });
-      } else if (year < minYear) {
-        ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Year cannot be more than 120 years ago', path: ['immTetanusDate'] });
-      } else {
+      if (isValidFormat && year >= minYear && year <= currentYear) {
         // Dec 31 of the entered year is the most lenient end date for the 10-year check
         const dec31OfYear = new Date(year, 11, 31);
         const tenYearsAgo = new Date();

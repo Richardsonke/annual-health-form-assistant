@@ -1,10 +1,10 @@
+import { useEffect } from 'react';
 import { useFormContext, useFieldArray, useWatch } from 'react-hook-form';
 import { FormField } from './FormField';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, AlertCircle } from 'lucide-react';
 import { SignaturePad } from './SignaturePad';
-
 export const FormSectionMedications = () => {
-  const { register, control, setValue } = useFormContext();
+  const { register, control, setValue, trigger, formState: { errors, isSubmitted } } = useFormContext();
   
   const isNoMeds = useWatch({ name: 'noMedications' });
   const isNonPrescExceptions = useWatch({ name: 'nonPrescriptionExceptions' });
@@ -16,15 +16,37 @@ export const FormSectionMedications = () => {
     name: "medications"
   });
 
+  const medicationsVal = useWatch({ control, name: 'medications' });
+
+  // Re-trigger validation on 'noMedications' when medications change after form submission
+  useEffect(() => {
+    if (isSubmitted) {
+      trigger('noMedications');
+    }
+  }, [medicationsVal, trigger, isSubmitted]);
   return (
     <div className="form-card">
       <h2 className="section-title">Medications</h2>
       
-      <div style={{ display: 'flex', gap: '2rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
         <label className="checkbox-group">
-          <input type="checkbox" className="checkbox-input" {...register('noMedications')} />
+          <input 
+            type="checkbox" 
+            className="checkbox-input" 
+            {...register('noMedications', {
+              onChange: (e) => {
+                setValue('noMedications', e.target.checked, { shouldDirty: true, shouldValidate: true });
+              }
+            })} 
+          />
           <span style={{ fontWeight: 500 }}>Participant takes NO medications</span>
         </label>
+        {errors.noMedications && (
+          <span className="error-message">
+            <AlertCircle size={16} />
+            {errors.noMedications.message?.toString()}
+          </span>
+        )}
       </div>
 
       {isNoMeds ? (
@@ -131,17 +153,21 @@ export const FormSectionMedications = () => {
         </div>
       )}
 
-      {/* Non-prescription medication authorization Yes/No */}
       <div style={{ marginTop: '2rem', borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
           <span style={{ fontWeight: 600 }}>Non-prescription medication administration is authorized:</span>
+          {errors.nonPrescriptionExceptions && (
+            <span style={{ color: 'var(--error-color)', fontSize: '0.8rem', marginTop: '-0.25rem', display: 'block' }}>
+              {errors.nonPrescriptionExceptions.message?.toString()}
+            </span>
+          )}
           <div style={{ display: 'flex', gap: '1.5rem' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
               <input 
                 type="checkbox" 
                 className="checkbox-input" 
                 checked={isNonPrescExceptions === true} 
-                onChange={() => setValue('nonPrescriptionExceptions', isNonPrescExceptions === true ? undefined : true, { shouldDirty: true })} 
+                onChange={() => setValue('nonPrescriptionExceptions', isNonPrescExceptions === true ? undefined : true, { shouldDirty: true, shouldValidate: true })} 
               />
               Yes
             </label>
@@ -150,7 +176,7 @@ export const FormSectionMedications = () => {
                 type="checkbox" 
                 className="checkbox-input" 
                 checked={isNonPrescExceptions === false} 
-                onChange={() => setValue('nonPrescriptionExceptions', isNonPrescExceptions === false ? undefined : false, { shouldDirty: true })} 
+                onChange={() => setValue('nonPrescriptionExceptions', isNonPrescExceptions === false ? undefined : false, { shouldDirty: true, shouldValidate: true })} 
               />
               No
             </label>

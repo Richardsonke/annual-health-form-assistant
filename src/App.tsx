@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Download, CheckCircle2, AlertCircle, X, CreditCard, PenLine } from 'lucide-react';
+import { Download, CheckCircle2, AlertCircle, X, CreditCard, PenLine, FileText } from 'lucide-react';
 import { formSchema, type HealthFormData } from './schema/formSchema';
 import { FormSectionPartA } from './components/FormSectionPartA';
 import { FormSectionPartB } from './components/FormSectionPartB';
@@ -94,6 +94,23 @@ function ReminderModal({ pendingData, onConfirm, onCancel }: ReminderModalProps)
             </div>
           </div>
 
+          {/* Additional sheet reminder */}
+          {pendingData.medicationsAdditionalSpace && (
+            <div style={{
+              display: 'flex', gap: '1rem', alignItems: 'flex-start',
+              background: '#F0FDF4', borderRadius: 'var(--radius-md)',
+              padding: '1rem 1.25rem', border: '1px solid #BBF7D0'
+            }}>
+              <FileText size={22} color="#16A34A" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <p style={{ fontWeight: 600, color: '#166534', marginBottom: '0.25rem' }}>Include additional medication sheet</p>
+                <p style={{ fontSize: '0.9rem', color: '#166534' }}>
+                  You checked "Additional space is needed". Please attach a printed sheet listing all your additional medications (including name, dose, frequency, and reason) to the completed form.
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Sign-later reminders — only shown when relevant */}
           {signLaterItems.length > 0 && (
             <div style={{
@@ -149,6 +166,7 @@ function App() {
   const methods = useForm<HealthFormData>({
     resolver: zodResolver(formSchema) as any,
     mode: 'onTouched',
+    shouldFocusError: false,
     defaultValues: {
       hasAllergies: false,
       willSignLater: false,
@@ -316,6 +334,9 @@ function App() {
       parentSignatureDate: getTodayDateString(),
       participantSignatureDate: getTodayDateString()
     });
+    setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }, 100);
   };
 
   const handleLoadTestDataNo = () => {
@@ -396,7 +417,7 @@ function App() {
       medicationsAdditionalSpace: false,
       medications: [],
       rescueInhaler: false,
-      exemptionToImmunizations: false,
+      exemptionToImmunizations: true,
       immTetanus: false,
       immPertussis: false,
       immDiphtheria: false,
@@ -415,6 +436,9 @@ function App() {
       parentSignatureDate: getTodayDateString(),
       participantSignatureDate: getTodayDateString()
     });
+    setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }, 100);
   };
 
   const executePdfDownload = useCallback(async (data: HealthFormData) => {
@@ -456,6 +480,16 @@ function App() {
     setPendingFormData(data);
   }, []);
 
+  const onInvalidSubmit = useCallback(() => {
+    // Wait for React to complete the render cycle and update the DOM with error classes
+    setTimeout(() => {
+      const firstError = document.querySelector('.error, .row-required-error, .error-message');
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 50);
+  }, []);
+
   return (
     <>
       {pendingFormData && (
@@ -493,7 +527,7 @@ function App() {
         </header>
 
         <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <form onSubmit={methods.handleSubmit(onSubmit, onInvalidSubmit)}>
             <FormSectionPartA />
             <FormSectionPartB />
             <FormSectionMedications />
