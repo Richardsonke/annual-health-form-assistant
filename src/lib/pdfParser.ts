@@ -134,12 +134,13 @@ export async function parseHealthFormPDF(fileBuffer: ArrayBuffer): Promise<Parti
 
   // Height / Weight (Convert height from total inches back to Ft/In)
   const heightTotalStr = getTextFieldVal('Height');
-  if (heightTotalStr) {
-    const totalInches = parseInt(heightTotalStr, 10);
-    if (!isNaN(totalInches) && totalInches > 0) {
-      data.heightFt = Math.floor(totalInches / 12).toString();
-      data.heightIn = (totalInches % 12).toString();
-    }
+  const totalInches = parseInt(heightTotalStr, 10);
+  if (!isNaN(totalInches) && totalInches > 0) {
+    data.heightFt = Math.floor(totalInches / 12).toString();
+    data.heightIn = (totalInches % 12).toString();
+  } else {
+    data.heightFt = '';
+    data.heightIn = '';
   }
   data.weight = getTextFieldVal('Weight');
 
