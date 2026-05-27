@@ -95,6 +95,7 @@ export const FormSectionMedications = () => {
                         name={`medications.${index}.medication`} 
                         placeholder="Medication name" 
                         containerClass="form-table-group"
+                        maxLength={30}
                       />
                     </td>
                     <td className="col-med-dose">
@@ -102,6 +103,7 @@ export const FormSectionMedications = () => {
                         name={`medications.${index}.dose`} 
                         placeholder="Dose" 
                         containerClass="form-table-group"
+                        maxLength={10}
                       />
                     </td>
                     <td className="col-med-freq">
@@ -109,6 +111,7 @@ export const FormSectionMedications = () => {
                         name={`medications.${index}.frequency`} 
                         placeholder="Frequency" 
                         containerClass="form-table-group"
+                        maxLength={25}
                       />
                     </td>
                     <td className="col-med-reason">
@@ -116,6 +119,7 @@ export const FormSectionMedications = () => {
                         name={`medications.${index}.reason`} 
                         placeholder="Reason" 
                         containerClass="form-table-group"
+                        maxLength={85}
                       />
                     </td>
                     <td className="col-med-action text-center">

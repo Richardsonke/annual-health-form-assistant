@@ -16,8 +16,8 @@ export const formSchema = z.object({
   unitNo: z.string().min(1, "Unit number is required"),
   councilName: z.string().min(1, "Council name is required"),
   expeditionCrewNo: z.string().optional(),
-  unitLeader: z.string().optional(),
-  unitLeaderPhone: z.string().optional(),
+  unitLeader: z.string().min(1, "Unit leader name is required"),
+  unitLeaderPhone: z.string().min(10, "Unit leader mobile number is required"),
   staffPosition: z.string().optional(),
 
   // Insurance Details
@@ -56,15 +56,33 @@ export const formSchema = z.object({
   allergyBugs: z.boolean().optional(),
   epinephrine: z.boolean().optional(),
   autoinjectorExpDate: z.string().optional(),
-  allergyFoodExp: z.string().optional(),
-  allergyMedicationExp: z.string().optional(),
-  allergyPlantsExp: z.string().optional(),
-  allergyBugsExp: z.string().optional(),
+  allergyFoodExp: z.string().max(38, "Explanation cannot exceed 38 characters").optional(),
+  allergyMedicationExp: z.string().max(38, "Explanation cannot exceed 38 characters").optional(),
+  allergyPlantsExp: z.string().max(38, "Explanation cannot exceed 38 characters").optional(),
+  allergyBugsExp: z.string().max(38, "Explanation cannot exceed 38 characters").optional(),
 
   // Part B: Physical Guidelines
-  heightFt: z.string().min(1, "Height (feet) is required").regex(/^\d+$/, "Must be a number"),
-  heightIn: z.string().min(1, "Height (inches) is required").regex(/^\d+$/, "Must be a number"),
-  weight: z.string().min(1, "Weight is required").regex(/^\d+$/, "Must be a number"),
+  heightFt: z.string()
+    .min(1, "Height (feet) is required")
+    .regex(/^\d+$/, "Must be a number")
+    .refine((val) => {
+      const num = parseInt(val, 10);
+      return num >= 0 && num <= 10;
+    }, "Must be between 0 and 10"),
+  heightIn: z.string()
+    .min(1, "Height (inches) is required")
+    .regex(/^\d+$/, "Must be a number")
+    .refine((val) => {
+      const num = parseInt(val, 10);
+      return num >= 0 && num <= 11;
+    }, "Must be between 0 and 11"),
+  weight: z.string()
+    .min(1, "Weight is required")
+    .regex(/^\d+$/, "Must be a number")
+    .refine((val) => {
+      const num = parseInt(val, 10);
+      return num >= 1 && num <= 1000;
+    }, "Must be between 1 and 1000"),
 
   // Part B: Medical Conditions
   condAsthma: z.boolean().optional(),
@@ -101,27 +119,27 @@ export const formSchema = z.object({
   condOther: z.boolean().optional(),
 
   // Explanations for Conditions
-  diabetesExplanation: z.string().optional(),
-  heartDiseaseExplanation: z.string().optional(),
-  familyHistoryExplanation: z.string().optional(),
-  hypertensionExplanation: z.string().optional(),
-  strokeExplanation: z.string().optional(),
-  lungExplanation: z.string().optional(),
-  copdExplanation: z.string().optional(),
-  sleepExplanation: z.string().optional(),
-  psychiatricExplanation: z.string().optional(),
-  neurologicalExplanation: z.string().optional(),
-  faintingExplanation: z.string().optional(),
-  headExplanation: z.string().optional(),
-  altitudeExplanation: z.string().optional(),
-  stomachExplanation: z.string().optional(),
-  kidneyExplanation: z.string().optional(),
-  skinExplanation: z.string().optional(),
-  thyroidExplanation: z.string().optional(),
-  bloodExplanation: z.string().optional(),
-  eenspExplanation: z.string().optional(),
-  muscularExplanation: z.string().optional(),
-  otherExplanation: z.string().optional(),
+  diabetesExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  heartDiseaseExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  familyHistoryExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  hypertensionExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  strokeExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  lungExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  copdExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  sleepExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  psychiatricExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  neurologicalExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  faintingExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  headExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  altitudeExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  stomachExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  kidneyExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  skinExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  thyroidExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  bloodExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  eenspExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  muscularExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
+  otherExplanation: z.string().max(100, "Explanation cannot exceed 100 characters").optional(),
 
   // Medications
   noMedications: z.boolean().default(false),
@@ -129,10 +147,10 @@ export const formSchema = z.object({
   nonPrescriptionExceptionsText: z.string().optional(),
   medicationsAdditionalSpace: z.boolean().default(false),
   medications: z.array(z.object({
-    medication: z.string().optional(),
-    dose: z.string().optional(),
-    frequency: z.string().optional(),
-    reason: z.string().optional()
+    medication: z.string().max(30, "Medication name cannot exceed 30 characters").optional(),
+    dose: z.string().max(10, "Dose cannot exceed 10 characters").optional(),
+    frequency: z.string().max(25, "Frequency cannot exceed 25 characters").optional(),
+    reason: z.string().max(85, "Reason cannot exceed 85 characters").optional()
   })).max(6, "Maximum of 6 medications allowed").default([]),
   medicationsSignature: z.string().optional(),
   willSignMedsLater: z.boolean().default(false),

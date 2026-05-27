@@ -9,6 +9,7 @@ interface ConditionRowProps {
   dateName?: string;
   datePlaceholder?: string;
   extraContent?: React.ReactNode;
+  expMaxLength?: number;
 }
 
 const ConditionRow: React.FC<ConditionRowProps> = ({
@@ -17,7 +18,8 @@ const ConditionRow: React.FC<ConditionRowProps> = ({
   expName,
   dateName,
   datePlaceholder,
-  extraContent
+  extraContent,
+  expMaxLength = 100
 }) => {
   const isChecked = useWatch({ name });
   const { setValue, formState: { errors } } = useFormContext();
@@ -68,6 +70,7 @@ const ConditionRow: React.FC<ConditionRowProps> = ({
               name={expName}
               placeholder={`Explain...`}
               containerClass="form-table-group"
+              maxLength={expMaxLength}
             />
           )}
           {extraContent && isChecked === true && extraContent}
@@ -94,11 +97,11 @@ export const FormSectionPartB = () => {
           <label className="form-label">Height</label>
           <div style={{ display: 'flex', gap: '1.25rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1 }}>
-              <FormField name="heightFt" type="number" placeholder="Ft" containerClass="" showErrorMsg={false} />
+              <FormField name="heightFt" type="number" placeholder="Ft" containerClass="" showErrorMsg={false} min={0} max={10} />
               <span style={{ fontSize: '0.95rem', color: 'var(--text-muted)', fontWeight: 500 }}>Feet</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1 }}>
-              <FormField name="heightIn" type="number" placeholder="In" containerClass="" showErrorMsg={false} />
+              <FormField name="heightIn" type="number" placeholder="In" containerClass="" showErrorMsg={false} min={0} max={11} />
               <span style={{ fontSize: '0.95rem', color: 'var(--text-muted)', fontWeight: 500 }}>Inches</span>
             </div>
           </div>
@@ -109,7 +112,7 @@ export const FormSectionPartB = () => {
             </span>
           )}
         </div>
-        <FormField name="weight" label="Weight (lbs)" type="number" placeholder="e.g., 150" />
+        <FormField name="weight" label="Weight (lbs)" type="number" placeholder="e.g., 150" min={1} max={1000} />
       </div>
 
       <h3 className="section-title" style={{ fontSize: '1.2rem', marginTop: '2rem', color: 'var(--text-main)', borderBottom: '1px solid var(--border-color)' }}>
@@ -128,10 +131,10 @@ export const FormSectionPartB = () => {
           </tr>
         </thead>
         <tbody>
-          <ConditionRow name="allergyFood" label="Food Allergies" expName="allergyFoodExp" />
-          <ConditionRow name="allergyMedication" label="Medicines" expName="allergyMedicationExp" />
-          <ConditionRow name="allergyPlants" label="Plants" expName="allergyPlantsExp" />
-          <ConditionRow name="allergyBugs" label="Insect Bites/Stings" expName="allergyBugsExp" />
+          <ConditionRow name="allergyFood" label="Food Allergies" expName="allergyFoodExp" expMaxLength={38} />
+          <ConditionRow name="allergyMedication" label="Medicines" expName="allergyMedicationExp" expMaxLength={38} />
+          <ConditionRow name="allergyPlants" label="Plants" expName="allergyPlantsExp" expMaxLength={38} />
+          <ConditionRow name="allergyBugs" label="Insect Bites/Stings" expName="allergyBugsExp" expMaxLength={38} />
           <ConditionRow name="epinephrine" label="Epinephrine Auto-injector" dateName="autoinjectorExpDate" datePlaceholder="Auto-injector Exp. Date (MM/YYYY)" />
           <ConditionRow name="rescueInhaler" label="Rescue Inhaler" dateName="inhalerExpDate" datePlaceholder="Inhaler Expiration Date (MM/YYYY)" />
         </tbody>

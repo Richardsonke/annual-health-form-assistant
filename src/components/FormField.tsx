@@ -11,6 +11,8 @@ interface FormFieldProps {
   maxLength?: number;
   disabled?: boolean;
   showErrorMsg?: boolean;
+  min?: number;
+  max?: number;
 }
 
 // Simple helper to resolve nested paths like "medications.0.medication"
@@ -27,7 +29,9 @@ export const FormField: React.FC<FormFieldProps> = ({
   containerClass = 'form-group',
   maxLength,
   disabled,
-  showErrorMsg = true
+  showErrorMsg = true,
+  min,
+  max
 }) => {
   const { register, formState: { errors } } = useFormContext();
   const error = getNestedValue(errors, name);
@@ -78,6 +82,8 @@ export const FormField: React.FC<FormFieldProps> = ({
           className={`form-input ${error ? 'error' : ''}`}
           maxLength={isPhone ? 12 : maxLength}
           disabled={disabled}
+          min={min}
+          max={max}
           {...registerRest}
           onChange={handleCustomChange}
         />

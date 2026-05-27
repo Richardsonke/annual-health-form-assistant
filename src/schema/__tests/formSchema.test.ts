@@ -14,6 +14,8 @@ const baseValidYouthData = {
   phone: '330-555-0199',
   unitNo: 'Troop 123',
   councilName: 'Great Trail Council',
+  unitLeader: 'John Smith',
+  unitLeaderPhone: '330-555-0111',
   insuranceCompany: 'Blue Cross Blue Shield',
   insurancePolicy: 'XYZ1234567',
   emergencyName: 'Jane Smith',
@@ -151,6 +153,30 @@ describe('formSchema Validation', () => {
       expect(issues.some(i => i.path[0] === 'heightFt')).toBe(true);
       expect(issues.some(i => i.path[0] === 'weight')).toBe(true);
     }
+  });
+
+  it('should enforce range constraints for heightFt (0 to 10)', () => {
+    const invalidData1 = { ...baseValidYouthData, heightFt: '-1' };
+    const invalidData2 = { ...baseValidYouthData, heightFt: '11' };
+    
+    expect(formSchema.safeParse(invalidData1).success).toBe(false);
+    expect(formSchema.safeParse(invalidData2).success).toBe(false);
+  });
+
+  it('should enforce range constraints for heightIn (0 to 11)', () => {
+    const invalidData1 = { ...baseValidYouthData, heightIn: '-1' };
+    const invalidData2 = { ...baseValidYouthData, heightIn: '12' };
+    
+    expect(formSchema.safeParse(invalidData1).success).toBe(false);
+    expect(formSchema.safeParse(invalidData2).success).toBe(false);
+  });
+
+  it('should enforce range constraints for weight (1 to 1000)', () => {
+    const invalidData1 = { ...baseValidYouthData, weight: '0' };
+    const invalidData2 = { ...baseValidYouthData, weight: '1001' };
+    
+    expect(formSchema.safeParse(invalidData1).success).toBe(false);
+    expect(formSchema.safeParse(invalidData2).success).toBe(false);
   });
 
   it('should require parent signature for youth if willSignLater is false', () => {

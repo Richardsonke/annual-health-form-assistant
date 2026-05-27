@@ -7,6 +7,7 @@ interface ImmRowProps {
   dateName?: string;
   hadDiseaseName?: string;
   extraTriggerFields?: string[];
+  datePlaceholder?: string;
 }
 
 const ImmRow: React.FC<ImmRowProps> = ({ 
@@ -14,7 +15,8 @@ const ImmRow: React.FC<ImmRowProps> = ({
   label, 
   dateName, 
   hadDiseaseName,
-  extraTriggerFields
+  extraTriggerFields,
+  datePlaceholder = "Immunization Date(s)"
 }) => {
   const isChecked = useWatch({ name });
   const { setValue, formState: { errors }, trigger, register } = useFormContext();
@@ -74,10 +76,11 @@ const ImmRow: React.FC<ImmRowProps> = ({
           <div>
             <input
               type="text"
-              placeholder="Immunization Date(s)"
+              placeholder={datePlaceholder}
               className={`form-input form-table-group${hasDateError ? ' error' : ''}`}
               style={{ padding: '0.4rem 0.75rem' }}
               disabled={isChecked !== true}
+              maxLength={32}
               {...register(dateName)}
             />
             {hasDateError && (
@@ -90,7 +93,7 @@ const ImmRow: React.FC<ImmRowProps> = ({
       </td>
       <td className="col-details" style={{ width: '30%' }}>
         {hadDiseaseName ? (
-          <FormField name={hadDiseaseName} placeholder="Had Disease (Year)" containerClass="form-table-group" />
+          <FormField name={hadDiseaseName} placeholder="Had Disease (Year)" containerClass="form-table-group" maxLength={10} />
         ) : (
           <div style={{ background: 'var(--border-color)', height: '42px', borderRadius: 'var(--radius-md)', opacity: 0.25 }}></div>
         )}
@@ -129,7 +132,7 @@ export const FormSectionImmunizations = () => {
           <ImmRow name="immMeningitis" label="Meningitis" dateName="immMeningitisDate" hadDiseaseName="hadMeningitis" />
           <ImmRow name="immInfluenza" label="Influenza" dateName="immInfluenzaDate" hadDiseaseName="hadInfluenza" />
           <ImmRow name="immOther" label="Other (i.e. HIB)" dateName="immOtherDate" hadDiseaseName="hadOther" />
-          <ImmRow name="exemptionToImmunizations" label="Exemption to immunizations (form required)" dateName="immOtherExemptionDate" hadDiseaseName="immOtherExemption" extraTriggerFields={['immTetanus', 'immTetanusDate']} />
+          <ImmRow name="exemptionToImmunizations" label="Exemption to immunizations (form required)" dateName="immOtherExemptionDate" datePlaceholder="Details..." extraTriggerFields={['immTetanus', 'immTetanusDate']} />
         </tbody>
       </table>
     </div>

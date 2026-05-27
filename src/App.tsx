@@ -165,6 +165,8 @@ function App() {
   const [pendingFormData, setPendingFormData] = useState<HealthFormData | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const isTestMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('testmode') === '1';
+
   const methods = useForm<HealthFormData>({
     resolver: zodResolver(formSchema) as any,
     mode: 'onTouched',
@@ -219,11 +221,11 @@ function App() {
       allergyFood: true,
       allergyFoodExp: 'Food Allergy (Peanuts) Explanation',
       allergyMedication: true,
-      allergyMedicationExp: 'Medication Allergy (Penicillin) Explanation',
+      allergyMedicationExp: 'Med Allergy (Penicillin) Explanation',
       allergyPlants: true,
       allergyPlantsExp: 'Plants Allergy (Poison Ivy) Explanation',
       allergyBugs: true,
-      allergyBugsExp: 'Insect Allergy (Bee Stings) Explanation',
+      allergyBugsExp: 'Bug Allergy (Bee Stings) Explanation',
       epinephrine: true,
       autoinjectorExpDate: '12/28',
       heightFt: '5',
@@ -233,7 +235,7 @@ function App() {
       lastHbA1c: '6.5% on 04/26',
       condInsulin: true,
       condHypertension: true,
-      hypertensionExplanation: 'Hypertension (High Blood Pressure) Explanation',
+      hypertensionExplanation: 'Hypertension managed by diet, exercise, and daily lisinopril; blood pressure is monitored weekly. OK',
       condHeartDisease: true,
       heartDiseaseExplanation: 'Congenital Heart Defect Explanation',
       condFamilyHistory: true,
@@ -284,7 +286,7 @@ function App() {
       nonPrescriptionExceptionsText: 'Non-prescription exceptions list: Tylenol only',
       medicationsAdditionalSpace: true,
       medications: [
-        { medication: 'Med 1 Name', dose: '10mg', frequency: 'Daily', reason: 'Reason 1' },
+        { medication: 'Acetaminophen Extra Strength 5', dose: '1000mg tab', frequency: 'Every 4-6 hours as needed', reason: 'Manage mild to moderate headache pain and reduce fever symptoms during outdoor events' },
         { medication: 'Med 2 Name', dose: '20mg', frequency: 'Twice daily', reason: 'Reason 2' },
         { medication: 'Med 3 Name', dose: '500mg', frequency: 'As needed', reason: 'Reason 3' },
         { medication: 'Med 4 Name', dose: '1 puff', frequency: 'Every 4 hours', reason: 'Reason 4' },
@@ -529,22 +531,26 @@ function App() {
           <p><strong>Private & Secure:</strong> All data is processed entirely in your browser. Nothing is ever sent to any server.</p>
           <p>Secure storage of the generated PDF is your responsiblity.</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem' }}>
-            <button
-              type="button"
-              onClick={handleLoadTestData}
-              className="btn btn-secondary"
-              style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
-            >
-              Load Test Data (Yes)
-            </button>
-            <button
-              type="button"
-              onClick={handleLoadTestDataNo}
-              className="btn btn-secondary"
-              style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
-            >
-              Load Test Data (No)
-            </button>
+            {isTestMode && (
+              <>
+                <button
+                  type="button"
+                  onClick={handleLoadTestData}
+                  className="btn btn-secondary"
+                  style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
+                >
+                  Load Test Data (Yes)
+                </button>
+                <button
+                  type="button"
+                  onClick={handleLoadTestDataNo}
+                  className="btn btn-secondary"
+                  style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
+                >
+                  Load Test Data (No)
+                </button>
+              </>
+            )}
             <button
               type="button"
               onClick={handleImportPdfClick}
