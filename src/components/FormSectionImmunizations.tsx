@@ -80,7 +80,7 @@ const ImmRow: React.FC<ImmRowProps> = ({
               className={`form-input form-table-group${hasDateError ? ' error' : ''}`}
               style={{ padding: '0.4rem 0.75rem' }}
               disabled={isChecked !== true}
-              maxLength={32}
+              maxLength={35}
               {...register(dateName)}
             />
             {hasDateError && (

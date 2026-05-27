@@ -154,6 +154,24 @@ export const FormSectionMedications = () => {
               <span>Additional space is needed (use extra sheet)</span>
             </label>
           </div>
+
+          <div style={{
+            marginTop: '1.25rem',
+            padding: '1rem 1.25rem',
+            backgroundColor: '#EFF6FF',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid #BFDBFE',
+            color: '#1E40AF',
+            fontSize: '0.9rem',
+            lineHeight: '1.6'
+          }}>
+            <p style={{ margin: 0, fontWeight: 500 }}>
+              Bring enough medications in sufficient quantities and in the original containers. Make sure that they are NOT expired, including inhalers and EpiPens.
+            </p>
+            <p style={{ margin: '0.5rem 0 0 0', fontWeight: 600 }}>
+              You SHOULD NOT STOP taking any maintenance medication unless instructed to do so by your doctor.
+            </p>
+          </div>
         </div>
       )}
 
@@ -200,6 +218,7 @@ export const FormSectionMedications = () => {
               name="nonPrescriptionExceptionsText" 
               placeholder="List exceptions (e.g. Tylenol, Ibuprofen as directed)" 
               containerClass="form-group"
+              maxLength={85}
             />
           </div>
 

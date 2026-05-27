@@ -334,7 +334,10 @@ function App() {
       participantSignatureData: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAA8CAYAAAAjW/WRAAABWklEQVR42u3cUQ6DMAwE0b3/pekJgkoIECdvJP+WeOUxpVLJAaBJRAAQBCAIQBCAIABBAIIABAEIAhAEAEEAggAEAQiyYvDJ5QJBCEEYgpCCLAQhxpDhJgpBthKj0nVAkFcGdtVrEwTdw+k8BCHHpINIEoIYPqIQpMLAOTdBhLTAJnY3IYjt625CEBtXbwSxZfVJEJtVzyXyEYhtqv+TTARiOORwkoWtaSDk0ux/10DIIZ+/nsd2C4QY8rrSZ3YKhBxyu9pbdgjET5ky7J3zrL45iCHPOz1k1c3hriHbEefOaqEQQ9Yjz5kRF5ohFH83lfsTZ0v1UIhBlCfPkoqheJNHTVG+nIvuz3w6EO+CIkrlucibgXibIFGqzUVmCMX7aIky60ykWiggy5tzkQrBgCxfzYTpA84FzqGUapYQlCKIUj3lWybgIR0gCEAQgCAAQQCCAAQBCALsxw+7B4PgHhlX+wAAAABJRU5ErkJggg==',
       medicationsSignature: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAA8CAYAAAAjW/WRAAABWklEQVR42u3cUQ6DMAwE0b3/pekJgkoIECdvJP+WeOUxpVLJAaBJRAAQBCAIQBCAIABBAIIABAEIAhAEAEEAggAEAQiyYvDJ5QJBCEEYgpCCLAQhxpDhJgpBthKj0nVAkFcGdtVrEwTdw+k8BCHHpINIEoIYPqIQpMLAOTdBhLTAJnY3IYjt625CEBtXbwSxZfVJEJtVzyXyEYhtqv+TTARiOORwkoWtaSDk0ux/10DIIZ+/nsd2C4QY8rrSZ3YKhBxyu9pbdgjET5ky7J3zrL45iCHPOz1k1c3hriHbEefOaqEQQ9Yjz5kRF5ohFH83lfsTZ0v1UIhBlCfPkoqheJNHTVG+nIvuz3w6EO+CIkrlucibgXibIFGqzUVmCMX7aIky60ykWiggy5tzkQrBgCxfzYTpA84FzqGUapYQlCKIUj3lWybgIR0gCEAQgCAAQQCCAAQBCALsxw+7B4PgHhlX+wAAAABJRU5ErkJggg==',
       parentSignatureDate: getTodayDateString(),
-      participantSignatureDate: getTodayDateString()
+      participantSignatureDate: getTodayDateString(),
+      willSignLater: false,
+      willParticipantSignLater: false,
+      willSignMedsLater: false
     });
     setTimeout(() => {
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
@@ -435,7 +438,175 @@ function App() {
       participantSignatureData: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAA8CAYAAAAjW/WRAAABWklEQVR42u3cUQ6DMAwE0b3/pekJgkoIECdvJP+WeOUxpVLJAaBJRAAQBCAIQBCAIABBAIIABAEIAhAEAEEAggAEAQiyYvDJ5QJBCEEYgpCCLAQhxpDhJgpBthKj0nVAkFcGdtVrEwTdw+k8BCHHpINIEoIYPqIQpMLAOTdBhLTAJnY3IYjt625CEBtXbwSxZfVJEJtVzyXyEYhtqv+TTARiOORwkoWtaSDk0ux/10DIIZ+/nsd2C4QY8rrSZ3YKhBxyu9pbdgjET5ky7J3zrL45iCHPOz1k1c3hriHbEefOaqEQQ9Yjz5kRF5ohFH83lfsTZ0v1UIhBlCfPkoqheJNHTVG+nIvuz3w6EO+CIkrlucibgXibIFGqzUVmCMX7aIky60ykWiggy5tzkQrBgCxfzYTpA84FzqGUapYQlCKIUj3lWybgIR0gCEAQgCAAQQCCAAQBCALsxw+7B4PgHhlX+wAAAABJRU5ErkJggg==',
       medicationsSignature: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAA8CAYAAAAjW/WRAAABWklEQVR42u3cUQ6DMAwE0b3/pekJgkoIECdvJP+WeOUxpVLJAaBJRAAQBCAIQBCAIABBAIIABAEIAhAEAEEAggAEAQiyYvDJ5QJBCEEYgpCCLAQhxpDhJgpBthKj0nVAkFcGdtVrEwTdw+k8BCHHpINIEoIYPqIQpMLAOTdBhLTAJnY3IYjt625CEBtXbwSxZfVJEJtVzyXyEYhtqv+TTARiOORwkoWtaSDk0ux/10DIIZ+/nsd2C4QY8rrSZ3YKhBxyu9pbdgjET5ky7J3zrL45iCHPOz1k1c3hriHbEefOaqEQQ9Yjz5kRF5ohFH83lfsTZ0v1UIhBlCfPkoqheJNHTVG+nIvuz3w6EO+CIkrlucibgXibIFGqzUVmCMX7aIky60ykWiggy5tzkQrBgCxfzYTpA84FzqGUapYQlCKIUj3lWybgIR0gCEAQgCAAQQCCAAQBCALsxw+7B4PgHhlX+wAAAABJRU5ErkJggg==',
       parentSignatureDate: getTodayDateString(),
-      participantSignatureDate: getTodayDateString()
+      participantSignatureDate: getTodayDateString(),
+      willSignLater: false,
+      willParticipantSignLater: false,
+      willSignMedsLater: false
+    });
+    setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }, 100);
+  };
+
+  const handleLoadTestDataMax = () => {
+    methods.reset({
+      participantType: 'youth',
+      fullName: 'Alex Alexander Alexanderson-Smith III, Senior Volunteer Program Offic',
+      dateOfBirth: '2015-05-15',
+      age: '11',
+      gender: 'female',
+      address: '12345 West Participant Boulevard Way, Suite 6789, Room 101, Mailstop 42, North East Valley District Center, City of Metropolitan Scouttow OK',
+      city: 'Metropolitan City of Scouttown District Areas',
+      state: 'State of Ohio Region Nine',
+      zipCode: '44240-1234-5678',
+      phone: '555-111-2222',
+      unitNo: 'Troop Number 1234567',
+      councilName: 'Great Trail Council of Scouting America North East Region District Area Valley Organization Headquarter O',
+      expeditionCrewNo: 'Expedition Crew Number 4567890123456789012345',
+      unitLeader: 'Unit Leader Johnathan Doe Senior Volunteer Program Lead Officer of District Nine',
+      unitLeaderPhone: '555-333-4444',
+      staffPosition: 'Staff Position Assistant Counselor Coordinator Adm',
+      insuranceCompany: 'Test Insurance Company Name of Scouting America State O',
+      insurancePolicy: 'Policy Number XYZ789012345678901234567890123456789',
+      emergencyName: 'Primary Emergency Contact Jane Janelle Doe Senior Family Member Representative O',
+      emergencyRelationship: 'Parent Legal Guardian Custodian Family Representat',
+      emergencyPhone: '555-555-5555',
+      emergencyAddress: '123 Primary Emergency Address Street Way, Scouttown, OH 44240  OK',
+      emergencyOtherPhone: '555-666-6666',
+      emergencyAltName: 'Alternate Emergency Contact Name Bob Bobby Bobbyer Representative',
+      emergencyAltPhone: '555-777-7777',
+      authPickupName1: 'Authorized Transportation Pickup Person One Full Name Representat',
+      authPickupPhone1: '555-888-8888',
+      authPickupName2: 'Authorized Transportation Pickup Person Two Full Name Representat',
+      authPickupPhone2: '555-999-9999',
+      notAuthPickupName1: 'Not Authorized Transportation Pickup Person One Full Name Represe',
+      notAuthPickupPhone1: '555-000-0000',
+      notAuthPickupName2: 'Not Authorized Transportation Pickup Person Two Full Name Represe',
+      notAuthPickupPhone2: '555-222-2222',
+      bbDevice: true,
+      participantRestrictions: false, // false = restrictions apply
+      restrictionsText: 'Restrictions: no climbing, running, hiking, swimming, or sports!!',
+      hasAllergies: true,
+      allergyFood: true,
+      allergyFoodExp: 'Food Allergy (Peanuts) Explanation OK',
+      allergyMedication: true,
+      allergyMedicationExp: 'Med Allergy (Penicillin) Explanations',
+      allergyPlants: true,
+      allergyPlantsExp: 'Plants Allergy (Poison Ivy) Expan OK!',
+      allergyBugs: true,
+      allergyBugsExp: 'Bug Allergy (Bee Stings) Explanations',
+      epinephrine: true,
+      autoinjectorExpDate: '12/28 (Auto-inject Exp) ',
+      heightFt: '5',
+      heightIn: '5',
+      weight: '120',
+      condDiabetes: true,
+      lastHbA1c: 'HbA1c: 6.5% on 04/2026 OK',
+      condInsulin: true,
+      condHypertension: true,
+      hypertensionExplanation: 'Hypertension managed by diet, exercise, and daily lisinopril; blood pressure is monitored weekly. OK',
+      condHeartDisease: true,
+      heartDiseaseExplanation: 'Congenital Heart Defect managed by cardiologist, no strenuous activity allowed on high altitude hike',
+      condFamilyHistory: true,
+      familyHistoryExplanation: 'Father had myocardial infarction at age 48; sibling has history of congenital heart disease defect',
+      condStroke: true,
+      strokeExplanation: 'Transient ischemic attack managed by medication, fully resolved with no permanent neurological def',
+      condAsthma: true,
+      lastAsthmaAttack: 'Last attack: 11/2025 (Mild) OK',
+      condRespiratory: true,
+      lungExplanation: 'Chronic respiratory disease managed by pulmonologist, fully resolved with no permanent lung damage',
+      condCOPD: true,
+      copdExplanation: 'Chronic obstructive pulmonary disease managed by specialist, fully stable with regular medication OK',
+      condEENSP: true,
+      eenspExplanation: 'Chronic sinusitis sinus problems managed by specialist, fully stable with no active sinus infection',
+      condMuscular: true,
+      muscularExplanation: 'Scoliosis muscular skeletal condition managed by specialist, fully stable with regular exercises OK!',
+      condHeadInjury: true,
+      headExplanation: 'Head injury/concussion/TBI managed by specialist, fully stable with no permanent brain damage OK!',
+      condAltitude: true,
+      altitudeExplanation: 'Altitude sickness managed by gradual acclimatization, fully stable with regular monitoring OK!',
+      condPsychiatric: true,
+      psychiatricExplanation: 'Mild anxiety and depression managed by therapist, fully stable with no active psychiatric symptoms',
+      condNeurological: true,
+      neurologicalExplanation: 'Mild attention deficit hyperactivity disorder managed by specialist, fully stable with medication OK',
+      condBlood: true,
+      bloodExplanation: 'Mild sickle cell trait managed by hematologist, fully stable with no history of painful crises OK!',
+      condFainting: true,
+      faintingExplanation: 'Vasovagal syncope episodes managed by hydration and salt intake, fully stable with no active episode',
+      condKidney: true,
+      kidneyExplanation: 'Chronic kidney nephritis managed by nephrologist, fully stable with regular monitoring of functions',
+      condSeizures: true,
+      lastSeizureDate: 'Last seizure: 01/2026 (No) OK',
+      condStomach: true,
+      stomachExplanation: 'Acid reflux stomach disease managed by gastroenterologist, fully stable with regular medication OK!',
+      condThyroid: true,
+      thyroidExplanation: 'Hypothyroidism thyroid disease managed by endocrinologist, fully stable with daily synthroid use OK',
+      condSkin: true,
+      skinExplanation: 'Eczema skin disease managed by dermatologist, fully stable with topical steroid use when flareup OK',
+      condSleep: true,
+      condCPAP: true,
+      sleepExplanation: 'Obstructive sleep apnea managed by CPAP therapy nightly, fully compliance monitored by physician OK',
+      condSurgeries: true,
+      lastSurgeryDate: '08/2024 - Appendectomy Surgery, no complications and full recovery OK!',
+      condOther: true,
+      otherExplanation: 'Other medical conditions not covered above fully explained and monitored by primary care physician',
+      noMedications: false,
+      nonPrescriptionExceptions: true,
+      nonPrescriptionExceptionsText: 'Non-prescription exceptions list: Tylenol, Ibuprofen, Claritin, Benadryl, and Aspirin',
+      medicationsAdditionalSpace: true,
+      medications: [
+        { medication: 'Acetaminophen Extra Strength 5', dose: '1000mg tab', frequency: 'Every 4-6 hours as needed', reason: 'Manage mild to moderate headache pain and reduce fever symptoms during outdoor events' },
+        { medication: 'Ibuprofen Pain Reliever 200mg', dose: '400mg tabs', frequency: 'Three times daily with fo', reason: 'Manage mild muscle soreness and joint inflammation after long high altitude scout hik' },
+        { medication: 'Diphenhydramine Allergy 25mg', dose: '25mg capsl', frequency: 'Once nightly before sleep', reason: 'Relieve seasonal allergy symptoms and prevent mild itching during outdoor scout camps' },
+        { medication: 'Albuterol HFA Inhaler 90mcg 1', dose: '2 puffs   ', frequency: 'Every 4 hours as needed ', reason: 'Prevent exercise induced asthma bronchospasm during strenuous physical activity tests' },
+        { medication: 'Fluticasone Prop Nasal Spray 1', dose: '2 sprays  ', frequency: 'Once daily in each nostri', reason: 'Relieve chronic seasonal allergic rhinitis symptoms and reduce sinus inflammation OK!' },
+        { medication: 'Montelukast Sodium Tab 10mg 1', dose: '10mg tab  ', frequency: 'Once daily in the evening', reason: 'Control chronic asthma symptoms and prevent seasonal allergy flareups during event OK' }
+      ],
+      rescueInhaler: true,
+      inhalerExpDate: '10/27 (Rescue Inh. Exp) ',
+      exemptionToImmunizations: false,
+      immTetanus: true,
+      immTetanusDate: '08/15/2022 (Current Tetanus Vac) OK',
+      hadTetanus: '2018 (Had)',
+      immPertussis: true,
+      immPertussisDate: '05/20/2020 (Pertussis Vaccinate) OK',
+      hadPertussis: '2012 (Had)',
+      immDiphtheria: true,
+      immDiphtheriaDate: '05/20/2020 (Diphtheria Vaccine) OK',
+      hadDiphtheria: '2012 (Had)',
+      immPolio: true,
+      immPolioDate: '09/10/2005, 11/12/2007 (Polio Vac) ',
+      hadPolio: '2008 (Had)',
+      immMMR: true,
+      immMMRDate: '03/12/2010, 06/15/2013 (MMR Vacs) ',
+      hadMMR: '2010 (Had)',
+      immChickenPox: true,
+      immChickenPoxDate: '06/18/2008 (Chicken Pox Vaccine)OK',
+      hadChickenPox: '2006 (Had)',
+      immHepA: true,
+      immHepADate: '04/10/2015, 10/12/2015 (Hep A Vac)',
+      hadHepA: '2014 (Had)',
+      immHepB: true,
+      immHepBDate: '01/15/2012, 02/15/2012, 07/15/12 OK',
+      hadHepB: '2011 (Had)',
+      immMeningitis: true,
+      immMeningitisDate: '09/20/2018 (Meningitis Vaccine) OK',
+      hadMeningitis: '2017 (Had)',
+      immInfluenza: true,
+      immInfluenzaDate: '10/15/2025 (Influenza Vaccine)  OK',
+      hadInfluenza: '2024 (Had)',
+      immOther: true,
+      immOtherDate: '08/22/2003 (Other HIB Vaccine)  OK',
+      hadOther: '2004 (Had)',
+      additionalMedicalHistory: 'Frequent mild asthma symptoms during heavy physical exercise. Uses rescue albuterol inhaler. Past history of seasonal grass allergies but no anaphylaxis. Underwent uncomplicated minor appendectomy in August 2024. All vitals normal. No other history of hospitalization, blood transfusions, or serious chronic illnesses. Participant maintains an active lifestyle, participating in weekly hiking, swimming, and outdoor scouts camping trips without restriction. Normal growth and development verified OK!',
+      signatureData: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAA8CAYAAAAjW/WRAAABWklEQVR42u3cUQ6DMAwE0b3/pekJgkoIECdvJP+WeOUxpVLJAaBJRAAQBCAIQBCAIABBAIIABAEIAhAEAEEAggAEAQiyYvDJ5QJBCEEYgpCCLAQhxpDhJgpBthKj0nVAkFcGdtVrEwTdw+k8BCHHpINIEoIYPqIQpMLAOTdBhLTAJnY3IYjt625CEBtXbwSxZfVJEJtVzyXyEYhtqv+TTARiOORwkoWtaSDk0ux/10DIIZ+/nsd2C4QY8rrSZ3YKhBxyu9pbdgjET5ky7J3zrL45iCHPOz1k1c3hriHbEefOaqEQQ9Yjz5kRF5ohFH83lfsTZ0v1UIhBlCfPkoqheJNHTVG+nIvuz3w6EO+CIkrlucibgXibIFGqzUVmCMX7aIky60ykWiggy5tzkQrBgCxfzYTpA84FzqGUapYQlCKIUj3lWybgIR0gCEAQgCAAQQCCAAQBCALsxw+7B4PgHhlX+wAAAABJRU5ErkJggg==',
+      participantSignatureData: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAA8CAYAAAAjW/WRAAABWklEQVR42u3cUQ6DMAwE0b3/pekJgkoIECdvJP+WeOUxpVLJAaBJRAAQBCAIQBCAIABBAIIABAEIAhAEAEEAggAEAQiyYvDJ5QJBCEEYgpCCLAQhxpDhJgpBthKj0nVAkFcGdtVrEwTdw+k8BCHHpINIEoIYPqIQpMLAOTdBhLTAJnY3IYjt625CEBtXbwSxZfVJEJtVzyXyEYhtqv+TTARiOORwkoWtaSDk0ux/10DIIZ+/nsd2C4QY8rrSZ3YKhBxyu9pbdgjET5ky7J3zrL45iCHPOz1k1c3hriHbEefOaqEQQ9Yjz5kRF5ohFH83lfsTZ0v1UIhBlCfPkoqheJNHTVG+nIvuz3w6EO+CIkrlucibgXibIFGqzUVmCMX7aIky60ykWiggy5tzkQrBgCxfzYTpA84FzqGUapYQlCKIUj3lWybgIR0gCEAQgCAAQQCCAAQBCALsxw+7B4PgHhlX+wAAAABJRU5ErkJggg==',
+      medicationsSignature: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAA8CAYAAAAjW/WRAAABWklEQVR42u3cUQ6DMAwE0b3/pekJgkoIECdvJP+WeOUxpVLJAaBJRAAQBCAIQBCAIABBAIIABAEIAhAEAEEAggAEAQiyYvDJ5QJBCEEYgpCCLAQhxpDhJgpBthKj0nVAkFcGdtVrEwTdw+k8BCHHpINIEoIYPqIQpMLAOTdBhLTAJnY3IYjt625CEBtXbwSxZfVJEJtVzyXyEYhtqv+TTARiOORwkoWtaSDk0ux/10DIIZ+/nsd2C4QY8rrSZ3YKhBxyu9pbdgjET5ky7J3zrL45iCHPOz1k1c3hriHbEefOaqEQQ9Yjz5kRF5ohFH83lfsTZ0v1UIhBlCfPkoqheJNHTVG+nIvuz3w6EO+CIkrlucibgXibIFGqzUVmCMX7aIky60ykWiggy5tzkQrBgCxfzYTpA84FzqGUapYQlCKIUj3lWybgIR0gCEAQgCAAQQCCAAQBCALsxw+7B4PgHhlX+wAAAABJRU5ErkJggg==',
+      parentSignatureDate: getTodayDateString(),
+      participantSignatureDate: getTodayDateString(),
+      willSignLater: false,
+      willParticipantSignLater: false,
+      willSignMedsLater: false
     });
     setTimeout(() => {
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
@@ -549,6 +720,14 @@ function App() {
                 >
                   Load Test Data (No)
                 </button>
+                <button
+                  type="button"
+                  onClick={handleLoadTestDataMax}
+                  className="btn btn-secondary"
+                  style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
+                >
+                  Load Test Data (Max)
+                </button>
               </>
             )}
             <button
@@ -559,12 +738,12 @@ function App() {
             >
               Import Completed PDF
             </button>
-            <input 
-              type="file" 
-              ref={fileInputRef} 
-              onChange={handleImportPdfChange} 
-              accept=".pdf" 
-              style={{ display: 'none' }} 
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImportPdfChange}
+              accept=".pdf"
+              style={{ display: 'none' }}
             />
           </div>
         </header>

@@ -1,0 +1,1458 @@
+[
+  {
+    "name": "Name of authorized",
+    "type": "PDFTextField",
+    "width": 227.15999999999997,
+    "height": 13.679999999999978,
+    "x": 75.24,
+    "y": 182.52
+  },
+  {
+    "name": "Name of not authorized",
+    "type": "PDFTextField",
+    "width": 227.15999999999997,
+    "height": 13.680000000000007,
+    "x": 75.24,
+    "y": 107.58
+  },
+  {
+    "name": "Name of not authorized 2",
+    "type": "PDFTextField",
+    "width": 227.15999999999997,
+    "height": 13.679999999999993,
+    "x": 342,
+    "y": 107.504
+  },
+  {
+    "name": "Phone of not authorized 2",
+    "type": "PDFTextField",
+    "width": 227.15999999999997,
+    "height": 13.680400000000006,
+    "x": 342,
+    "y": 88.2546
+  },
+  {
+    "name": "Phone of not authorized",
+    "type": "PDFTextField",
+    "width": 227.16000000000003,
+    "height": 13.680400000000006,
+    "x": 75.5,
+    "y": 88.2546
+  },
+  {
+    "name": "Phone of authorized",
+    "type": "PDFTextField",
+    "width": 227.15999999999997,
+    "height": 13.680000000000007,
+    "x": 75.24,
+    "y": 163.32
+  },
+  {
+    "name": "Name of authorized 2",
+    "type": "PDFTextField",
+    "width": 227.15999999999997,
+    "height": 13.680000000000007,
+    "x": 342,
+    "y": 182.32
+  },
+  {
+    "name": "Phone of authorized 2",
+    "type": "PDFTextField",
+    "width": 227.15999999999997,
+    "height": 13.679999999999978,
+    "x": 342,
+    "y": 163.705
+  },
+  {
+    "name": "Parent's signature date",
+    "type": "PDFTextField",
+    "width": 104.75999999999999,
+    "height": 13.680000000000007,
+    "x": 459.36,
+    "y": 314.64
+  },
+  {
+    "name": "Participant's Signature",
+    "type": "PDFSignature",
+    "width": 318.59999999999997,
+    "height": 13.680000000000007,
+    "x": 121.68,
+    "y": 314.84
+  },
+  {
+    "name": "Parent/guardian signature",
+    "type": "PDFSignature",
+    "width": 284.58,
+    "height": 13.680000000000007,
+    "x": 155.7,
+    "y": 296.61
+  },
+  {
+    "name": "Date of birth 3",
+    "type": "PDFTextField",
+    "width": 104.75999999999999,
+    "height": 13.680000000000007,
+    "x": 459.36,
+    "y": 295.64
+  },
+  {
+    "name": "Date of birth 1",
+    "type": "PDFTextField",
+    "width": 251.64,
+    "height": 12.600000000000023,
+    "x": 321.12,
+    "y": 413.76
+  },
+  {
+    "name": "Check Box 1",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000011,
+    "height": 10.800000000000011,
+    "x": 317.09,
+    "y": 501.96
+  },
+  {
+    "name": "Check Box 2",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000011,
+    "height": 10.800000000000011,
+    "x": 478.81,
+    "y": 424.8
+  },
+  {
+    "name": "Full name",
+    "type": "PDFTextField",
+    "width": 231.835,
+    "height": 13.680000000000064,
+    "x": 104.9,
+    "y": 717.9
+  },
+  {
+    "name": "Date of birth",
+    "type": "PDFTextField",
+    "width": 220.76100000000002,
+    "height": 13.67999999999995,
+    "x": 115.974,
+    "y": 696.279
+  },
+  {
+    "name": "Expedition/crew No",
+    "type": "PDFTextField",
+    "width": 163.44,
+    "height": 10.799999999999955,
+    "x": 403.92,
+    "y": 707.76
+  },
+  {
+    "name": "Age",
+    "type": "PDFTextField",
+    "width": 75.6,
+    "height": 10.799999999999955,
+    "x": 69.12,
+    "y": 670.88
+  },
+  {
+    "name": "Address",
+    "type": "PDFTextField",
+    "width": 476.64000000000004,
+    "height": 10.799999999999955,
+    "x": 79.2,
+    "y": 653.725
+  },
+  {
+    "name": "City",
+    "type": "PDFTextField",
+    "width": 148.5092,
+    "height": 10.799999999999955,
+    "x": 69.6508,
+    "y": 638.12
+  },
+  {
+    "name": "Unit leader's mobile #",
+    "type": "PDFTextField",
+    "width": 139.45500000000004,
+    "height": 10.800000000000068,
+    "x": 416.385,
+    "y": 622.04
+  },
+  {
+    "name": "Unit No",
+    "type": "PDFTextField",
+    "width": 66.20000000000005,
+    "height": 10.799999999999955,
+    "x": 489.64,
+    "y": 605.48
+  },
+  {
+    "name": "Council Name/No",
+    "type": "PDFTextField",
+    "width": 359.38,
+    "height": 10.799999999999955,
+    "x": 104.12,
+    "y": 605.48
+  },
+  {
+    "name": "Health/Accident Insurance Company",
+    "type": "PDFTextField",
+    "width": 195.303,
+    "height": 10.799999999999955,
+    "x": 152.505,
+    "y": 589.59
+  },
+  {
+    "name": "Emergency Name",
+    "type": "PDFTextField",
+    "width": 269.847,
+    "height": 10.799999999999955,
+    "x": 73.16,
+    "y": 531.24
+  },
+  {
+    "name": "Emergency Alternate contact name",
+    "type": "PDFTextField",
+    "width": 226.22000000000003,
+    "height": 10.800000000000011,
+    "x": 118.52,
+    "y": 499.275
+  },
+  {
+    "name": "Emergency Relationship",
+    "type": "PDFTextField",
+    "width": 176.07199999999995,
+    "height": 10.800000000000068,
+    "x": 380.651,
+    "y": 531.285
+  },
+  {
+    "name": "Emergency Address",
+    "type": "PDFTextField",
+    "width": 226.8,
+    "height": 10.800000000000068,
+    "x": 79.2,
+    "y": 515.78
+  },
+  {
+    "name": "Emergency Home phone",
+    "type": "PDFTextField",
+    "width": 85.82,
+    "height": 10.800000000000068,
+    "x": 344.74,
+    "y": 515.78
+  },
+  {
+    "name": "Emergency alternate's phone",
+    "type": "PDFTextField",
+    "width": 85.82,
+    "height": 10.800000000000011,
+    "x": 397.16,
+    "y": 499.275
+  },
+  {
+    "name": "Emergency Other phone",
+    "type": "PDFTextField",
+    "width": 85.81899999999996,
+    "height": 10.800000000000068,
+    "x": 469.904,
+    "y": 515.78
+  },
+  {
+    "name": "Policy No",
+    "type": "PDFTextField",
+    "width": 175.18900000000002,
+    "height": 10.799999999999955,
+    "x": 380.651,
+    "y": 589.59
+  },
+  {
+    "name": "Unit leader",
+    "type": "PDFTextField",
+    "width": 265.68,
+    "height": 10.800000000000068,
+    "x": 85.68,
+    "y": 621.515
+  },
+  {
+    "name": "State",
+    "type": "PDFTextField",
+    "width": 95.84,
+    "height": 10.799999999999955,
+    "x": 236.16,
+    "y": 638.12
+  },
+  {
+    "name": "ZIP code",
+    "type": "PDFTextField",
+    "width": 62.84700000000004,
+    "height": 10.800000000000068,
+    "x": 361.953,
+    "y": 637.708
+  },
+  {
+    "name": "Phone",
+    "type": "PDFTextField",
+    "width": 102.31200000000001,
+    "height": 10.799999999999955,
+    "x": 453.528,
+    "y": 638.12
+  },
+  {
+    "name": "Height",
+    "type": "PDFTextField",
+    "width": 96.19999999999999,
+    "height": 10.799999999999955,
+    "x": 191.8,
+    "y": 670.88
+  },
+  {
+    "name": "Weight",
+    "type": "PDFTextField",
+    "width": 89.56,
+    "height": 10.799999999999955,
+    "x": 327.32,
+    "y": 669.76
+  },
+  {
+    "name": "staff position",
+    "type": "PDFTextField",
+    "width": 175.36,
+    "height": 10.800000000000068,
+    "x": 392,
+    "y": 694.64
+  },
+  {
+    "name": "Last HbA1c",
+    "type": "PDFTextField",
+    "width": 89.56,
+    "height": 10.800000000000011,
+    "x": 369.14,
+    "y": 440.64
+  },
+  {
+    "name": "Last attack date",
+    "type": "PDFTextField",
+    "width": 107.19999999999999,
+    "height": 10.800000000000011,
+    "x": 324.8,
+    "y": 350.075
+  },
+  {
+    "name": "Last seizure date",
+    "type": "PDFTextField",
+    "width": 107.19999999999999,
+    "height": 10.800000000000011,
+    "x": 329.16,
+    "y": 177.135
+  },
+  {
+    "name": "Sleep explanation",
+    "type": "PDFTextField",
+    "width": 227.16000000000003,
+    "height": 10.799999999999997,
+    "x": 345.96,
+    "y": 119.05
+  },
+  {
+    "name": "Hypertension explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 274.61,
+    "y": 426.685
+  },
+  {
+    "name": "Heart explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 20.274999999999977,
+    "x": 274.61,
+    "y": 400.925
+  },
+  {
+    "name": "Heart disease explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 274.61,
+    "y": 380.685
+  },
+  {
+    "name": "Stroke explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 274.61,
+    "y": 364.135
+  },
+  {
+    "name": "Lung explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 274.61,
+    "y": 335.01
+  },
+  {
+    "name": "COPD explanation",
+    "type": "PDFTextField",
+    "width": 298.51000000000005,
+    "height": 10.800000000000011,
+    "x": 275.08,
+    "y": 321.26
+  },
+  {
+    "name": "EENS explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 274.61,
+    "y": 306.135
+  },
+  {
+    "name": "MSM explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 275.49,
+    "y": 292.01
+  },
+  {
+    "name": "Head explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 275.49,
+    "y": 278.135
+  },
+  {
+    "name": "Altitude sickness explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 276.49,
+    "y": 262.92
+  },
+  {
+    "name": "Psychiatric explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 275.61,
+    "y": 248.135
+  },
+  {
+    "name": "Neurological explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 276.49,
+    "y": 234.135
+  },
+  {
+    "name": "Blood explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 275.49,
+    "y": 220.135
+  },
+  {
+    "name": "Fainting explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.799999999999983,
+    "x": 276.49,
+    "y": 205.33
+  },
+  {
+    "name": "Kidney explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 275.61,
+    "y": 191.26
+  },
+  {
+    "name": "Stomach explanation",
+    "type": "PDFTextField",
+    "width": 298.51000000000005,
+    "height": 10.800000000000011,
+    "x": 275.08,
+    "y": 162.135
+  },
+  {
+    "name": "Thyroid explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 275.61,
+    "y": 148.135
+  },
+  {
+    "name": "Skin explanation",
+    "type": "PDFTextField",
+    "width": 298.51,
+    "height": 10.800000000000011,
+    "x": 275.61,
+    "y": 134.26
+  },
+  {
+    "name": "Last surgery date",
+    "type": "PDFTextField",
+    "width": 243.95999999999998,
+    "height": 10.799999999999997,
+    "x": 329.16,
+    "y": 105.01
+  },
+  {
+    "name": "Other explanation",
+    "type": "PDFTextField",
+    "width": 292.32,
+    "height": 10.799999999999997,
+    "x": 280.8,
+    "y": 90.26
+  },
+  {
+    "name": "Diabetes",
+    "type": "PDFCheckBox",
+    "width": 10.799999999999997,
+    "height": 10.800000000000011,
+    "x": 59.09,
+    "y": 440.685
+  },
+  {
+    "name": "Insuliln",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000011,
+    "height": 10.800000000000011,
+    "x": 511.704,
+    "y": 441.765
+  },
+  {
+    "name": "Stroke",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 364.135
+  },
+  {
+    "name": "Blood disorders",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 220.135
+  },
+  {
+    "name": "Respiratory",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 335.135
+  },
+  {
+    "name": "Kidney",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 191.135
+  },
+  {
+    "name": "Head injury",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 277.135
+  },
+  {
+    "name": "Skin issues",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 133.135
+  },
+  {
+    "name": "EENSP",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 306.135
+  },
+  {
+    "name": "Stomach",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 162.135
+  },
+  {
+    "name": "Psychiatric",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 248.135
+  },
+  {
+    "name": "Surgeries",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.799999999999997,
+    "x": 59.38,
+    "y": 104.135
+  },
+  {
+    "name": "Heart disease",
+    "type": "PDFCheckBox",
+    "width": 10.799999999999997,
+    "height": 10.800000000000011,
+    "x": 59.09,
+    "y": 406.685
+  },
+  {
+    "name": "Hypertension",
+    "type": "PDFCheckBox",
+    "width": 10.799999999999997,
+    "height": 10.800000000000011,
+    "x": 59.09,
+    "y": 426.685
+  },
+  {
+    "name": "Asthma",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 349.135
+  },
+  {
+    "name": "Fainting",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 205.135
+  },
+  {
+    "name": "COPD",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 321.135
+  },
+  {
+    "name": "Seizures",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 177.135
+  },
+  {
+    "name": "Altitude",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 263.135
+  },
+  {
+    "name": "Sleep",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.799999999999997,
+    "x": 59.38,
+    "y": 119.135
+  },
+  {
+    "name": "Muscular/skeletal",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 292.135
+  },
+  {
+    "name": "Neurological",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.38,
+    "y": 234.135
+  },
+  {
+    "name": "Other",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.799999999999997,
+    "x": 59.38,
+    "y": 90.135
+  },
+  {
+    "name": "Check Box 3",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000011,
+    "height": 10.800000000000068,
+    "x": 501.81,
+    "y": 666.92
+  },
+  {
+    "name": "Family history",
+    "type": "PDFCheckBox",
+    "width": 10.799999999999997,
+    "height": 10.800000000000011,
+    "x": 59.09,
+    "y": 380.685
+  },
+  {
+    "name": "Thyroid",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000011,
+    "height": 10.800000000000011,
+    "x": 81.38,
+    "y": 148.135
+  },
+  {
+    "name": "CPAP 2",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000011,
+    "height": 10.800000000000011,
+    "x": 305.32,
+    "y": 118.97
+  },
+  {
+    "name": "Autoinjector exp date",
+    "type": "PDFTextField",
+    "width": 98.203,
+    "height": 10.799999999999955,
+    "x": 213.557,
+    "y": 637.61
+  },
+  {
+    "name": "Medication explanation",
+    "type": "PDFTextField",
+    "width": 115.32,
+    "height": 10.800000000000068,
+    "x": 193.56,
+    "y": 585.92
+  },
+  {
+    "name": "Plants explanation",
+    "type": "PDFTextField",
+    "width": 115.31999999999994,
+    "height": 10.800000000000068,
+    "x": 456.22,
+    "y": 585.92
+  },
+  {
+    "name": "Bugs explanation",
+    "type": "PDFTextField",
+    "width": 115.32,
+    "height": 10.800000000000068,
+    "x": 456.715,
+    "y": 572.04
+  },
+  {
+    "name": "Food explanation",
+    "type": "PDFTextField",
+    "width": 115.32,
+    "height": 10.800000000000068,
+    "x": 193.44,
+    "y": 572.04
+  },
+  {
+    "name": "Medication 1",
+    "type": "PDFTextField",
+    "width": 121.8178,
+    "height": 10.799999999999955,
+    "x": 58.5822,
+    "y": 507.731
+  },
+  {
+    "name": "Reason 1",
+    "type": "PDFTextField",
+    "width": 248.61999999999995,
+    "height": 10.799999999999955,
+    "x": 322.92,
+    "y": 507.731
+  },
+  {
+    "name": "Frequency 1",
+    "type": "PDFTextField",
+    "width": 85.68,
+    "height": 10.799999999999955,
+    "x": 231.12,
+    "y": 507.731
+  },
+  {
+    "name": "Dose 1",
+    "type": "PDFTextField",
+    "width": 38.798,
+    "height": 10.799999999999955,
+    "x": 186.922,
+    "y": 507.731
+  },
+  {
+    "name": "Medication 3",
+    "type": "PDFTextField",
+    "width": 121.8178,
+    "height": 10.800000000000011,
+    "x": 58.5822,
+    "y": 477.949
+  },
+  {
+    "name": "Reason 3",
+    "type": "PDFTextField",
+    "width": 248.61999999999995,
+    "height": 10.800000000000011,
+    "x": 322.92,
+    "y": 477.949
+  },
+  {
+    "name": "Frequency 3",
+    "type": "PDFTextField",
+    "width": 85.68,
+    "height": 10.800000000000011,
+    "x": 231.12,
+    "y": 477.949
+  },
+  {
+    "name": "Dose 3",
+    "type": "PDFTextField",
+    "width": 38.798,
+    "height": 10.800000000000011,
+    "x": 186.922,
+    "y": 477.949
+  },
+  {
+    "name": "Medication 4",
+    "type": "PDFTextField",
+    "width": 121.8178,
+    "height": 10.800000000000011,
+    "x": 58.5822,
+    "y": 463.058
+  },
+  {
+    "name": "Reason 4",
+    "type": "PDFTextField",
+    "width": 248.61999999999995,
+    "height": 10.800000000000011,
+    "x": 322.92,
+    "y": 463.058
+  },
+  {
+    "name": "Frequency 4",
+    "type": "PDFTextField",
+    "width": 85.68,
+    "height": 10.800000000000011,
+    "x": 231.12,
+    "y": 463.058
+  },
+  {
+    "name": "Dose 4",
+    "type": "PDFTextField",
+    "width": 38.798,
+    "height": 10.800000000000011,
+    "x": 186.922,
+    "y": 463.058
+  },
+  {
+    "name": "Medication 5",
+    "type": "PDFTextField",
+    "width": 121.8178,
+    "height": 10.800000000000011,
+    "x": 58.5822,
+    "y": 449.167
+  },
+  {
+    "name": "Reason 5",
+    "type": "PDFTextField",
+    "width": 248.61999999999995,
+    "height": 10.800000000000011,
+    "x": 322.92,
+    "y": 449.167
+  },
+  {
+    "name": "Frequency 5",
+    "type": "PDFTextField",
+    "width": 85.68,
+    "height": 10.800000000000011,
+    "x": 231.12,
+    "y": 449.167
+  },
+  {
+    "name": "Dose 5",
+    "type": "PDFTextField",
+    "width": 38.798,
+    "height": 10.800000000000011,
+    "x": 186.922,
+    "y": 449.167
+  },
+  {
+    "name": "Medication 6",
+    "type": "PDFTextField",
+    "width": 121.81740000000002,
+    "height": 10.800000000000011,
+    "x": 57.8216,
+    "y": 434.276
+  },
+  {
+    "name": "Reason 6",
+    "type": "PDFTextField",
+    "width": 248.61999999999995,
+    "height": 10.800000000000011,
+    "x": 322.92,
+    "y": 434.276
+  },
+  {
+    "name": "Pertussis date",
+    "type": "PDFTextField",
+    "width": 111.036,
+    "height": 10.800000000000011,
+    "x": 266.942,
+    "y": 257.68
+  },
+  {
+    "name": "Med history 1",
+    "type": "PDFTextField",
+    "width": 159.79200000000003,
+    "height": 8.640000000000043,
+    "x": 405.408,
+    "y": 318.888
+  },
+  {
+    "name": "MMR date",
+    "type": "PDFTextField",
+    "width": 111.036,
+    "height": 10.800000000000011,
+    "x": 266.942,
+    "y": 225.01
+  },
+  {
+    "name": "Polio date",
+    "type": "PDFTextField",
+    "width": 111.036,
+    "height": 10.800000000000011,
+    "x": 266.942,
+    "y": 209.885
+  },
+  {
+    "name": "Chicken pox date",
+    "type": "PDFTextField",
+    "width": 111.036,
+    "height": 10.800000000000011,
+    "x": 267.484,
+    "y": 193.01
+  },
+  {
+    "name": "Diphtheria date",
+    "type": "PDFTextField",
+    "width": 111.036,
+    "height": 10.800000000000011,
+    "x": 266.942,
+    "y": 242.011
+  },
+  {
+    "name": "Non-prescrip exceptions",
+    "type": "PDFTextField",
+    "width": 222.35999999999996,
+    "height": 10.799999999999955,
+    "x": 334.92,
+    "y": 420.196
+  },
+  {
+    "name": "Frequency 6",
+    "type": "PDFTextField",
+    "width": 85.68,
+    "height": 10.800000000000011,
+    "x": 231.12,
+    "y": 434.276
+  },
+  {
+    "name": "Dose 6",
+    "type": "PDFTextField",
+    "width": 38.798,
+    "height": 10.800000000000011,
+    "x": 186.922,
+    "y": 434.276
+  },
+  {
+    "name": "Medication 2",
+    "type": "PDFTextField",
+    "width": 121.8178,
+    "height": 10.800000000000011,
+    "x": 58.5822,
+    "y": 492.84
+  },
+  {
+    "name": "Reason 2",
+    "type": "PDFTextField",
+    "width": 248.61999999999995,
+    "height": 10.800000000000011,
+    "x": 322.92,
+    "y": 492.84
+  },
+  {
+    "name": "Frequency 2",
+    "type": "PDFTextField",
+    "width": 85.68,
+    "height": 10.800000000000011,
+    "x": 231.12,
+    "y": 492.84
+  },
+  {
+    "name": "Dose 2",
+    "type": "PDFTextField",
+    "width": 38.798,
+    "height": 10.800000000000011,
+    "x": 186.922,
+    "y": 492.84
+  },
+  {
+    "name": "Inhaler exp date",
+    "type": "PDFTextField",
+    "width": 98.20299999999997,
+    "height": 10.799999999999955,
+    "x": 417.172,
+    "y": 637.61
+  },
+  {
+    "name": "Parent/guardian medications",
+    "type": "PDFSignature",
+    "width": 245.52,
+    "height": 7.9599999999999795,
+    "x": 56.16,
+    "y": 397.88
+  },
+  {
+    "name": "MD/DO NP PA",
+    "type": "PDFSignature",
+    "width": 245.51999999999998,
+    "height": 7.9599999999999795,
+    "x": 311.76,
+    "y": 397.88
+  },
+  {
+    "name": "Med history 2",
+    "type": "PDFTextField",
+    "width": 159.79200000000003,
+    "height": 8.639999999999986,
+    "x": 405.408,
+    "y": 303.132
+  },
+  {
+    "name": "Med history 3",
+    "type": "PDFTextField",
+    "width": 159.79200000000003,
+    "height": 8.640000000000043,
+    "x": 405.408,
+    "y": 287.09
+  },
+  {
+    "name": "Med history 4",
+    "type": "PDFTextField",
+    "width": 159.79200000000003,
+    "height": 8.640000000000043,
+    "x": 405.408,
+    "y": 271.09
+  },
+  {
+    "name": "Med history 5",
+    "type": "PDFTextField",
+    "width": 159.79200000000003,
+    "height": 8.640000000000015,
+    "x": 405.408,
+    "y": 255.16
+  },
+  {
+    "name": "Med history 6",
+    "type": "PDFTextField",
+    "width": 159.79200000000003,
+    "height": 8.639999999999986,
+    "x": 405.408,
+    "y": 239.09
+  },
+  {
+    "name": "Med history 7",
+    "type": "PDFTextField",
+    "width": 159.79200000000003,
+    "height": 8.640000000000015,
+    "x": 404.76,
+    "y": 223.16
+  },
+  {
+    "name": "Tetanus date",
+    "type": "PDFTextField",
+    "width": 110.81,
+    "height": 10.800000000000011,
+    "x": 267.168,
+    "y": 273.579
+  },
+  {
+    "name": "Reviewed by",
+    "type": "PDFTextField",
+    "width": 128.04400000000004,
+    "height": 8.640000000000015,
+    "x": 437.156,
+    "y": 169.314
+  },
+  {
+    "name": "Reviewed by date",
+    "type": "PDFTextField",
+    "width": 128.04399999999993,
+    "height": 8.640000000000015,
+    "x": 420.04,
+    "y": 150.45
+  },
+  {
+    "name": "Reason",
+    "type": "PDFTextField",
+    "width": 138.24000000000007,
+    "height": 8.640000000000015,
+    "x": 426.96,
+    "y": 119.851
+  },
+  {
+    "name": "Approved by",
+    "type": "PDFTextField",
+    "width": 128.08000000000004,
+    "height": 8.64,
+    "x": 437.12,
+    "y": 101.605
+  },
+  {
+    "name": "Approved by date",
+    "type": "PDFTextField",
+    "width": 143.548,
+    "height": 8.64,
+    "x": 421.004,
+    "y": 81.285
+  },
+  {
+    "name": "Had tetanus",
+    "type": "PDFTextField",
+    "width": 45.998400000000004,
+    "height": 10.800000000000011,
+    "x": 94.4016,
+    "y": 273.25
+  },
+  {
+    "name": "Had pertussis",
+    "type": "PDFTextField",
+    "width": 45.998400000000004,
+    "height": 10.800000000000011,
+    "x": 94.4016,
+    "y": 256.329
+  },
+  {
+    "name": "Had diphtheria",
+    "type": "PDFTextField",
+    "width": 45.998400000000004,
+    "height": 10.800000000000011,
+    "x": 94.4016,
+    "y": 242.25
+  },
+  {
+    "name": "Had MMR",
+    "type": "PDFTextField",
+    "width": 45.998400000000004,
+    "height": 10.799999999999983,
+    "x": 94.4016,
+    "y": 224.93
+  },
+  {
+    "name": "Had Polio",
+    "type": "PDFTextField",
+    "width": 45.998699999999985,
+    "height": 10.800000000000011,
+    "x": 94.7313,
+    "y": 210.201
+  },
+  {
+    "name": "Had chicken pox",
+    "type": "PDFTextField",
+    "width": 45.998400000000004,
+    "height": 10.800000000000011,
+    "x": 94.4016,
+    "y": 192.409
+  },
+  {
+    "name": "Had HA",
+    "type": "PDFTextField",
+    "width": 45.998400000000004,
+    "height": 10.800000000000011,
+    "x": 94.4016,
+    "y": 177.534
+  },
+  {
+    "name": "Had HB",
+    "type": "PDFTextField",
+    "width": 45.998400000000004,
+    "height": 10.799999999999983,
+    "x": 94.4016,
+    "y": 160.078
+  },
+  {
+    "name": "Had Pertussis",
+    "type": "PDFTextField",
+    "width": 45.998400000000004,
+    "height": 10.799999999999983,
+    "x": 94.4016,
+    "y": 145.078
+  },
+  {
+    "name": "Had Meningitis",
+    "type": "PDFTextField",
+    "width": 45.998400000000004,
+    "height": 10.800000000000011,
+    "x": 94.4016,
+    "y": 128.534
+  },
+  {
+    "name": "Had other",
+    "type": "PDFTextField",
+    "width": 45.998699999999985,
+    "height": 10.799999999999997,
+    "x": 94.7313,
+    "y": 112.534
+  },
+  {
+    "name": "Exemption to other",
+    "type": "PDFTextField",
+    "width": 45.998699999999985,
+    "height": 10.799999999999997,
+    "x": 94.7313,
+    "y": 96.369
+  },
+  {
+    "name": "No medications",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.799999999999955,
+    "x": 54.8216,
+    "y": 544.547
+  },
+  {
+    "name": "Epinephrine",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000011,
+    "height": 10.799999999999955,
+    "x": 212.78,
+    "y": 648.725
+  },
+  {
+    "name": "Non-prescription exceptions",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 54.8216,
+    "y": 419.51
+  },
+  {
+    "name": "Additional space",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000011,
+    "height": 10.799999999999955,
+    "x": 257.822,
+    "y": 544.547
+  },
+  {
+    "name": "Rescue inhaler",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000011,
+    "height": 10.799999999999955,
+    "x": 482.42,
+    "y": 648.725
+  },
+  {
+    "name": "Chicken Pox",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.799999999999983,
+    "x": 59.3881,
+    "y": 193.078
+  },
+  {
+    "name": "Hepatitis B",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.799999999999983,
+    "x": 59.3881,
+    "y": 161.078
+  },
+  {
+    "name": "Pertussis",
+    "type": "PDFCheckBox",
+    "width": 10.799999999999997,
+    "height": 10.800000000000011,
+    "x": 58.91,
+    "y": 258.534
+  },
+  {
+    "name": "Exemption to immunizations",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.799999999999997,
+    "x": 59.3881,
+    "y": 96.369
+  },
+  {
+    "name": "Influenza",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.799999999999983,
+    "x": 59.3881,
+    "y": 129.078
+  },
+  {
+    "name": "Measles/mumps/rubella",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.3881,
+    "y": 225.464
+  },
+  {
+    "name": "Hepatitis A",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.799999999999983,
+    "x": 59.3881,
+    "y": 177.078
+  },
+  {
+    "name": "Meningitis",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.799999999999983,
+    "x": 59.3881,
+    "y": 145.078
+  },
+  {
+    "name": "Diphtheria",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.799999999999983,
+    "x": 59.3881,
+    "y": 242.615
+  },
+  {
+    "name": "Tetanus",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000004,
+    "height": 10.800000000000011,
+    "x": 59.3881,
+    "y": 275.534
+  },
+  {
+    "name": "Other (i.e. HIB)",
+    "type": "PDFCheckBox",
+    "width": 10.799999999999997,
+    "height": 10.799999999999997,
+    "x": 76.62,
+    "y": 113.534
+  },
+  {
+    "name": "Polio",
+    "type": "PDFCheckBox",
+    "width": 10.799999999999997,
+    "height": 10.799999999999983,
+    "x": 59.1874,
+    "y": 210.406
+  },
+  {
+    "name": "Hep A date",
+    "type": "PDFTextField",
+    "width": 111.036,
+    "height": 10.800000000000011,
+    "x": 266.4,
+    "y": 177.76
+  },
+  {
+    "name": "Meningitis date",
+    "type": "PDFTextField",
+    "width": 111.036,
+    "height": 10.800000000000011,
+    "x": 266.4,
+    "y": 145.01
+  },
+  {
+    "name": "Influenza date",
+    "type": "PDFTextField",
+    "width": 111.036,
+    "height": 10.800000000000011,
+    "x": 266.4,
+    "y": 128.885
+  },
+  {
+    "name": "Other date",
+    "type": "PDFTextField",
+    "width": 111.036,
+    "height": 10.799999999999997,
+    "x": 266.942,
+    "y": 113.01
+  },
+  {
+    "name": "Hep B date",
+    "type": "PDFTextField",
+    "width": 111.036,
+    "height": 10.799999999999983,
+    "x": 266.4,
+    "y": 161.091
+  },
+  {
+    "name": "Exemption date",
+    "type": "PDFTextField",
+    "width": 111.036,
+    "height": 10.799999999999997,
+    "x": 266.9,
+    "y": 95.76
+  },
+  {
+    "name": "Further approval",
+    "type": "PDFCheckBox",
+    "width": 10.800000000000011,
+    "height": 10.799999999999983,
+    "x": 465.662,
+    "y": 132.33
+  },
+  {
+    "name": "Medication",
+    "type": "PDFCheckBox",
+    "width": 10.799999999999997,
+    "height": 10.800000000000068,
+    "x": 59.2916,
+    "y": 586.045
+  },
+  {
+    "name": "Food",
+    "type": "PDFCheckBox",
+    "width": 10.799999999999997,
+    "height": 10.800000000000068,
+    "x": 59.2916,
+    "y": 572.04
+  },
+  {
+    "name": "Plants",
+    "type": "PDFCheckBox",
+    "width": 10.799999999999955,
+    "height": 10.800000000000068,
+    "x": 321.785,
+    "y": 586.92
+  },
+  {
+    "name": "Bugs",
+    "type": "PDFCheckBox",
+    "width": 10.799999999999955,
+    "height": 10.800000000000068,
+    "x": 321.785,
+    "y": 572.04
+  }
+]

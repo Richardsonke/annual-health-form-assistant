@@ -3,50 +3,57 @@ import { z } from 'zod';
 export const formSchema = z.object({
   // Part A: General Information
   participantType: z.enum(['youth', 'adult'], { message: "Participant type is required" }),
-  fullName: z.string().min(2, "Full name is required"),
-  dateOfBirth: z.string().min(1, "Date of birth is required"),
-  age: z.string().min(1, "Age is required"),
+  fullName: z.string().min(2, "Full name is required").max(70, "Full name cannot exceed 70 characters"),
+  dateOfBirth: z.string().min(1, "Date of birth is required").max(65, "Date of birth cannot exceed 65 characters"),
+  age: z.string()
+    .min(1, "Age is required")
+    .regex(/^\d+$/, "Must be a number")
+    .refine((val) => {
+      const num = parseInt(val, 10);
+      return num >= 0 && num <= 150;
+    }, "Must be between 0 and 150")
+    .max(20, "Age cannot exceed 20 characters"),
   gender: z.enum(['male', 'female'], { message: "Sex is required" }),
-  address: z.string().min(5, "Address is required"),
-  city: z.string().min(2, "City is required"),
-  state: z.string().min(2, "State is required"),
-  zipCode: z.string().min(5, "ZIP code is required"),
-  phone: z.string().min(10, "Phone number is required"),
+  address: z.string().min(5, "Address is required").max(140, "Address cannot exceed 140 characters"),
+  city: z.string().min(2, "City is required").max(45, "City cannot exceed 45 characters"),
+  state: z.string().min(2, "State is required").max(25, "State cannot exceed 25 characters"),
+  zipCode: z.string().min(5, "ZIP code is required").max(15, "ZIP code cannot exceed 15 characters"),
+  phone: z.string().min(10, "Phone number is required").max(30, "Phone number cannot exceed 30 characters"),
 
-  unitNo: z.string().min(1, "Unit number is required"),
-  councilName: z.string().min(1, "Council name is required"),
-  expeditionCrewNo: z.string().optional(),
-  unitLeader: z.string().min(1, "Unit leader name is required"),
-  unitLeaderPhone: z.string().min(10, "Unit leader mobile number is required"),
-  staffPosition: z.string().optional(),
+  unitNo: z.string().min(1, "Unit number is required").max(20, "Unit number cannot exceed 20 characters"),
+  councilName: z.string().min(1, "Council name is required").max(105, "Council name cannot exceed 105 characters"),
+  expeditionCrewNo: z.string().max(45, "Expedition/crew No. cannot exceed 45 characters").optional(),
+  unitLeader: z.string().min(1, "Unit leader name is required").max(80, "Unit leader name cannot exceed 80 characters"),
+  unitLeaderPhone: z.string().min(10, "Unit leader mobile number is required").max(40, "Unit leader mobile number cannot exceed 40 characters"),
+  staffPosition: z.string().max(50, "Staff position cannot exceed 50 characters").optional(),
 
   // Insurance Details
-  insuranceCompany: z.string().min(1, "Insurance company is required"),
-  insurancePolicy: z.string().min(1, "Policy number is required"),
+  insuranceCompany: z.string().min(1, "Insurance company is required").max(55, "Insurance company cannot exceed 55 characters"),
+  insurancePolicy: z.string().min(1, "Policy number is required").max(50, "Policy number cannot exceed 50 characters"),
 
   // Emergency Contacts
-  emergencyName: z.string().min(2, "Emergency contact name is required"),
-  emergencyRelationship: z.string().min(2, "Relationship is required"),
-  emergencyPhone: z.string().min(10, "Emergency phone is required"),
-  emergencyAddress: z.string().min(5, "Emergency contact address is required"),
-  emergencyOtherPhone: z.string().optional(),
-  emergencyAltName: z.string().min(2, "Alternate contact name is required"),
-  emergencyAltPhone: z.string().min(10, "Alternate phone is required"),
+  emergencyName: z.string().min(2, "Emergency contact name is required").max(80, "Emergency contact name cannot exceed 80 characters"),
+  emergencyRelationship: z.string().min(2, "Relationship is required").max(50, "Relationship cannot exceed 50 characters"),
+  emergencyPhone: z.string().min(10, "Emergency phone is required").max(25, "Emergency phone cannot exceed 25 characters"),
+  emergencyAddress: z.string().min(5, "Emergency contact address is required").max(65, "Emergency contact address cannot exceed 65 characters"),
+  emergencyOtherPhone: z.string().max(25, "Other phone cannot exceed 25 characters").optional(),
+  emergencyAltName: z.string().min(2, "Alternate contact name is required").max(65, "Alternate contact name cannot exceed 65 characters"),
+  emergencyAltPhone: z.string().min(10, "Alternate phone is required").max(25, "Alternate phone cannot exceed 25 characters"),
 
   // Authorized / Unauthorized Pickups
-  authPickupName1: z.string().optional(),
-  authPickupPhone1: z.string().optional(),
-  authPickupName2: z.string().optional(),
-  authPickupPhone2: z.string().optional(),
-  notAuthPickupName1: z.string().optional(),
-  notAuthPickupPhone1: z.string().optional(),
-  notAuthPickupName2: z.string().optional(),
-  notAuthPickupPhone2: z.string().optional(),
+  authPickupName1: z.string().max(65, "Name cannot exceed 65 characters").optional(),
+  authPickupPhone1: z.string().max(65, "Phone cannot exceed 65 characters").optional(),
+  authPickupName2: z.string().max(65, "Name cannot exceed 65 characters").optional(),
+  authPickupPhone2: z.string().max(65, "Phone cannot exceed 65 characters").optional(),
+  notAuthPickupName1: z.string().max(65, "Name cannot exceed 65 characters").optional(),
+  notAuthPickupPhone1: z.string().max(65, "Phone cannot exceed 65 characters").optional(),
+  notAuthPickupName2: z.string().max(65, "Name cannot exceed 65 characters").optional(),
+  notAuthPickupPhone2: z.string().max(65, "Phone cannot exceed 65 characters").optional(),
 
   // BB Device & Participant Restrictions (Page 1)
   bbDevice: z.boolean().default(false),
   participantRestrictions: z.boolean().optional(),
-  restrictionsText: z.string().optional(),
+  restrictionsText: z.string().max(65, "Restrictions explanation cannot exceed 65 characters").optional(),
 
   // Part B: Allergies
   hasAllergies: z.boolean().default(false),
@@ -55,7 +62,7 @@ export const formSchema = z.object({
   allergyPlants: z.boolean().optional(),
   allergyBugs: z.boolean().optional(),
   epinephrine: z.boolean().optional(),
-  autoinjectorExpDate: z.string().optional(),
+  autoinjectorExpDate: z.string().max(25, "Expiration date cannot exceed 25 characters").optional(),
   allergyFoodExp: z.string().max(38, "Explanation cannot exceed 38 characters").optional(),
   allergyMedicationExp: z.string().max(38, "Explanation cannot exceed 38 characters").optional(),
   allergyPlantsExp: z.string().max(38, "Explanation cannot exceed 38 characters").optional(),
@@ -87,11 +94,11 @@ export const formSchema = z.object({
   // Part B: Medical Conditions
   condAsthma: z.boolean().optional(),
   rescueInhaler: z.boolean().optional(),
-  inhalerExpDate: z.string().optional(),
-  lastAsthmaAttack: z.string().optional(),
+  inhalerExpDate: z.string().max(25, "Expiration date cannot exceed 25 characters").optional(),
+  lastAsthmaAttack: z.string().max(30, "Last attack details cannot exceed 30 characters").optional(),
   condDiabetes: z.boolean().optional(),
   condInsulin: z.boolean().default(false),
-  lastHbA1c: z.string().optional(),
+  lastHbA1c: z.string().max(25, "HbA1c details cannot exceed 25 characters").optional(),
   condHeartDisease: z.boolean().optional(),
   condHypertension: z.boolean().optional(),
   condStroke: z.boolean().optional(),
@@ -102,7 +109,7 @@ export const formSchema = z.object({
   condPsychiatric: z.boolean().optional(),
   condNeurological: z.boolean().optional(),
   condSeizures: z.boolean().optional(),
-  lastSeizureDate: z.string().optional(),
+  lastSeizureDate: z.string().max(30, "Last seizure details cannot exceed 30 characters").optional(),
   condFainting: z.boolean().optional(),
   condHeadInjury: z.boolean().optional(),
   condAltitude: z.boolean().optional(),
@@ -114,7 +121,7 @@ export const formSchema = z.object({
   condEENSP: z.boolean().optional(),
   condMuscular: z.boolean().optional(),
   condSurgeries: z.boolean().optional(),
-  lastSurgeryDate: z.string().optional(),
+  lastSurgeryDate: z.string().max(70, "Last surgery details cannot exceed 70 characters").optional(),
   condFamilyHistory: z.boolean().optional(),
   condOther: z.boolean().optional(),
 
@@ -144,7 +151,7 @@ export const formSchema = z.object({
   // Medications
   noMedications: z.boolean().default(false),
   nonPrescriptionExceptions: z.boolean().optional(),
-  nonPrescriptionExceptionsText: z.string().optional(),
+  nonPrescriptionExceptionsText: z.string().max(85, "Non-prescription exceptions cannot exceed 85 characters").optional(),
   medicationsAdditionalSpace: z.boolean().default(false),
   medications: z.array(z.object({
     medication: z.string().max(30, "Medication name cannot exceed 30 characters").optional(),
@@ -158,41 +165,41 @@ export const formSchema = z.object({
   // Immunizations
   exemptionToImmunizations: z.boolean().optional(),
   immTetanus: z.boolean().optional(),
-  immTetanusDate: z.string().optional(),
-  hadTetanus: z.string().optional(),
+  immTetanusDate: z.string().max(35, "Date details cannot exceed 35 characters").optional(),
+  hadTetanus: z.string().max(10, "Had disease details cannot exceed 10 characters").optional(),
   immPertussis: z.boolean().optional(),
-  immPertussisDate: z.string().optional(),
-  hadPertussis: z.string().optional(),
+  immPertussisDate: z.string().max(35, "Date details cannot exceed 35 characters").optional(),
+  hadPertussis: z.string().max(10, "Had disease details cannot exceed 10 characters").optional(),
   immDiphtheria: z.boolean().optional(),
-  immDiphtheriaDate: z.string().optional(),
-  hadDiphtheria: z.string().optional(),
+  immDiphtheriaDate: z.string().max(35, "Date details cannot exceed 35 characters").optional(),
+  hadDiphtheria: z.string().max(10, "Had disease details cannot exceed 10 characters").optional(),
   immPolio: z.boolean().optional(),
-  immPolioDate: z.string().optional(),
-  hadPolio: z.string().optional(),
+  immPolioDate: z.string().max(35, "Date details cannot exceed 35 characters").optional(),
+  hadPolio: z.string().max(10, "Had disease details cannot exceed 10 characters").optional(),
   immMMR: z.boolean().optional(),
-  immMMRDate: z.string().optional(),
-  hadMMR: z.string().optional(),
+  immMMRDate: z.string().max(35, "Date details cannot exceed 35 characters").optional(),
+  hadMMR: z.string().max(10, "Had disease details cannot exceed 10 characters").optional(),
   immChickenPox: z.boolean().optional(),
-  immChickenPoxDate: z.string().optional(),
-  hadChickenPox: z.string().optional(),
+  immChickenPoxDate: z.string().max(35, "Date details cannot exceed 35 characters").optional(),
+  hadChickenPox: z.string().max(10, "Had disease details cannot exceed 10 characters").optional(),
   immHepA: z.boolean().optional(),
-  immHepADate: z.string().optional(),
-  hadHepA: z.string().optional(),
+  immHepADate: z.string().max(35, "Date details cannot exceed 35 characters").optional(),
+  hadHepA: z.string().max(10, "Had disease details cannot exceed 10 characters").optional(),
   immHepB: z.boolean().optional(),
-  immHepBDate: z.string().optional(),
-  hadHepB: z.string().optional(),
+  immHepBDate: z.string().max(35, "Date details cannot exceed 35 characters").optional(),
+  hadHepB: z.string().max(10, "Had disease details cannot exceed 10 characters").optional(),
   immMeningitis: z.boolean().optional(),
-  immMeningitisDate: z.string().optional(),
-  hadMeningitis: z.string().optional(),
+  immMeningitisDate: z.string().max(35, "Date details cannot exceed 35 characters").optional(),
+  hadMeningitis: z.string().max(10, "Had disease details cannot exceed 10 characters").optional(),
   immInfluenza: z.boolean().optional(),
-  immInfluenzaDate: z.string().optional(),
-  hadInfluenza: z.string().optional(),
-  hadOther: z.string().optional(),
+  immInfluenzaDate: z.string().max(35, "Date details cannot exceed 35 characters").optional(),
+  hadInfluenza: z.string().max(10, "Had disease details cannot exceed 10 characters").optional(),
+  hadOther: z.string().max(10, "Had disease details cannot exceed 10 characters").optional(),
 
   immOther: z.boolean().optional(),
-  immOtherDate: z.string().optional(),
-  immOtherExemption: z.string().optional(),
-  immOtherExemptionDate: z.string().optional(),
+  immOtherDate: z.string().max(35, "Date details cannot exceed 35 characters").optional(),
+  immOtherExemption: z.string().max(10, "Had disease details cannot exceed 10 characters").optional(),
+  immOtherExemptionDate: z.string().max(35, "Date details cannot exceed 35 characters").optional(),
   additionalMedicalHistory: z.string().max(500, "Maximum of 500 characters allowed").optional(),
 
   // Signature Handling
@@ -238,6 +245,24 @@ export const formSchema = z.object({
       message: "Non-prescription authorization is required",
       path: ["nonPrescriptionExceptions"]
     });
+  }
+
+  // 3.7. First authorized pickup name and phone number required for youth
+  if (data.participantType !== 'adult') {
+    if (!data.authPickupName1 || data.authPickupName1.trim() === "") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Authorized pickup name is required",
+        path: ["authPickupName1"]
+      });
+    }
+    if (!data.authPickupPhone1 || data.authPickupPhone1.trim() === "") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Authorized pickup phone is required",
+        path: ["authPickupPhone1"]
+      });
+    }
   }
 
   // 3.6. Either at least one medication must be added or noMedications checked

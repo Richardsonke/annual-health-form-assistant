@@ -8,11 +8,30 @@ async function extractFields() {
   const fields = form.getFields();
   
   const fieldData = fields.map(f => {
-    return { name: f.getName(), type: f.constructor.name };
+    const widgets = f.acroField.getWidgets();
+    let width = null;
+    let height = null;
+    let x = null;
+    let y = null;
+    if (widgets && widgets.length > 0) {
+      const rect = widgets[0].getRectangle();
+      width = rect.width;
+      height = rect.height;
+      x = rect.x;
+      y = rect.y;
+    }
+    return { 
+      name: f.getName(), 
+      type: f.constructor.name,
+      width,
+      height,
+      x,
+      y
+    };
   });
 
-  await fs.writeFile('pdf-fields.json', JSON.stringify(fieldData, null, 2));
-  console.log('Fields written to pdf-fields.json');
+  await fs.writeFile('pdf-fields-geometry.json', JSON.stringify(fieldData, null, 2));
+  console.log('Fields geometry written to pdf-fields-geometry.json');
 }
 
 extractFields().catch(console.error);

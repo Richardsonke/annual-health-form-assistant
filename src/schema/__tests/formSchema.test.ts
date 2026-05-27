@@ -83,6 +83,10 @@ const baseValidYouthData = {
   immInfluenza: false,
   immOther: false,
 
+  // Authorized Pickups
+  authPickupName1: 'Jane Smith',
+  authPickupPhone1: '330-555-0199',
+
   // Signatures
   willSignLater: true,
   willParticipantSignLater: true,
@@ -177,6 +181,38 @@ describe('formSchema Validation', () => {
     
     expect(formSchema.safeParse(invalidData1).success).toBe(false);
     expect(formSchema.safeParse(invalidData2).success).toBe(false);
+  });
+
+  it('should enforce numeric values and range constraints for age (0 to 150)', () => {
+    const invalidData1 = { ...baseValidYouthData, age: 'abc' };
+    const invalidData2 = { ...baseValidYouthData, age: '-1' };
+    const invalidData3 = { ...baseValidYouthData, age: '151' };
+    const validData1 = { ...baseValidYouthData, age: '0' };
+    const validData2 = { ...baseValidYouthData, age: '150' };
+
+    expect(formSchema.safeParse(invalidData1).success).toBe(false);
+    expect(formSchema.safeParse(invalidData2).success).toBe(false);
+    expect(formSchema.safeParse(invalidData3).success).toBe(false);
+    expect(formSchema.safeParse(validData1).success).toBe(true);
+    expect(formSchema.safeParse(validData2).success).toBe(true);
+  });
+
+  it('should require the first authorized pickup name and phone number for youth participants', () => {
+    const invalidName = { ...baseValidYouthData };
+    delete (invalidName as any).authPickupName1;
+    const invalidPhone = { ...baseValidYouthData };
+    delete (invalidPhone as any).authPickupPhone1;
+
+    expect(formSchema.safeParse(invalidName).success).toBe(false);
+    expect(formSchema.safeParse(invalidPhone).success).toBe(false);
+  });
+
+  it('should not require authorized pickup details for adult participants', () => {
+    const validAdult = { ...baseValidAdultData };
+    delete (validAdult as any).authPickupName1;
+    delete (validAdult as any).authPickupPhone1;
+
+    expect(formSchema.safeParse(validAdult).success).toBe(true);
   });
 
   it('should require parent signature for youth if willSignLater is false', () => {

@@ -10,6 +10,7 @@ interface ConditionRowProps {
   datePlaceholder?: string;
   extraContent?: React.ReactNode;
   expMaxLength?: number;
+  dateMaxLength?: number;
 }
 
 const ConditionRow: React.FC<ConditionRowProps> = ({
@@ -19,7 +20,8 @@ const ConditionRow: React.FC<ConditionRowProps> = ({
   dateName,
   datePlaceholder,
   extraContent,
-  expMaxLength = 100
+  expMaxLength = 100,
+  dateMaxLength
 }) => {
   const isChecked = useWatch({ name });
   const { setValue, formState: { errors } } = useFormContext();
@@ -63,6 +65,7 @@ const ConditionRow: React.FC<ConditionRowProps> = ({
               name={dateName}
               placeholder={datePlaceholder || "Date/Result"}
               containerClass="form-table-group"
+              maxLength={dateMaxLength}
             />
           )}
           {expName && isChecked === true && (
@@ -135,8 +138,8 @@ export const FormSectionPartB = () => {
           <ConditionRow name="allergyMedication" label="Medicines" expName="allergyMedicationExp" expMaxLength={38} />
           <ConditionRow name="allergyPlants" label="Plants" expName="allergyPlantsExp" expMaxLength={38} />
           <ConditionRow name="allergyBugs" label="Insect Bites/Stings" expName="allergyBugsExp" expMaxLength={38} />
-          <ConditionRow name="epinephrine" label="Epinephrine Auto-injector" dateName="autoinjectorExpDate" datePlaceholder="Auto-injector Exp. Date (MM/YYYY)" />
-          <ConditionRow name="rescueInhaler" label="Rescue Inhaler" dateName="inhalerExpDate" datePlaceholder="Inhaler Expiration Date (MM/YYYY)" />
+          <ConditionRow name="epinephrine" label="Epinephrine Auto-injector" dateName="autoinjectorExpDate" datePlaceholder="Auto-injector Exp. Date (MM/YYYY)" dateMaxLength={25} />
+          <ConditionRow name="rescueInhaler" label="Rescue Inhaler" dateName="inhalerExpDate" datePlaceholder="Inhaler Expiration Date (MM/YYYY)" dateMaxLength={25} />
         </tbody>
       </table>
 
@@ -161,6 +164,7 @@ export const FormSectionPartB = () => {
             label="Diabetes"
             dateName="lastHbA1c"
             datePlaceholder="Last HbA1c percentage and date:"
+            dateMaxLength={25}
             extraContent={
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.25rem' }}>
                 <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Insulin pump:</span>
@@ -189,7 +193,7 @@ export const FormSectionPartB = () => {
           <ConditionRow name="condHeartDisease" label="Adult or congenital heart disease/heart attack/chest pain (angina)/heart murmur/coronary artery disease. Any heart surgery or procedure. Explain all 'yes' answers." expName="heartDiseaseExplanation" />
           <ConditionRow name="condFamilyHistory" label="Family history of heart disease or any sudden heart-related death of a family member before age 50." expName="familyHistoryExplanation" />
           <ConditionRow name="condStroke" label="Stroke/TIA" expName="strokeExplanation" />
-          <ConditionRow name="condAsthma" label="Asthma/reactive airway disease" dateName="lastAsthmaAttack" datePlaceholder="Last attack date (MM/YYYY)" />
+          <ConditionRow name="condAsthma" label="Asthma/reactive airway disease" dateName="lastAsthmaAttack" datePlaceholder="Last attack date (MM/YYYY)" dateMaxLength={30} />
           <ConditionRow name="condRespiratory" label="Lung/respiratory disease" expName="lungExplanation" />
           <ConditionRow name="condCOPD" label="COPD" expName="copdExplanation" />
           <ConditionRow name="condEENSP" label="Ear/eyes/nose/sinus problems" expName="eenspExplanation" />
@@ -201,7 +205,7 @@ export const FormSectionPartB = () => {
           <ConditionRow name="condBlood" label="Blood disorders/sickle cell disease" expName="bloodExplanation" />
           <ConditionRow name="condFainting" label="Fainting spells and dizziness" expName="faintingExplanation" />
           <ConditionRow name="condKidney" label="Kidney disease" expName="kidneyExplanation" />
-          <ConditionRow name="condSeizures" label="Seizures or epilepsy" dateName="lastSeizureDate" datePlaceholder="Last seizure date (MM/YYYY)" />
+          <ConditionRow name="condSeizures" label="Seizures or epilepsy" dateName="lastSeizureDate" datePlaceholder="Last seizure date (MM/YYYY)" dateMaxLength={30} />
           <ConditionRow name="condStomach" label="Abdominal/stomach/digestive problems" expName="stomachExplanation" />
           <ConditionRow name="condThyroid" label="Thyroid disease" expName="thyroidExplanation" />
           <ConditionRow name="condSkin" label="Skin issues" expName="skinExplanation" />
@@ -233,7 +237,7 @@ export const FormSectionPartB = () => {
               </div>
             }
           />
-          <ConditionRow name="condSurgeries" label="List all surgeries and hospitalizations" dateName="lastSurgeryDate" datePlaceholder="Last surgery date and explanation" />
+          <ConditionRow name="condSurgeries" label="List all surgeries and hospitalizations" dateName="lastSurgeryDate" datePlaceholder="Last surgery date and explanation" dateMaxLength={70} />
           <ConditionRow name="condOther" label="List any other medical conditions not covered above" expName="otherExplanation" />
         </tbody>
       </table>

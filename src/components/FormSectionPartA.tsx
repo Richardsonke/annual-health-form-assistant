@@ -58,12 +58,12 @@ export const FormSectionPartA: React.FC = () => {
         Participant Information
       </h3>
       <div className="form-grid-2">
-        <FormField name="fullName" label="Full Name" placeholder="e.g., Alex Johnson" />
-        <FormField name="dateOfBirth" label="Date of Birth" type="date" />
+        <FormField name="fullName" label="Full Name" placeholder="e.g., Alex Johnson" maxLength={70} />
+        <FormField name="dateOfBirth" label="Date of Birth" type="date" maxLength={65} />
       </div>
 
       <div className="form-grid-3" style={{ marginTop: '0.5rem' }}>
-        <FormField name="age" label="Age" type="number" />
+        <FormField name="age" label="Age" type="number" maxLength={20} min={0} max={150} />
         <div className="form-group">
           <label className="form-label" htmlFor="gender">Sex</label>
           <select id="gender" className={`form-input ${errors.gender ? 'error' : ''}`} {...register('gender')}>
@@ -78,29 +78,29 @@ export const FormSectionPartA: React.FC = () => {
             </span>
           )}
         </div>
-        <FormField name="phone" label="Phone Number" placeholder="555-555-5555" />
+        <FormField name="phone" label="Phone Number" placeholder="555-555-5555" maxLength={30} />
       </div>
 
       <div className="form-group" style={{ marginTop: '0.5rem' }}>
-        <FormField name="address" label="Address" />
+        <FormField name="address" label="Address" maxLength={140} />
       </div>
 
       <div className="form-grid-2">
-        <FormField name="city" label="City" />
-        <FormField name="state" label="State" />
-        <FormField name="zipCode" label="ZIP Code" />
+        <FormField name="city" label="City" maxLength={45} />
+        <FormField name="state" label="State" maxLength={25} />
+        <FormField name="zipCode" label="ZIP Code" maxLength={15} />
       </div>
 
       <h3 className="section-title" style={{ fontSize: '1.2rem', marginTop: '2rem', color: 'var(--text-main)', borderBottom: '1px solid var(--border-color)' }}>
         Scouting Information
       </h3>
       <div className="form-grid-2">
-        <FormField name="unitNo" label="Unit Number" placeholder="e.g., Troop 123" />
-        <FormField name="councilName" label="Council Name/Number" placeholder="e.g., Greater Alabama Council" />
+        <FormField name="unitNo" label="Unit Number" placeholder="e.g., Troop 123" maxLength={20} />
+        <FormField name="councilName" label="Council Name/Number" placeholder="e.g., Greater Alabama Council" maxLength={105} />
       </div>
       <div className="form-grid-2" style={{ marginTop: '0.5rem' }}>
-        <FormField name="unitLeader" label="Unit Leader Name" placeholder="e.g., John Smith" />
-        <FormField name="unitLeaderPhone" label="Unit Leader Mobile #" placeholder="555-555-5555" />
+        <FormField name="unitLeader" label="Unit Leader Name" placeholder="e.g., John Smith" maxLength={80} />
+        <FormField name="unitLeaderPhone" label="Unit Leader Mobile #" placeholder="555-555-5555" maxLength={40} />
       </div>
 
       <div style={{
@@ -122,8 +122,8 @@ export const FormSectionPartA: React.FC = () => {
           High-Adventure Base Participants Only (optional)
         </h3>
         <div className="form-grid-2">
-          <FormField name="expeditionCrewNo" label="Expedition/Crew No." placeholder="e.g., Philmont Crew 715-A" />
-          <FormField name="staffPosition" label="Staff Position (if applicable)" placeholder="e.g., Counselor" />
+          <FormField name="expeditionCrewNo" label="Expedition/Crew No." placeholder="e.g., Philmont Crew 715-A" maxLength={45} />
+          <FormField name="staffPosition" label="Staff Position (if applicable)" placeholder="e.g., Counselor" maxLength={50} />
         </div>
       </div>
 
@@ -134,8 +134,8 @@ export const FormSectionPartA: React.FC = () => {
         Please attach a photocopy of both sides of the insurance card. If you do not have medical insurance, enter “none” below.
       </p>
       <div className="form-grid-2">
-        <FormField name="insuranceCompany" label="Health/Accident Insurance Company" placeholder="e.g., Blue Cross" />
-        <FormField name="insurancePolicy" label="Policy Number" placeholder="e.g., X12345Y" />
+        <FormField name="insuranceCompany" label="Health/Accident Insurance Company" placeholder="e.g., Blue Cross" maxLength={55} />
+        <FormField name="insurancePolicy" label="Policy Number" placeholder="e.g., X12345Y" maxLength={50} />
       </div>
 
       <h3 className="section-title" style={{ fontSize: '1.2rem', marginTop: '2rem', color: 'var(--text-main)', borderBottom: '1px solid var(--border-color)' }}>
@@ -147,23 +147,23 @@ export const FormSectionPartA: React.FC = () => {
       <div className="form-grid-2" style={{ gap: '2rem' }}>
         <div>
           <h4 style={{ marginBottom: '1rem', fontWeight: 600, color: 'var(--primary-color)' }}>Primary Emergency Contact</h4>
-          <FormField name="emergencyName" label="Contact Name" placeholder="e.g., Jane Johnson" />
-          <FormField name="emergencyRelationship" label="Relationship" placeholder="e.g., Parent" />
-          <FormField name="emergencyPhone" label="Primary Home Phone" placeholder="555-555-5555" />
-          <FormField name="emergencyOtherPhone" label="Other Phone" placeholder="555-555-5555" />
-          <FormField name="emergencyAddress" label="Address" placeholder="e.g., 123 Emergency Way, City, ST 12345" />
+          <FormField name="emergencyName" label="Contact Name" placeholder="e.g., Jane Johnson" maxLength={80} />
+          <FormField name="emergencyRelationship" label="Relationship" placeholder="e.g., Parent" maxLength={50} />
+          <FormField name="emergencyPhone" label="Primary Home Phone" placeholder="555-555-5555" maxLength={25} />
+          <FormField name="emergencyOtherPhone" label="Other Phone" placeholder="555-555-5555" maxLength={25} />
+          <FormField name="emergencyAddress" label="Address" placeholder="e.g., 123 Emergency Way, City, ST 12345" maxLength={65} />
         </div>
         <div>
           <h4 style={{ marginBottom: '1rem', fontWeight: 600, color: 'var(--primary-color)' }}>Alternate Contact</h4>
-          <FormField name="emergencyAltName" label="Alternate Contact Name" placeholder="e.g., Bob Johnson" />
-          <FormField name="emergencyAltPhone" label="Alternate Phone" placeholder="555-555-5555" />
+          <FormField name="emergencyAltName" label="Alternate Contact Name" placeholder="e.g., Bob Johnson" maxLength={65} />
+          <FormField name="emergencyAltPhone" label="Alternate Phone" placeholder="555-555-5555" maxLength={25} />
         </div>
       </div>
 
       {participantType === 'youth' && (
         <div style={{ animation: 'fadeInUp 0.3s ease-out' }}>
           <h3 className="section-title" style={{ fontSize: '1.2rem', marginTop: '2.5rem', color: 'var(--text-main)', borderBottom: '1px solid var(--border-color)' }}>
-            Authorized / Unauthorized Transportation Pickups (optional)
+            Authorized / Unauthorized Transportation Pickups
           </h3>
           <p style={{ color: 'var(--text-muted)', marginBottom: '1rem', fontSize: '0.95rem' }}>
             Specify who is authorized or NOT authorized to take the participant to and from events. You must designate at least one adult. Please include a phone number.
@@ -179,28 +179,28 @@ export const FormSectionPartA: React.FC = () => {
               <tr>
                 <td className="col-auth">
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <FormField name="authPickupName1" placeholder="1. Full Name" containerClass="form-table-group" />
-                    <FormField name="authPickupPhone1" placeholder="Phone Number" containerClass="form-table-group" />
+                    <FormField name="authPickupName1" placeholder="1. Full Name (Required)" containerClass="form-table-group" maxLength={65} />
+                    <FormField name="authPickupPhone1" placeholder="Phone Number (Required)" containerClass="form-table-group" maxLength={65} />
                   </div>
                 </td>
                 <td className="col-not-auth" style={{ backgroundColor: '#F1F5F9' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <FormField name="notAuthPickupName1" placeholder="1. Full Name" containerClass="form-table-group" />
-                    <FormField name="notAuthPickupPhone1" placeholder="Phone Number" containerClass="form-table-group" />
+                    <FormField name="notAuthPickupName1" placeholder="1. Full Name" containerClass="form-table-group" maxLength={65} />
+                    <FormField name="notAuthPickupPhone1" placeholder="Phone Number" containerClass="form-table-group" maxLength={65} />
                   </div>
                 </td>
               </tr>
               <tr>
                 <td className="col-auth">
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <FormField name="authPickupName2" placeholder="2. Full Name" containerClass="form-table-group" />
-                    <FormField name="authPickupPhone2" placeholder="Phone Number" containerClass="form-table-group" />
+                    <FormField name="authPickupName2" placeholder="2. Full Name" containerClass="form-table-group" maxLength={65} />
+                    <FormField name="authPickupPhone2" placeholder="Phone Number" containerClass="form-table-group" maxLength={65} />
                   </div>
                 </td>
                 <td className="col-not-auth" style={{ backgroundColor: '#F1F5F9' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <FormField name="notAuthPickupName2" placeholder="2. Full Name" containerClass="form-table-group" />
-                    <FormField name="notAuthPickupPhone2" placeholder="Phone Number" containerClass="form-table-group" />
+                    <FormField name="notAuthPickupName2" placeholder="2. Full Name" containerClass="form-table-group" maxLength={65} />
+                    <FormField name="notAuthPickupPhone2" placeholder="Phone Number" containerClass="form-table-group" maxLength={65} />
                   </div>
                 </td>
               </tr>
@@ -293,6 +293,7 @@ export const FormSectionPartA: React.FC = () => {
                   name="restrictionsText"
                   placeholder="Describe any restrictions on programs or activities..."
                   containerClass="form-group"
+                  maxLength={65}
                 />
               </div>
             )}
