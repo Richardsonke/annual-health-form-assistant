@@ -227,7 +227,6 @@ export async function generateHealthFormPDF(data: HealthFormData): Promise<Blob>
   setText('Plants explanation', data.allergyPlantsExp || '');
   setYesNoCheck('Bugs', data.allergyBugs);
   setText('Bugs explanation', data.allergyBugsExp || '');
-  setText('Other explanation', data.allergyOtherExp || '');
   setYesNoCheck('Epinephrine', data.epinephrine);
   setText('Autoinjector exp date', data.autoinjectorExpDate || '');
 
@@ -376,7 +375,7 @@ export async function generateHealthFormPDF(data: HealthFormData): Promise<Blob>
   setText('Had other', data.hadOther || '');
 
   // Split and map additional medical history to Med history 1 through Med history 7
-  const medHistoryLines = wrapText(data.additionalMedicalHistory || '', 70);
+  const medHistoryLines = wrapText(data.additionalMedicalHistory || '', 72);
   for (let i = 0; i < 7; i++) {
     setText(`Med history ${i + 1}`, medHistoryLines[i] || '');
   }

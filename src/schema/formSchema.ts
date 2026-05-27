@@ -54,14 +54,12 @@ export const formSchema = z.object({
   allergyMedication: z.boolean().optional(),
   allergyPlants: z.boolean().optional(),
   allergyBugs: z.boolean().optional(),
-  allergyOther: z.boolean().optional(),
   epinephrine: z.boolean().optional(),
   autoinjectorExpDate: z.string().optional(),
   allergyFoodExp: z.string().optional(),
   allergyMedicationExp: z.string().optional(),
   allergyPlantsExp: z.string().optional(),
   allergyBugsExp: z.string().optional(),
-  allergyOtherExp: z.string().optional(),
 
   // Part B: Physical Guidelines
   heightFt: z.string().min(1, "Height (feet) is required").regex(/^\d+$/, "Must be a number"),
@@ -177,7 +175,7 @@ export const formSchema = z.object({
   immOtherDate: z.string().optional(),
   immOtherExemption: z.string().optional(),
   immOtherExemptionDate: z.string().optional(),
-  additionalMedicalHistory: z.string().max(490, "Maximum of 490 characters allowed").optional(),
+  additionalMedicalHistory: z.string().max(500, "Maximum of 500 characters allowed").optional(),
 
   // Signature Handling
   signatureData: z.string().optional(),
@@ -257,7 +255,7 @@ export const formSchema = z.object({
   // 4. Required Yes/No table fields — must have either Yes or No selected
   const requiredYesNoFields = [
     // Allergies table
-    'allergyFood', 'allergyMedication', 'allergyPlants', 'allergyBugs', 'allergyOther', 'epinephrine', 'rescueInhaler',
+    'allergyFood', 'allergyMedication', 'allergyPlants', 'allergyBugs', 'epinephrine', 'rescueInhaler',
     // Medical Conditions table
     'condAsthma', 'condDiabetes', 'condHeartDisease', 'condHypertension', 'condStroke', 'condRespiratory', 'condCOPD',
     'condSleep', 'condPsychiatric', 'condNeurological', 'condSeizures', 'condFainting', 'condHeadInjury', 'condAltitude',
@@ -288,9 +286,7 @@ export const formSchema = z.object({
     }
   }
 
-  // 6. Immunization dates required when Yes is checked (must be a valid 4-digit year in range)
-  const currentYear = new Date().getFullYear();
-  const minYear = currentYear - 120;
+  // 6. Immunization dates required when Yes is checked
   const immDatePairs: [string, string][] = [
     ['immTetanus', 'immTetanusDate'],
     ['immPertussis', 'immPertussisDate'],
@@ -306,22 +302,15 @@ export const formSchema = z.object({
   ];
   for (const [checkField, dateField] of immDatePairs) {
     if ((data as any)[checkField] === true) {
-      const yearStr = String((data as any)[dateField] ?? '');
-      const year = parseInt(yearStr, 10);
-      const isValidFormat = yearStr.length === 4 && !isNaN(year);
-      if (!yearStr || !isValidFormat) {
-        const customMsg = checkField === 'immTetanus' ? 'Tetanus year is required (YYYY)' : 'Year is required (YYYY)';
+      const dateStr = String((data as any)[dateField] ?? '').trim();
+      if (!dateStr) {
+        const customMsg = checkField === 'immTetanus' ? 'Tetanus Date(s) is required' : 'Date(s) is required';
         ctx.addIssue({ code: z.ZodIssueCode.custom, message: customMsg, path: [dateField] });
-      } else if (year > currentYear) {
-        ctx.addIssue({ code: z.ZodIssueCode.custom, message: `Year cannot be in the future`, path: [dateField] });
-      } else if (year < minYear) {
-        ctx.addIssue({ code: z.ZodIssueCode.custom, message: `Year cannot be more than 120 years ago`, path: [dateField] });
       }
     }
   }
 
   // 7. Tetanus must be current (within 10 years) unless exemption is marked Yes
-  //    Compare today against Dec 31 of the entered year (most lenient)
   if (data.exemptionToImmunizations !== true) {
     if (data.immTetanus !== true) {
       ctx.addIssue({
@@ -330,16 +319,25 @@ export const formSchema = z.object({
         path: ['immTetanus']
       });
     } else {
-      const yearStr = String(data.immTetanusDate ?? '');
-      const year = parseInt(yearStr, 10);
-      const isValidFormat = yearStr.length === 4 && !isNaN(year);
-      if (isValidFormat && year >= minYear && year <= currentYear) {
-        // Dec 31 of the entered year is the most lenient end date for the 10-year check
-        const dec31OfYear = new Date(year, 11, 31);
-        const tenYearsAgo = new Date();
-        tenYearsAgo.setFullYear(tenYearsAgo.getFullYear() - 10);
-        if (dec31OfYear < tenYearsAgo) {
-          ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Tetanus must have been within the last 10 years', path: ['immTetanusDate'] });
+      const dateStr = String(data.immTetanusDate ?? '').trim();
+      if (dateStr) {
+        // Extract all 4-digit years from the string (e.g. "2018, 2022" -> [2018, 2022])
+        const years = (dateStr.match(/\b(19\d{2}|20\d{2})\b/g) ?? []).map(y => parseInt(y, 10));
+        
+        if (years.length > 0) {
+          const maxYear = Math.max(...years);
+          const dec31OfYear = new Date(maxYear, 11, 31);
+          const tenYearsAgo = new Date();
+          tenYearsAgo.setFullYear(tenYearsAgo.getFullYear() - 10);
+          if (dec31OfYear < tenYearsAgo) {
+            ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Tetanus must have been within the last 10 years', path: ['immTetanusDate'] });
+          }
+        } else {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'Please include a 4-digit year (e.g., 2022) to verify the 10-year requirement',
+            path: ['immTetanusDate']
+          });
         }
       }
     }

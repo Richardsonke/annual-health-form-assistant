@@ -141,6 +141,9 @@ export const FormSectionPartA: React.FC = () => {
       <h3 className="section-title" style={{ fontSize: '1.2rem', marginTop: '2rem', color: 'var(--text-main)', borderBottom: '1px solid var(--border-color)' }}>
         Emergency Contacts
       </h3>
+      <p style={{ color: 'var(--text-muted)', marginBottom: '1rem', fontSize: '0.95rem' }}>
+        In case of emergency, notify the person below:
+      </p>
       <div className="form-grid-2" style={{ gap: '2rem' }}>
         <div>
           <h4 style={{ marginBottom: '1rem', fontWeight: 600, color: 'var(--primary-color)' }}>Primary Emergency Contact</h4>
@@ -163,24 +166,24 @@ export const FormSectionPartA: React.FC = () => {
             Authorized / Unauthorized Transportation Pickups (optional)
           </h3>
           <p style={{ color: 'var(--text-muted)', marginBottom: '1rem', fontSize: '0.95rem' }}>
-            Specify who is authorized or NOT authorized to take the participant to and from events.
+            Specify who is authorized or NOT authorized to take the participant to and from events. You must designate at least one adult. Please include a phone number.
           </p>
-          <table className="form-table">
+          <table className="form-table table-responsive-pickups">
             <thead>
               <tr>
                 <th style={{ width: '50%', fontWeight: 600 }}>Authorized Persons</th>
-                <th style={{ width: '50%', fontWeight: 600 }}>NOT Authorized Persons</th>
+                <th className="col-header-not-auth" style={{ width: '50%', fontWeight: 600 }}>NOT Authorized Persons</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>
+                <td className="col-auth">
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     <FormField name="authPickupName1" placeholder="1. Full Name" containerClass="form-table-group" />
                     <FormField name="authPickupPhone1" placeholder="Phone Number" containerClass="form-table-group" />
                   </div>
                 </td>
-                <td style={{ backgroundColor: '#F1F5F9' }}>
+                <td className="col-not-auth" style={{ backgroundColor: '#F1F5F9' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     <FormField name="notAuthPickupName1" placeholder="1. Full Name" containerClass="form-table-group" />
                     <FormField name="notAuthPickupPhone1" placeholder="Phone Number" containerClass="form-table-group" />
@@ -188,13 +191,13 @@ export const FormSectionPartA: React.FC = () => {
                 </td>
               </tr>
               <tr>
-                <td>
+                <td className="col-auth">
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     <FormField name="authPickupName2" placeholder="2. Full Name" containerClass="form-table-group" />
                     <FormField name="authPickupPhone2" placeholder="Phone Number" containerClass="form-table-group" />
                   </div>
                 </td>
-                <td style={{ backgroundColor: '#F1F5F9' }}>
+                <td className="col-not-auth" style={{ backgroundColor: '#F1F5F9' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     <FormField name="notAuthPickupName2" placeholder="2. Full Name" containerClass="form-table-group" />
                     <FormField name="notAuthPickupPhone2" placeholder="Phone Number" containerClass="form-table-group" />

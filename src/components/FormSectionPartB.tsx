@@ -33,24 +33,28 @@ const ConditionRow: React.FC<ConditionRowProps> = ({
 
   return (
     <tr>
-      <td className={`text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
-        <input
-          type="checkbox"
-          className="checkbox-input"
-          checked={isChecked === true}
-          onChange={handleYesChange}
-        />
+      <td className={`col-yes text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
+        <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', cursor: 'pointer' }}>
+          <input
+            type="checkbox"
+            className="checkbox-input"
+            checked={isChecked === true}
+            onChange={handleYesChange}
+          />
+        </label>
       </td>
-      <td className={`text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
-        <input
-          type="checkbox"
-          className="checkbox-input"
-          checked={isChecked === false}
-          onChange={handleNoChange}
-        />
+      <td className={`col-no text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
+        <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', cursor: 'pointer' }}>
+          <input
+            type="checkbox"
+            className="checkbox-input"
+            checked={isChecked === false}
+            onChange={handleNoChange}
+          />
+        </label>
       </td>
-      <td style={{ fontWeight: 500, width: '40%' }}>{label}</td>
-      <td>
+      <td className="col-label" style={{ fontWeight: 500, width: '40%' }}>{label}</td>
+      <td className="col-details">
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {dateName && isChecked === true && (
             <FormField
@@ -111,7 +115,10 @@ export const FormSectionPartB = () => {
       <h3 className="section-title" style={{ fontSize: '1.2rem', marginTop: '2rem', color: 'var(--text-main)', borderBottom: '1px solid var(--border-color)' }}>
         Allergies / Medical Alerts
       </h3>
-      <table className="form-table">
+      <p style={{ marginBottom: '1rem', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+        Are you allergic to or do you have any adverse reaction to any of the following?
+      </p>
+      <table className="form-table table-responsive-yesno">
         <thead>
           <tr>
             <th style={{ width: '60px' }}>Yes</th>
@@ -125,7 +132,6 @@ export const FormSectionPartB = () => {
           <ConditionRow name="allergyMedication" label="Medicines" expName="allergyMedicationExp" />
           <ConditionRow name="allergyPlants" label="Plants" expName="allergyPlantsExp" />
           <ConditionRow name="allergyBugs" label="Insect Bites/Stings" expName="allergyBugsExp" />
-          <ConditionRow name="allergyOther" label="Other Allergies" expName="allergyOtherExp" />
           <ConditionRow name="epinephrine" label="Epinephrine Auto-injector" dateName="autoinjectorExpDate" datePlaceholder="Auto-injector Exp. Date (MM/YYYY)" />
           <ConditionRow name="rescueInhaler" label="Rescue Inhaler" dateName="inhalerExpDate" datePlaceholder="Inhaler Expiration Date (MM/YYYY)" />
         </tbody>
@@ -137,7 +143,7 @@ export const FormSectionPartB = () => {
       <p style={{ marginBottom: '1rem', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
         Do you currently have or have you ever been treated for any of the following?
       </p>
-      <table className="form-table">
+      <table className="form-table table-responsive-yesno">
         <thead>
           <tr>
             <th style={{ width: '60px' }}>Yes</th>
@@ -234,14 +240,14 @@ export const FormSectionPartB = () => {
           Additional Medical History (optional)
         </h3>
         <p style={{ color: 'var(--text-muted)', marginBottom: '0.75rem', fontSize: '0.95rem' }}>
-          Please list any additional information about your medical history (maximum 490 characters):
+          Please list any additional information about your medical history (maximum 500 characters):
         </p>
         <FormField
           name="additionalMedicalHistory"
           type="textarea"
           placeholder="e.g. details of other medical alerts, allergies, surgeries, or family history..."
           containerClass="form-group"
-          maxLength={490}
+          maxLength={500}
         />
       </div>
     </div>

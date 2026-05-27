@@ -35,23 +35,33 @@ const ImmRow: React.FC<ImmRowProps> = ({
 
   return (
     <tr>
-      <td className={`text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
-        <input 
-          type="checkbox" 
-          className="checkbox-input" 
-          checked={isChecked === true} 
-          onChange={handleYesChange} 
-        />
+      <td className={`col-yes text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
+        <label 
+          title="Has been immunized"
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', cursor: 'pointer' }}
+        >
+          <input 
+            type="checkbox" 
+            className="checkbox-input" 
+            checked={isChecked === true} 
+            onChange={handleYesChange} 
+          />
+        </label>
       </td>
-      <td className={`text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
-        <input 
-          type="checkbox" 
-          className="checkbox-input" 
-          checked={isChecked === false} 
-          onChange={handleNoChange} 
-        />
+      <td className={`col-no text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
+        <label 
+          title="Has not been immunized"
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', cursor: 'pointer' }}
+        >
+          <input 
+            type="checkbox" 
+            className="checkbox-input" 
+            checked={isChecked === false} 
+            onChange={handleNoChange} 
+          />
+        </label>
       </td>
-      <td style={{ fontWeight: 500, width: '30%' }}>
+      <td className="col-label" style={{ fontWeight: 500, width: '30%' }}>
         {label}
         {hasError && errorMsg && (
           <span style={{ display: 'block', color: 'var(--error-color)', fontSize: '0.8rem', fontWeight: 400, marginTop: '0.25rem' }}>
@@ -59,18 +69,16 @@ const ImmRow: React.FC<ImmRowProps> = ({
           </span>
         )}
       </td>
-      <td style={{ width: '30%' }}>
-        {dateName && isChecked === true ? (
+      <td className="col-details" style={{ width: '30%' }}>
+        {dateName && (
           <div>
             <input
-              type="number"
-              inputMode="numeric"
-              placeholder="YYYY"
-              min={1900}
-              max={new Date().getFullYear()}
+              type="text"
+              placeholder="Immunization Date(s)"
               className={`form-input form-table-group${hasDateError ? ' error' : ''}`}
               style={{ padding: '0.4rem 0.75rem' }}
-              {...register(dateName, { valueAsNumber: false })}
+              disabled={isChecked !== true}
+              {...register(dateName)}
             />
             {hasDateError && (
               <span style={{ color: 'var(--error-color)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
@@ -78,13 +86,11 @@ const ImmRow: React.FC<ImmRowProps> = ({
               </span>
             )}
           </div>
-        ) : (
-          <div style={{ background: hasDateError ? 'rgba(239,68,68,0.09)' : 'var(--border-color)', height: '42px', borderRadius: 'var(--radius-md)', opacity: hasDateError ? 1 : 0.25 }}></div>
         )}
       </td>
-      <td style={{ width: '30%' }}>
-        {hadDiseaseName && isChecked === true ? (
-          <FormField name={hadDiseaseName} placeholder="Detail / Year" containerClass="form-table-group" />
+      <td className="col-details" style={{ width: '30%' }}>
+        {hadDiseaseName ? (
+          <FormField name={hadDiseaseName} placeholder="Had Disease (Year)" containerClass="form-table-group" />
         ) : (
           <div style={{ background: 'var(--border-color)', height: '42px', borderRadius: 'var(--radius-md)', opacity: 0.25 }}></div>
         )}
@@ -97,15 +103,18 @@ export const FormSectionImmunizations = () => {
   return (
     <div className="form-card">
       <h2 className="section-title">Immunizations</h2>
+      <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '0.95rem', lineHeight: 1.5 }}>
+        The following immunizations are recommended. Tetanus immunization is required and must have been received within the last 10 years. If you had the disease, check the disease column and list the date. If immunized, check yes and provide the year received.
+      </p>
       
-      <table className="form-table">
+      <table className="form-table table-responsive-yesno">
         <thead>
           <tr>
             <th style={{ width: '60px', textAlign: 'center' }}>Yes</th>
             <th style={{ width: '60px', textAlign: 'center' }}>No</th>
             <th>Immunization</th>
-            <th>Year</th>
-            <th>Had Disease (Details)</th>
+            <th>Date(s)</th>
+            <th>Had Disease (Year)</th>
           </tr>
         </thead>
         <tbody>

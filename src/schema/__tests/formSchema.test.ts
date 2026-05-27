@@ -33,7 +33,6 @@ const baseValidYouthData = {
   allergyMedication: false,
   allergyPlants: false,
   allergyBugs: false,
-  allergyOther: false,
   epinephrine: false,
   rescueInhaler: false,
 

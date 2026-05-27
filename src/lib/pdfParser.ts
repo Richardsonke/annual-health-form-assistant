@@ -153,16 +153,11 @@ export async function parseHealthFormPDF(fileBuffer: ArrayBuffer): Promise<Parti
   data.allergyPlantsExp = getTextFieldVal('Plants explanation');
   data.allergyBugs = getYesNoCheckVal('Bugs');
   data.allergyBugsExp = getTextFieldVal('Bugs explanation');
-  data.allergyOtherExp = getTextFieldVal('Other explanation');
-
-  // Reconstruct allergyOther and hasAllergies (allergyOther checkbox isn't in PDF, so we infer it from explanation)
-  data.allergyOther = !!data.allergyOtherExp;
   data.hasAllergies = !!(
     data.allergyFood ||
     data.allergyMedication ||
     data.allergyPlants ||
-    data.allergyBugs ||
-    data.allergyOther
+    data.allergyBugs
   );
 
   data.epinephrine = getYesNoCheckVal('Epinephrine');

@@ -77,7 +77,7 @@ export const FormSectionMedications = () => {
               No medications added yet. Click "Add Medication" below to document a medication.
             </div>
           ) : (
-            <table className="form-table" style={{ marginBottom: '1rem' }}>
+            <table className="form-table table-responsive-medications" style={{ marginBottom: '1rem' }}>
               <thead>
                 <tr>
                   <th style={{ width: '30%' }}>Medication</th>
@@ -90,35 +90,35 @@ export const FormSectionMedications = () => {
               <tbody>
                 {fields.map((item, index) => (
                   <tr key={item.id}>
-                    <td>
+                    <td className="col-med-name">
                       <FormField 
                         name={`medications.${index}.medication`} 
                         placeholder="Medication name" 
                         containerClass="form-table-group"
                       />
                     </td>
-                    <td>
+                    <td className="col-med-dose">
                       <FormField 
                         name={`medications.${index}.dose`} 
                         placeholder="Dose" 
                         containerClass="form-table-group"
                       />
                     </td>
-                    <td>
+                    <td className="col-med-freq">
                       <FormField 
                         name={`medications.${index}.frequency`} 
                         placeholder="Frequency" 
                         containerClass="form-table-group"
                       />
                     </td>
-                    <td>
+                    <td className="col-med-reason">
                       <FormField 
                         name={`medications.${index}.reason`} 
                         placeholder="Reason" 
                         containerClass="form-table-group"
                       />
                     </td>
-                    <td className="text-center">
+                    <td className="col-med-action text-center">
                       <button
                         type="button"
                         className="btn-remove"

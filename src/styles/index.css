@@ -129,6 +129,13 @@ body {
   box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
 }
 
+.form-input:disabled {
+  background-color: var(--border-color);
+  border-color: var(--border-color);
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
 .error-message {
   color: var(--error-color);
   font-size: 0.875rem;
@@ -272,6 +279,10 @@ body {
   border: 1px solid var(--border-color);
   box-shadow: inset 0 -1px 0 var(--border-color), inset 0 1px 0 var(--border-color);
 }
+.form-table th.col-header-not-auth {
+  color: var(--error-color);
+  background-color: var(--error-bg);
+}
 .form-table td {
   padding: 0.75rem;
   border: 1px solid var(--border-color);
@@ -349,4 +360,242 @@ body {
 
 .btn-add-med {
   margin-top: 1rem;
+}
+
+/* Responsive Table Layout for Immunizations (Yes/No structure) */
+@media (max-width: 768px) {
+  .table-responsive-yesno {
+    display: block;
+    background: transparent;
+    border: none;
+  }
+  
+  .table-responsive-yesno thead {
+    display: none;
+  }
+  
+  .table-responsive-yesno tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  .table-responsive-yesno tbody tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    height: auto; /* override height: 72px */
+    padding: 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--surface-color);
+    box-shadow: var(--shadow-sm);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .table-responsive-yesno td {
+    display: block;
+    padding: 0 !important;
+    border: none !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  .table-responsive-yesno td.col-label {
+    grid-column: span 2;
+    order: 1;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color) !important;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 0.25rem;
+  }
+
+  .table-responsive-yesno td.col-yes {
+    grid-column: span 1;
+    order: 2;
+  }
+
+  .table-responsive-yesno td.col-no {
+    grid-column: span 1;
+    order: 3;
+  }
+
+  .table-responsive-yesno td.col-yes label,
+  .table-responsive-yesno td.col-no label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem !important;
+    border: 1.5px solid var(--border-color) !important;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    background-color: var(--background-color);
+    transition: all var(--transition-fast);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .table-responsive-yesno td.col-yes label::after {
+    content: "Yes";
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .table-responsive-yesno td.col-no label::after {
+    content: "No";
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  /* Highlight selected states using modern CSS :has selector */
+  .table-responsive-yesno td.col-yes label:has(input:checked) {
+    background-color: var(--primary-light);
+    border-color: var(--primary-color) !important;
+  }
+  .table-responsive-yesno td.col-yes label:has(input:checked)::after {
+    color: var(--primary-color);
+  }
+
+  .table-responsive-yesno td.col-no label:has(input:checked) {
+    background-color: #F1F5F9;
+    border-color: var(--text-muted) !important;
+  }
+  .table-responsive-yesno td.col-no label:has(input:checked)::after {
+    color: var(--text-main);
+  }
+
+  .table-responsive-yesno td.col-details {
+    grid-column: span 2;
+    order: 4;
+    margin-top: 0.25rem;
+  }
+
+  /* ---------------------------------------------------- */
+  /* Pickups (Authorized/Not Authorized) responsive table */
+  /* ---------------------------------------------------- */
+  .table-responsive-pickups {
+    display: block;
+    background: transparent;
+    border: none;
+  }
+  .table-responsive-pickups thead {
+    display: none;
+  }
+  .table-responsive-pickups tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+  .table-responsive-pickups tbody tr {
+    display: contents;
+  }
+  .table-responsive-pickups td {
+    display: block;
+    padding: 0 !important;
+    border: none !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+  .table-responsive-pickups td.col-auth,
+  .table-responsive-pickups td.col-not-auth {
+    padding: 1.25rem !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md);
+    background-color: var(--surface-color);
+    box-shadow: var(--shadow-sm);
+  }
+  .table-responsive-pickups td.col-auth {
+    order: 1;
+  }
+  .table-responsive-pickups td.col-not-auth {
+    background-color: #F8FAFC !important;
+    order: 2;
+  }
+  .table-responsive-pickups td.col-auth::before {
+    content: "Authorized Pickup";
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+    font-size: 1rem;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 0.25rem;
+  }
+  .table-responsive-pickups td.col-not-auth::before {
+    content: "NOT Authorized Pickup";
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--error-color);
+    font-size: 1rem;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 0.25rem;
+  }
+
+  /* ---------------------------------------------------- */
+  /* Medications responsive table                         */
+  /* ---------------------------------------------------- */
+  .table-responsive-medications {
+    display: block;
+    background: transparent;
+    border: none;
+  }
+  .table-responsive-medications thead {
+    display: none;
+  }
+  .table-responsive-medications tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+  .table-responsive-medications tbody tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    height: auto;
+    padding: 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--surface-color);
+    box-shadow: var(--shadow-sm);
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .table-responsive-medications td {
+    display: block;
+    padding: 0 !important;
+    border: none !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+  .table-responsive-medications td.col-med-name {
+    grid-column: span 2;
+    padding-right: 3rem !important; /* clear the floating remove button */
+  }
+  .table-responsive-medications td.col-med-dose {
+    grid-column: span 1;
+  }
+  .table-responsive-medications td.col-med-freq {
+    grid-column: span 1;
+  }
+  .table-responsive-medications td.col-med-reason {
+    grid-column: span 2;
+  }
+  .table-responsive-medications td.col-med-action {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    width: auto !important;
+    height: auto !important;
+  }
 }
