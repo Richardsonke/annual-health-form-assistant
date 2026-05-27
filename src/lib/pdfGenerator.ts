@@ -1,7 +1,7 @@
 import { PDFDocument, PDFName } from 'pdf-lib';
 import type { HealthFormData } from '../schema/formSchema';
 
-function wrapText(text: string, maxLineLength: number = 70): string[] {
+export function wrapText(text: string, maxLineLength: number = 70): string[] {
   if (!text) return [];
   const lines: string[] = [];
   const paragraphs = text.split('\n');
