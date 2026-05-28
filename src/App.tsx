@@ -760,7 +760,7 @@ function App() {
               className="btn btn-secondary"
               style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
             >
-              Import Completed PDF
+              Import Completed PDF for Editing
             </button>
             <input
               type="file"
