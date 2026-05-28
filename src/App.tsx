@@ -723,7 +723,7 @@ function App() {
           <img src="./headericon.png" width="64" height="64" style={{ marginBottom: '1rem' }} />
           <h1>Health Form Filler</h1>
           <p>Complete the Scouting America <a href="https://www.scouting.org/health-and-safety/ahmr/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary-color)', textDecoration: 'underline' }}>Medical Release Form</a> (Parts A & B).<br /><br /></p>
-          <p><strong>Private & Secure:</strong> All data is processed entirely in your browser. No information you enter is ever sent to any server.</p>
+          <p><strong>Private & Secure:</strong> All data is processed entirely in your browser.<br />No information you enter is ever sent to any server.</p>
           <p>Secure storage of the generated PDF is your responsiblity.</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem' }}>
             {isTestMode && (
