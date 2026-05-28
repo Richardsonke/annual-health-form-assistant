@@ -1,7 +1,7 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Download, CheckCircle2, AlertCircle, X, CreditCard, PenLine, FileText } from 'lucide-react';
+import { Download, CheckCircle2, AlertCircle, X, CreditCard, PenLine, FileText, ExternalLink } from 'lucide-react';
 import { formSchema, type HealthFormData } from './schema/formSchema';
 import { FormSectionPartA } from './components/FormSectionPartA';
 import { FormSectionPartB } from './components/FormSectionPartB';
@@ -80,6 +80,21 @@ function ReminderModal({ pendingData, onConfirm, onCancel }: ReminderModalProps)
 
         {/* Body */}
         <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          {/* Review responsibility warning — always first */}
+          <div style={{
+            display: 'flex', gap: '1rem', alignItems: 'flex-start',
+            background: '#FFFBEB', borderRadius: 'var(--radius-md)',
+            padding: '1rem 1.25rem', border: '1px solid #FDE68A'
+          }}>
+            <AlertCircle size={22} color="#D97706" style={{ flexShrink: 0, marginTop: '2px' }} />
+            <div>
+              <p style={{ fontWeight: 600, color: '#92400E', marginBottom: '0.25rem' }}>Important: Review Form Content</p>
+              <p style={{ fontSize: '0.9rem', color: '#B45309', margin: 0 }}>
+                You are responsible for reviewing the content of the generated health form for completeness and accuracy before submitting it.
+              </p>
+            </div>
+          </div>
+
           {/* Insurance card reminder — always shown */}
           <div style={{
             display: 'flex', gap: '1rem', alignItems: 'flex-start',
@@ -164,6 +179,15 @@ function App() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [pendingFormData, setPendingFormData] = useState<HealthFormData | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [supportEmail, setSupportEmail] = useState('support [at] health-form-filler');
+
+  useEffect(() => {
+    // Obfuscate email by reversing the string components to fool bot scrapers
+    const rev = (s: string) => s.split('').reverse().join('');
+    const u = rev('sdwxdhrne7');
+    const d = rev('sneakemail') + '.' + rev('moc');
+    setSupportEmail(u + '@' + d);
+  }, []);
 
   const isTestMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('testmode') === '1';
 
@@ -698,7 +722,7 @@ function App() {
         <header className="header">
           <img src="./headericon.png" width="64" height="64" style={{ marginBottom: '1rem' }} />
           <h1>Health Form Filler</h1>
-          <p>Complete the Scouting America Medical Release Form (Parts A & B).<br /><br /></p>
+          <p>Complete the Scouting America <a href="https://www.scouting.org/health-and-safety/ahmr/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary-color)', textDecoration: 'underline' }}>Medical Release Form</a> (Parts A & B).<br /><br /></p>
           <p><strong>Private & Secure:</strong> All data is processed entirely in your browser. Nothing is ever sent to any server.</p>
           <p>Secure storage of the generated PDF is your responsiblity.</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem' }}>
@@ -790,9 +814,56 @@ function App() {
           color: 'var(--text-muted)',
           fontSize: '0.9rem',
           padding: '1.5rem 0',
-          borderTop: '1px solid var(--border-color)'
+          borderTop: '1px solid var(--border-color)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '0.75rem'
         }}>
-          This application is not affiliated with, sponsored by, or endorsed by Scouting America. It is an independent, volunteer-created utility.
+          <p style={{ margin: 0 }}>This application is not affiliated with, sponsored by, or endorsed by Scouting America. It is an independent, volunteer-created utility.</p>
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <a 
+              href="https://github.com/Richardsonke/annual-health-form-assistant" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ 
+                color: 'var(--primary-color)', 
+                textDecoration: 'none', 
+                fontWeight: 500,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                transition: 'color 0.2s'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.color = '#7C3AED'}
+              onMouseOut={(e) => e.currentTarget.style.color = 'var(--primary-color)'}
+            >
+              <ExternalLink size={16} />
+              GitHub Repository
+            </a>
+            <span style={{ color: 'var(--border-color)' }}>|</span>
+            <a 
+              href="#" 
+              onClick={(e) => {
+                e.preventDefault();
+                const rev = (s: string) => s.split('').reverse().join('');
+                window.location.href = rev(':otliam') + rev('sdwxdhrne7') + '@' + rev('sneakemail') + '.' + rev('moc');
+              }}
+              style={{ 
+                color: 'var(--primary-color)', 
+                textDecoration: 'none', 
+                fontWeight: 500,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                transition: 'color 0.2s'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.color = '#7C3AED'}
+              onMouseOut={(e) => e.currentTarget.style.color = 'var(--primary-color)'}
+            >
+              Support: {supportEmail}
+            </a>
+          </div>
         </footer>
       </div>
     </>
