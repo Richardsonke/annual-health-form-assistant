@@ -242,7 +242,7 @@ export const formSchema = z.object({
   if (data.participantType !== 'adult' && data.nonPrescriptionExceptions === undefined) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
-      message: "Non-prescription authorization is required",
+      message: "Non-prescription authorization choice is required",
       path: ["nonPrescriptionExceptions"]
     });
   }
