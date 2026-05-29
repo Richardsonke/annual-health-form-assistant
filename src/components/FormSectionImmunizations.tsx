@@ -3,7 +3,7 @@ import { FormField } from './FormField';
 
 interface ImmRowProps {
   name: string;
-  label: string;
+  label: React.ReactNode;
   dateName?: string;
   hadDiseaseName?: string;
   extraTriggerFields?: string[];
@@ -132,7 +132,26 @@ export const FormSectionImmunizations = () => {
           <ImmRow name="immMeningitis" label="Meningitis" dateName="immMeningitisDate" hadDiseaseName="hadMeningitis" />
           <ImmRow name="immInfluenza" label="Influenza" dateName="immInfluenzaDate" hadDiseaseName="hadInfluenza" />
           <ImmRow name="immOther" label="Other (i.e. HIB)" dateName="immOtherDate" hadDiseaseName="hadOther" />
-          <ImmRow name="exemptionToImmunizations" label="Exemption to immunizations (form required)" dateName="immOtherExemptionDate" datePlaceholder="Details..." extraTriggerFields={['immTetanus', 'immTetanusDate']} />
+          <ImmRow 
+            name="exemptionToImmunizations" 
+            label={
+              <>
+                Exemption to immunizations (
+                <a 
+                  href="https://filestore.scouting.org/filestore/pdf/680-451.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{ color: 'var(--primary-color)', textDecoration: 'underline' }}
+                >
+                  form required
+                </a>
+                )
+              </>
+            } 
+            dateName="immOtherExemptionDate" 
+            datePlaceholder="Details..." 
+            extraTriggerFields={['immTetanus', 'immTetanusDate']} 
+          />
         </tbody>
       </table>
     </div>

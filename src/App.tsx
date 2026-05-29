@@ -127,6 +127,32 @@ function ReminderModal({ pendingData, onConfirm, onCancel }: ReminderModalProps)
             </div>
           )}
 
+          {/* Immunization exemption request form reminder */}
+          {pendingData.exemptionToImmunizations && (
+            <div style={{
+              display: 'flex', gap: '1rem', alignItems: 'flex-start',
+              background: '#FFFBEB', borderRadius: 'var(--radius-md)',
+              padding: '1rem 1.25rem', border: '1px solid #FDE68A'
+            }}>
+              <FileText size={22} color="#D97706" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <p style={{ fontWeight: 600, color: '#92400E', marginBottom: '0.25rem' }}>Include Immunization Exemption Form</p>
+                <p style={{ fontSize: '0.9rem', color: '#B45309', margin: 0 }}>
+                  You selected immunization exemption. You must attach the completed{' '}
+                  <a 
+                    href="https://filestore.scouting.org/filestore/pdf/680-451.pdf" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ color: '#92400E', textDecoration: 'underline', fontWeight: 600 }}
+                  >
+                    Immunization Exemption Request Form
+                  </a>
+                  {' '}to your completed health history form.
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Sign-later reminders — only shown when relevant */}
           {signLaterItems.length > 0 && (
             <div style={{
