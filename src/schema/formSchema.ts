@@ -18,13 +18,19 @@ export const formSchema = z.object({
   city: z.string().min(2, "City is required").max(45, "City cannot exceed 45 characters"),
   state: z.string().min(2, "State is required").max(25, "State cannot exceed 25 characters"),
   zipCode: z.string().min(5, "ZIP code is required").max(15, "ZIP code cannot exceed 15 characters"),
-  phone: z.string().min(10, "Phone number is required").max(30, "Phone number cannot exceed 30 characters"),
+  phone: z.string()
+    .min(1, "Phone number is required")
+    .regex(/^\d{3}-\d{3}-\d{4}$/, "Phone number must be formatted as XXX-XXX-XXXX")
+    .max(30, "Phone number cannot exceed 30 characters"),
 
   unitNo: z.string().min(1, "Unit number is required").max(20, "Unit number cannot exceed 20 characters"),
   councilName: z.string().min(1, "Council name is required").max(105, "Council name cannot exceed 105 characters"),
   expeditionCrewNo: z.string().max(45, "Expedition/crew No. cannot exceed 45 characters").optional(),
   unitLeader: z.string().min(1, "Unit leader name is required").max(80, "Unit leader name cannot exceed 80 characters"),
-  unitLeaderPhone: z.string().min(10, "Unit leader mobile number is required").max(40, "Unit leader mobile number cannot exceed 40 characters"),
+  unitLeaderPhone: z.string()
+    .min(1, "Unit leader mobile number is required")
+    .regex(/^\d{3}-\d{3}-\d{4}$/, "Unit leader mobile number must be formatted as XXX-XXX-XXXX")
+    .max(40, "Unit leader mobile number cannot exceed 40 characters"),
   staffPosition: z.string().max(50, "Staff position cannot exceed 50 characters").optional(),
 
   // Insurance Details
@@ -34,21 +40,42 @@ export const formSchema = z.object({
   // Emergency Contacts
   emergencyName: z.string().min(2, "Emergency contact name is required").max(80, "Emergency contact name cannot exceed 80 characters"),
   emergencyRelationship: z.string().min(2, "Relationship is required").max(50, "Relationship cannot exceed 50 characters"),
-  emergencyPhone: z.string().min(10, "Emergency phone is required").max(25, "Emergency phone cannot exceed 25 characters"),
+  emergencyPhone: z.string()
+    .min(1, "Emergency phone is required")
+    .regex(/^\d{3}-\d{3}-\d{4}$/, "Emergency phone must be formatted as XXX-XXX-XXXX")
+    .max(25, "Emergency phone cannot exceed 25 characters"),
   emergencyAddress: z.string().min(5, "Emergency contact address is required").max(65, "Emergency contact address cannot exceed 65 characters"),
-  emergencyOtherPhone: z.string().max(25, "Other phone cannot exceed 25 characters").optional(),
+  emergencyOtherPhone: z.string()
+    .max(25, "Other phone cannot exceed 25 characters")
+    .optional()
+    .refine(val => !val || /^\d{3}-\d{3}-\d{4}$/.test(val), "Other phone must be formatted as XXX-XXX-XXXX"),
   emergencyAltName: z.string().min(2, "Alternate contact name is required").max(65, "Alternate contact name cannot exceed 65 characters"),
-  emergencyAltPhone: z.string().min(10, "Alternate phone is required").max(25, "Alternate phone cannot exceed 25 characters"),
+  emergencyAltPhone: z.string()
+    .min(1, "Alternate phone is required")
+    .regex(/^\d{3}-\d{3}-\d{4}$/, "Alternate phone must be formatted as XXX-XXX-XXXX")
+    .max(25, "Alternate phone cannot exceed 25 characters"),
 
   // Authorized / Unauthorized Pickups
   authPickupName1: z.string().max(65, "Name cannot exceed 65 characters").optional(),
-  authPickupPhone1: z.string().max(65, "Phone cannot exceed 65 characters").optional(),
+  authPickupPhone1: z.string()
+    .max(65, "Phone cannot exceed 65 characters")
+    .optional()
+    .refine(val => !val || /^\d{3}-\d{3}-\d{4}$/.test(val), "Phone must be formatted as XXX-XXX-XXXX"),
   authPickupName2: z.string().max(65, "Name cannot exceed 65 characters").optional(),
-  authPickupPhone2: z.string().max(65, "Phone cannot exceed 65 characters").optional(),
+  authPickupPhone2: z.string()
+    .max(65, "Phone cannot exceed 65 characters")
+    .optional()
+    .refine(val => !val || /^\d{3}-\d{3}-\d{4}$/.test(val), "Phone must be formatted as XXX-XXX-XXXX"),
   notAuthPickupName1: z.string().max(65, "Name cannot exceed 65 characters").optional(),
-  notAuthPickupPhone1: z.string().max(65, "Phone cannot exceed 65 characters").optional(),
+  notAuthPickupPhone1: z.string()
+    .max(65, "Phone cannot exceed 65 characters")
+    .optional()
+    .refine(val => !val || /^\d{3}-\d{3}-\d{4}$/.test(val), "Phone must be formatted as XXX-XXX-XXXX"),
   notAuthPickupName2: z.string().max(65, "Name cannot exceed 65 characters").optional(),
-  notAuthPickupPhone2: z.string().max(65, "Phone cannot exceed 65 characters").optional(),
+  notAuthPickupPhone2: z.string()
+    .max(65, "Phone cannot exceed 65 characters")
+    .optional()
+    .refine(val => !val || /^\d{3}-\d{3}-\d{4}$/.test(val), "Phone must be formatted as XXX-XXX-XXXX"),
 
   // BB Device & Participant Restrictions (Page 1)
   bbDevice: z.boolean().default(false),

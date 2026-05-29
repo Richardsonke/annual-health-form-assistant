@@ -139,9 +139,9 @@ function ReminderModal({ pendingData, onConfirm, onCancel }: ReminderModalProps)
                 <p style={{ fontWeight: 600, color: '#92400E', marginBottom: '0.25rem' }}>Include Immunization Exemption Form</p>
                 <p style={{ fontSize: '0.9rem', color: '#B45309', margin: 0 }}>
                   You selected immunization exemption. You must attach the completed{' '}
-                  <a 
-                    href="https://filestore.scouting.org/filestore/pdf/680-451.pdf" 
-                    target="_blank" 
+                  <a
+                    href="https://filestore.scouting.org/filestore/pdf/680-451.pdf"
+                    target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: '#92400E', textDecoration: 'underline', fontWeight: 600 }}
                   >
@@ -273,7 +273,7 @@ function App() {
       allergyMedication: true,
       allergyMedicationExp: 'Med Allergy (Penicillin) Explanation',
       allergyPlants: true,
-      allergyPlantsExp: 'Plants Allergy (Poison Ivy) Explanation',
+      allergyPlantsExp: 'Plants Allergy (Poison Ivy) Expl.',
       allergyBugs: true,
       allergyBugsExp: 'Bug Allergy (Bee Stings) Explanation',
       epinephrine: true,
@@ -848,13 +848,13 @@ function App() {
         }}>
           <p style={{ margin: 0 }}>This application is not affiliated with, sponsored by, or endorsed by Scouting America. It is an independent, volunteer-created utility.</p>
           <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <a 
-              href="https://github.com/Richardsonke/annual-health-form-assistant" 
-              target="_blank" 
+            <a
+              href="https://github.com/Richardsonke/annual-health-form-assistant"
+              target="_blank"
               rel="noopener noreferrer"
-              style={{ 
-                color: 'var(--primary-color)', 
-                textDecoration: 'none', 
+              style={{
+                color: 'var(--primary-color)',
+                textDecoration: 'none',
                 fontWeight: 500,
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -868,16 +868,16 @@ function App() {
               GitHub Repository
             </a>
             <span style={{ color: 'var(--border-color)' }}>|</span>
-            <a 
-              href="#" 
+            <a
+              href="#"
               onClick={(e) => {
                 e.preventDefault();
                 const rev = (s: string) => s.split('').reverse().join('');
                 window.location.href = rev(':otliam') + rev('sdwxdhrne7') + '@' + rev('sneakemail') + '.' + rev('moc');
               }}
-              style={{ 
-                color: 'var(--primary-color)', 
-                textDecoration: 'none', 
+              style={{
+                color: 'var(--primary-color)',
+                textDecoration: 'none',
                 fontWeight: 500,
                 display: 'inline-flex',
                 alignItems: 'center',

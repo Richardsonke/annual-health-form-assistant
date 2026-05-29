@@ -65,7 +65,7 @@ const sampleYouthData: HealthFormData = {
   allergyMedication: true,
   allergyMedicationExp: 'Med Allergy (Penicillin) Explanation',
   allergyPlants: true,
-  allergyPlantsExp: 'Plants Allergy (Poison Ivy) Explanation',
+  allergyPlantsExp: 'Plants Allergy (Poison Ivy) Expl.',
   allergyBugs: true,
   allergyBugsExp: 'Bug Allergy (Bee Stings) Explanation',
   epinephrine: true,

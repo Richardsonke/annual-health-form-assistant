@@ -347,4 +347,68 @@ describe('formSchema Validation', () => {
     const result = formSchema.safeParse(validData);
     expect(result.success).toBe(true);
   });
+
+  describe('Phone Number Formatting (XXX-XXX-XXXX)', () => {
+    it('should fail if required phone number is empty or in wrong format', () => {
+      const dataWithEmptyPhone = {
+        ...baseValidYouthData,
+        phone: ''
+      };
+      const resultEmpty = formSchema.safeParse(dataWithEmptyPhone);
+      expect(resultEmpty.success).toBe(false);
+      if (!resultEmpty.success) {
+        expect(resultEmpty.error.issues[0].message).toBe('Phone number is required');
+      }
+
+      const dataWith10DigitPhone = {
+        ...baseValidYouthData,
+        phone: '1234567890'
+      };
+      const result10Digit = formSchema.safeParse(dataWith10DigitPhone);
+      expect(result10Digit.success).toBe(false);
+      if (!result10Digit.success) {
+        expect(result10Digit.error.issues[0].message).toBe('Phone number must be formatted as XXX-XXX-XXXX');
+      }
+
+      const dataWithPartialFormattedPhone = {
+        ...baseValidYouthData,
+        phone: '123-456-789'
+      };
+      const resultPartial = formSchema.safeParse(dataWithPartialFormattedPhone);
+      expect(resultPartial.success).toBe(false);
+      if (!resultPartial.success) {
+        expect(resultPartial.error.issues[0].message).toBe('Phone number must be formatted as XXX-XXX-XXXX');
+      }
+    });
+
+    it('should fail if optional phone number is filled but in wrong format', () => {
+      const dataWithInvalidOptional = {
+        ...baseValidYouthData,
+        emergencyOtherPhone: '123-456-7890' // 12 chars but wrong format/no hyphen or too long? wait, 12 chars is right format. Let's use 1234567890
+      };
+      dataWithInvalidOptional.emergencyOtherPhone = '1234567890';
+      const result = formSchema.safeParse(dataWithInvalidOptional);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe('Other phone must be formatted as XXX-XXX-XXXX');
+      }
+    });
+
+    it('should pass if optional phone number is empty, null, or undefined', () => {
+      const dataWithEmptyOptional = {
+        ...baseValidYouthData,
+        emergencyOtherPhone: ''
+      };
+      const resultEmpty = formSchema.safeParse(dataWithEmptyOptional);
+      expect(resultEmpty.success).toBe(true);
+
+      const dataWithUndefinedOptional = {
+        ...baseValidYouthData,
+        emergencyOtherPhone: undefined
+      };
+      const resultUndefined = formSchema.safeParse(dataWithUndefinedOptional);
+      expect(resultUndefined.success).toBe(true);
+    });
+  });
 });
+
