@@ -95,7 +95,7 @@ export const FormSectionPartA: React.FC = () => {
         Scouting Information
       </h3>
       <div className="form-grid-2">
-        <FormField name="unitNo" label="Unit Number" placeholder="e.g., Troop 123" maxLength={20} />
+        <FormField name="unitNo" label="Unit Number" placeholder="e.g., Troop/Pack/Crew 123" maxLength={20} />
         <FormField name="councilName" label="Council Name/Number" placeholder="e.g., Greater Alabama Council" maxLength={105} />
       </div>
       <div className="form-grid-2" style={{ marginTop: '0.5rem' }}>
