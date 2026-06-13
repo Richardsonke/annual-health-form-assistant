@@ -13,7 +13,7 @@ const baseValidYouthData = {
   zipCode: '44240',
   phone: '330-555-0199',
   unitNo: 'Troop 123',
-  councilName: 'Great Trail Council',
+  councilName: 'Dan Beard Council (#438)',
   unitLeader: 'John Smith',
   unitLeaderPhone: '330-555-0111',
   insuranceCompany: 'Blue Cross Blue Shield',

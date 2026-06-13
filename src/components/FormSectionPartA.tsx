@@ -2,6 +2,12 @@ import React from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { AlertCircle } from 'lucide-react';
 import { FormField } from './FormField';
+import { COUNCILS } from '../schema/councilsData';
+
+const councilOptions = COUNCILS.map(c => ({
+  value: `${c.name} (#${c.number})`,
+  label: `${c.name} (#${c.number})`
+}));
 
 export const FormSectionPartA: React.FC = () => {
   const { register, control, setValue, formState: { errors } } = useFormContext();
@@ -96,7 +102,12 @@ export const FormSectionPartA: React.FC = () => {
       </h3>
       <div className="form-grid-2">
         <FormField name="unitNo" label="Unit Number" placeholder="e.g., Troop/Pack/Crew 123" maxLength={20} />
-        <FormField name="councilName" label="Council Name/Number" placeholder="e.g., Greater Alabama Council" maxLength={105} />
+        <FormField
+          name="councilName"
+          label="Council Name/Number"
+          placeholder="Select Council..."
+          options={councilOptions}
+        />
       </div>
       <div className="form-grid-2" style={{ marginTop: '0.5rem' }}>
         <FormField name="unitLeader" label="Unit Leader Name" placeholder="e.g., John Smith" maxLength={80} />
@@ -111,10 +122,10 @@ export const FormSectionPartA: React.FC = () => {
         marginTop: '2rem',
         marginBottom: '2rem'
       }}>
-        <h3 className="section-title" style={{ 
-          fontSize: '1.2rem', 
-          marginTop: '0', 
-          color: 'var(--text-main)', 
+        <h3 className="section-title" style={{
+          fontSize: '1.2rem',
+          marginTop: '0',
+          color: 'var(--text-main)',
           borderBottom: '1px solid var(--border-color)',
           paddingBottom: '0.5rem',
           marginBottom: '1rem'
@@ -245,10 +256,10 @@ export const FormSectionPartA: React.FC = () => {
               limitations, list any restrictions imposed on a child participant in connection
               with programs or activities below.
             </p>
-            
-            <div style={{ 
-              display: 'flex', 
-              gap: '2rem', 
+
+            <div style={{
+              display: 'flex',
+              gap: '2rem',
               alignItems: 'center',
               padding: '0.75rem 1rem',
               borderRadius: 'var(--radius-md)',
@@ -279,7 +290,7 @@ export const FormSectionPartA: React.FC = () => {
                 <span>Restrictions apply</span>
               </label>
             </div>
-            
+
             {errors.participantRestrictions && (
               <span className="error-message" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '-0.25rem' }}>
                 <AlertCircle size={16} />

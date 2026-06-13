@@ -13,6 +13,7 @@ interface FormFieldProps {
   showErrorMsg?: boolean;
   min?: number;
   max?: number;
+  options?: { value: string; label: string }[];
 }
 
 // Simple helper to resolve nested paths like "medications.0.medication"
@@ -31,15 +32,22 @@ export const FormField: React.FC<FormFieldProps> = ({
   disabled,
   showErrorMsg = true,
   min,
-  max
+  max,
+  options
 }) => {
-  const { register, formState: { errors } } = useFormContext();
+  const { register, formState: { errors }, watch } = useFormContext();
   const error = getNestedValue(errors, name);
+
+  const currentValue = watch ? watch(name) : undefined;
+  let resolvedOptions = options;
+  if (options && currentValue && !options.some(opt => opt.value === currentValue)) {
+    resolvedOptions = [{ value: currentValue, label: currentValue }, ...options];
+  }
 
   const isPhone = type === 'tel' || name === 'phone' || name.toLowerCase().includes('phone');
   const { onChange, ...registerRest } = register(name);
 
-  const handleCustomChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleCustomChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     if (isPhone) {
       let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
       if (value.length > 10) {
@@ -63,7 +71,22 @@ export const FormField: React.FC<FormFieldProps> = ({
   return (
     <div className={containerClass}>
       {label && <label className="form-label" htmlFor={name}>{label}</label>}
-      {type === 'textarea' ? (
+      {resolvedOptions ? (
+        <select
+          id={name}
+          className={`form-input ${error ? 'error' : ''}`}
+          disabled={disabled}
+          {...registerRest}
+          onChange={handleCustomChange}
+        >
+          {placeholder && <option value="">{placeholder}</option>}
+          {resolvedOptions.map(opt => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      ) : type === 'textarea' ? (
         <textarea
           id={name}
           placeholder={placeholder}

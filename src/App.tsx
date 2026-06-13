@@ -1,8 +1,9 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Download, CheckCircle2, AlertCircle, X, CreditCard, PenLine, FileText, ExternalLink } from 'lucide-react';
+import { Download, CheckCircle2, AlertCircle, X, CreditCard, PenLine, FileText, ExternalLink, Link as LinkIcon, Copy, Check } from 'lucide-react';
 import { formSchema, type HealthFormData } from './schema/formSchema';
+import { COUNCILS } from './schema/councilsData';
 import { FormSectionPartA } from './components/FormSectionPartA';
 import { FormSectionPartB } from './components/FormSectionPartB';
 import { FormSectionMedications } from './components/FormSectionMedications';
@@ -40,21 +41,43 @@ function ReminderModal({ pendingData, onConfirm, onCancel }: ReminderModalProps)
     signLaterItems.push('Medications Authorization — sign on the medications page of the printed form');
   }
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onCancel();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onCancel]);
+
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onCancel();
+    }
+  };
+
   return (
-    <div style={{
-      position: 'fixed', inset: 0, zIndex: 1000,
-      background: 'rgba(15, 23, 42, 0.6)',
-      backdropFilter: 'blur(4px)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: '1rem',
-      animation: 'fadeInUp 0.2s ease-out'
-    }}>
+    <div 
+      onClick={handleBackdropClick}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 1000,
+        background: 'rgba(15, 23, 42, 0.6)',
+        backdropFilter: 'blur(4px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '1rem',
+        animation: 'fadeInUp 0.2s ease-out'
+      }}
+    >
       <div style={{
         background: 'var(--surface-color)',
         borderRadius: 'var(--radius-lg)',
         boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
         width: '100%',
         maxWidth: '520px',
+        maxHeight: '90vh',
+        display: 'flex',
+        flexDirection: 'column',
         overflow: 'hidden'
       }}>
         {/* Header */}
@@ -79,7 +102,7 @@ function ReminderModal({ pendingData, onConfirm, onCancel }: ReminderModalProps)
         </div>
 
         {/* Body */}
-        <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+        <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', overflowY: 'auto', flex: 1 }}>
           {/* Review responsibility warning — always first */}
           <div style={{
             display: 'flex', gap: '1rem', alignItems: 'flex-start',
@@ -199,11 +222,511 @@ function ReminderModal({ pendingData, onConfirm, onCancel }: ReminderModalProps)
   );
 }
 
+interface ConfirmModalProps {
+  title: string;
+  message: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+function ConfirmModal({ title, message, onConfirm, onCancel }: ConfirmModalProps) {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onCancel();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onCancel]);
+
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onCancel();
+    }
+  };
+
+  return (
+    <div 
+      onClick={handleBackdropClick}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 1100,
+        background: 'rgba(15, 23, 42, 0.6)',
+        backdropFilter: 'blur(4px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '1rem',
+        animation: 'fadeInUp 0.2s ease-out'
+      }}
+    >
+      <div style={{
+        background: 'var(--surface-color)',
+        borderRadius: 'var(--radius-lg)',
+        boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
+        width: '100%',
+        maxWidth: '450px',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden'
+      }}>
+        {/* Header */}
+        <div style={{
+          background: 'linear-gradient(135deg, #F59E0B, #D97706)',
+          padding: '1.25rem 1.75rem',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <AlertCircle size={24} color="white" />
+            <h2 style={{ color: 'white', fontSize: '1.15rem', fontWeight: 600, margin: 0 }}>
+              {title}
+            </h2>
+          </div>
+          <button
+            onClick={onCancel}
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center' }}
+            aria-label="Close"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div style={{ padding: '1.75rem', fontSize: '0.95rem', color: 'var(--text-main)', lineHeight: 1.5 }}>
+          {message}
+        </div>
+
+        {/* Footer */}
+        <div style={{
+          padding: '1rem 1.75rem 1.5rem',
+          display: 'flex', gap: '0.75rem', justifyContent: 'flex-end',
+          borderTop: '1px solid var(--border-color)'
+        }}>
+          <button
+            onClick={onCancel}
+            className="btn btn-secondary"
+            style={{ width: 'auto', padding: '0.6rem 1.5rem' }}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            className="btn btn-primary"
+            style={{ 
+              width: 'auto', 
+              padding: '0.6rem 1.75rem', 
+              background: '#D97706' 
+            }}
+          >
+            Overwrite
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface AlertModalProps {
+  title: string;
+  message: string;
+  type: 'success' | 'error' | 'info';
+  onClose: () => void;
+}
+
+function AlertModal({ title, message, type, onClose }: AlertModalProps) {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  const getHeaderGradient = () => {
+    switch (type) {
+      case 'success':
+        return 'linear-gradient(135deg, #10B981, #059669)';
+      case 'error':
+        return 'linear-gradient(135deg, #EF4444, #DC2626)';
+      case 'info':
+      default:
+        return 'linear-gradient(135deg, var(--primary-color), #7C3AED)';
+    }
+  };
+
+  const getIcon = () => {
+    switch (type) {
+      case 'success':
+        return <CheckCircle2 size={24} color="white" />;
+      case 'error':
+      case 'info':
+      default:
+        return <AlertCircle size={24} color="white" />;
+    }
+  };
+
+  return (
+    <div 
+      onClick={handleBackdropClick}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 1100,
+        background: 'rgba(15, 23, 42, 0.6)',
+        backdropFilter: 'blur(4px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '1rem',
+        animation: 'fadeInUp 0.2s ease-out'
+      }}
+    >
+      <div style={{
+        background: 'var(--surface-color)',
+        borderRadius: 'var(--radius-lg)',
+        boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
+        width: '100%',
+        maxWidth: '450px',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden'
+      }}>
+        {/* Header */}
+        <div style={{
+          background: getHeaderGradient(),
+          padding: '1.25rem 1.75rem',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            {getIcon()}
+            <h2 style={{ color: 'white', fontSize: '1.15rem', fontWeight: 600, margin: 0 }}>
+              {title}
+            </h2>
+          </div>
+          <button
+            onClick={onClose}
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center' }}
+            aria-label="Close"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div style={{ padding: '1.75rem', fontSize: '0.95rem', color: 'var(--text-main)', lineHeight: 1.5, whiteSpace: 'pre-wrap' }}>
+          {message}
+        </div>
+
+        {/* Footer */}
+        <div style={{
+          padding: '1rem 1.75rem 1.5rem',
+          display: 'flex', justifyContent: 'flex-end',
+          borderTop: '1px solid var(--border-color)'
+        }}>
+          <button
+            onClick={onClose}
+            className="btn btn-primary"
+            style={{ 
+              width: 'auto', 
+              padding: '0.6rem 1.75rem', 
+              background: type === 'error' ? '#EF4444' : type === 'success' ? '#10B981' : 'var(--primary-color)' 
+            }}
+          >
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const getHashParam = (name: string): string => {
+  if (typeof window === 'undefined') return '';
+  const hash = window.location.hash.replace(/^#/, '');
+  return new URLSearchParams(hash).get(name) || '';
+};
+
+// --- Leader Link Builder Modal ---
+interface LeaderLinkModalProps {
+  onClose: () => void;
+}
+
+function LeaderLinkModal({ onClose }: LeaderLinkModalProps) {
+  const [unitNo, setUnitNo] = useState('');
+  const [councilName, setCouncilName] = useState('');
+  const [unitLeader, setUnitLeader] = useState('');
+  const [unitLeaderPhone, setUnitLeaderPhone] = useState('');
+  const [copied, setCopied] = useState(false);
+  const [generatedLink, setGeneratedLink] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  const bodyRef = useRef<HTMLDivElement>(null);
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 10) value = value.substring(0, 10);
+    let formatted = '';
+    if (value.length > 0) formatted += value.substring(0, 3);
+    if (value.length > 3) formatted += '-' + value.substring(3, 6);
+    if (value.length > 6) formatted += '-' + value.substring(6, 10);
+    setUnitLeaderPhone(formatted);
+    setGeneratedLink('');
+    setPhoneError('');
+  };
+
+  const handleGenerate = () => {
+    setPhoneError('');
+    if (unitLeaderPhone.trim()) {
+      const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+      if (!phoneRegex.test(unitLeaderPhone.trim())) {
+        setPhoneError('Mobile number must be formatted as XXX-XXX-XXXX');
+        return;
+      }
+    }
+
+    const origin = window.location.origin;
+    const pathname = window.location.pathname;
+    const params = new URLSearchParams();
+    if (unitNo.trim()) params.set('unitNo', unitNo.trim());
+    if (councilName) params.set('councilName', councilName);
+    if (unitLeader.trim()) params.set('unitLeader', unitLeader.trim());
+    if (unitLeaderPhone.trim()) params.set('unitLeaderPhone', unitLeaderPhone.trim());
+
+    const url = `${origin}${pathname}#${params.toString()}`;
+    setGeneratedLink(url);
+    setCopied(false);
+
+    // Scroll body to the bottom so the generated link block is fully visible
+    setTimeout(() => {
+      if (bodyRef.current) {
+        bodyRef.current.scrollTo({
+          top: bodyRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    }, 50);
+  };
+
+  const handleCopy = async () => {
+    if (!generatedLink) return;
+    try {
+      await navigator.clipboard.writeText(generatedLink);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy', err);
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  return (
+    <div 
+      onClick={handleBackdropClick}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 1000,
+        background: 'rgba(15, 23, 42, 0.6)',
+        backdropFilter: 'blur(4px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '1rem',
+        animation: 'fadeInUp 0.2s ease-out'
+      }}
+    >
+      <div style={{
+        background: 'var(--surface-color)',
+        borderRadius: 'var(--radius-lg)',
+        boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
+        width: '100%',
+        maxWidth: '520px',
+        maxHeight: '90vh',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden'
+      }}>
+        {/* Header */}
+        <div style={{
+          background: 'linear-gradient(135deg, var(--primary-color), #7C3AED)',
+          padding: '1.5rem 2rem',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <LinkIcon size={22} color="white" />
+            <h2 style={{ color: 'white', fontSize: '1.2rem', fontWeight: 600, margin: 0 }}>
+              Leader Pre-filled Link Builder
+            </h2>
+          </div>
+          <button
+            onClick={onClose}
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center' }}
+            aria-label="Close"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div ref={bodyRef} style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', overflowY: 'auto', flex: 1 }}>
+          <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--text-muted)' }}>
+            Enter your unit details below to build a customized link. Parents who click this link will have their form fields pre-filled automatically.
+          </p>
+
+          <div className="form-group" style={{ marginBottom: '1rem' }}>
+            <label className="form-label">Unit Number</label>
+            <input
+              type="text"
+              className="form-input"
+              placeholder="e.g., Troop/Pack/Crew 123"
+              value={unitNo}
+              onChange={e => { setUnitNo(e.target.value); setGeneratedLink(''); }}
+              maxLength={20}
+            />
+          </div>
+
+          <div className="form-group" style={{ marginBottom: '1rem' }}>
+            <label className="form-label">Council Name/Number</label>
+            <select
+              className="form-input"
+              value={councilName}
+              onChange={e => { setCouncilName(e.target.value); setGeneratedLink(''); }}
+            >
+              <option value="">Select Council...</option>
+              {COUNCILS.map(c => (
+                <option key={c.number} value={`${c.name} (#${c.number})`}>
+                  {c.name} ({c.number})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group" style={{ marginBottom: '1rem' }}>
+            <label className="form-label">Unit Leader Name</label>
+            <input
+              type="text"
+              className="form-input"
+              placeholder="e.g., John Smith"
+              value={unitLeader}
+              onChange={e => { setUnitLeader(e.target.value); setGeneratedLink(''); }}
+              maxLength={80}
+            />
+          </div>
+
+          <div className="form-group" style={{ marginBottom: '1rem' }}>
+            <label className="form-label">Unit Leader Mobile #</label>
+            <input
+              type="tel"
+              className={`form-input ${phoneError ? 'error' : ''}`}
+              placeholder="XXX-XXX-XXXX"
+              value={unitLeaderPhone}
+              onChange={handlePhoneChange}
+              maxLength={12}
+            />
+            {phoneError && (
+              <span className="error-message">
+                <AlertCircle size={16} />
+                {phoneError}
+              </span>
+            )}
+          </div>
+
+          {generatedLink && (
+            <div style={{
+              background: 'var(--background-color)',
+              border: '1px solid var(--border-color)',
+              borderRadius: 'var(--radius-md)',
+              padding: '1rem',
+              marginTop: '0.5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.75rem',
+              animation: 'fadeInUp 0.3s ease-out'
+            }}>
+              <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-main)' }}>Generated Link:</span>
+              <div style={{
+                background: 'white',
+                border: '1px solid var(--border-color)',
+                borderRadius: '6px',
+                padding: '0.5rem 0.75rem',
+                fontSize: '0.85rem',
+                wordBreak: 'break-all',
+                color: 'var(--primary-color)',
+                maxHeight: '80px',
+                overflowY: 'auto'
+              }}>
+                {generatedLink}
+              </div>
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="btn btn-secondary"
+                style={{
+                  padding: '0.5rem 1rem',
+                  fontSize: '0.9rem',
+                  alignSelf: 'flex-start',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  transition: 'all 0.2s',
+                  borderColor: copied ? 'var(--secondary-color)' : 'var(--border-color)',
+                  color: copied ? 'var(--secondary-color)' : 'var(--text-main)'
+                }}
+              >
+                {copied ? <Check size={16} /> : <Copy size={16} />}
+                {copied ? 'Copied!' : 'Copy to Clipboard'}
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Footer buttons */}
+        <div style={{
+          padding: '1rem 2rem 1.5rem',
+          display: 'flex', gap: '0.75rem', justifyContent: 'flex-end',
+          borderTop: '1px solid var(--border-color)'
+        }}>
+          <button
+            onClick={onClose}
+            className="btn btn-secondary"
+            style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
+          >
+            Close
+          </button>
+          <button
+            onClick={handleGenerate}
+            className="btn btn-primary"
+            style={{ width: 'auto', padding: '0.75rem 1.75rem', background: 'var(--primary-color)' }}
+          >
+            <LinkIcon size={18} style={{ marginRight: '0.4rem' }} />
+            Generate Link
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // --- Main App ---
 function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [pendingFormData, setPendingFormData] = useState<HealthFormData | null>(null);
+  const [showLeaderModal, setShowLeaderModal] = useState(false);
+  const [appAlert, setAppAlert] = useState<{ title: string; message: string; type: 'success' | 'error' | 'info' } | null>(null);
+  const [showImportConfirm, setShowImportConfirm] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [supportEmail, setSupportEmail] = useState('support [at] health-form-filler');
 
@@ -225,9 +748,29 @@ function App() {
       hasAllergies: false,
       willSignLater: false,
       parentSignatureDate: getTodayDateString(),
-      participantSignatureDate: getTodayDateString()
+      participantSignatureDate: getTodayDateString(),
+      unitNo: getHashParam('unitNo'),
+      councilName: getHashParam('councilName'),
+      unitLeader: getHashParam('unitLeader'),
+      unitLeaderPhone: getHashParam('unitLeaderPhone')
     }
   });
+
+  const hasExistingData = () => {
+    const values = methods.getValues();
+    const ignoredKeys = [
+      'hasAllergies', 'willSignLater', 'parentSignatureDate', 'participantSignatureDate',
+      'unitNo', 'councilName', 'unitLeader', 'unitLeaderPhone', 'willParticipantSignLater', 'willSignMedsLater'
+    ];
+    
+    return Object.keys(values).some(key => {
+      if (ignoredKeys.includes(key)) return false;
+      const val = values[key as keyof HealthFormData];
+      if (Array.isArray(val)) return val.length > 0;
+      if (typeof val === 'boolean') return val === true;
+      return typeof val === 'string' && val.trim() !== '';
+    }) || methods.formState.isDirty;
+  };
 
   const handleLoadTestData = () => {
     methods.reset({
@@ -242,7 +785,7 @@ function App() {
       zipCode: '12345',
       phone: '555-111-2222',
       unitNo: 'Pack 123',
-      councilName: 'Great Trail Council',
+      councilName: 'Dan Beard Council (#438)',
       expeditionCrewNo: 'Expedition Crew 456',
       unitLeader: 'Unit Leader John Doe',
       unitLeaderPhone: '555-333-4444',
@@ -407,7 +950,7 @@ function App() {
       zipCode: '12345',
       phone: '555-111-2222',
       unitNo: 'Pack 123',
-      councilName: 'Great Trail Council',
+      councilName: 'Dan Beard Council (#438)',
       expeditionCrewNo: 'Expedition Crew 456',
       unitLeader: 'Unit Leader John Doe',
       unitLeaderPhone: '555-333-4444',
@@ -511,7 +1054,7 @@ function App() {
       zipCode: '44240-1234-5678',
       phone: '555-111-2222',
       unitNo: 'Troop Number 1234567',
-      councilName: 'Great Trail Council of Scouting America North East Region District Area Valley Organization Headquarter O',
+      councilName: 'Dan Beard Council (#438)',
       expeditionCrewNo: 'Expedition Crew Number 4567890123456789012345',
       unitLeader: 'Unit Leader Johnathan Doe Senior Volunteer Program Lead Officer of District Nine',
       unitLeaderPhone: '555-333-4444',
@@ -664,7 +1207,11 @@ function App() {
   };
 
   const handleImportPdfClick = () => {
-    fileInputRef.current?.click();
+    if (hasExistingData()) {
+      setShowImportConfirm(true);
+    } else {
+      fileInputRef.current?.click();
+    }
   };
 
   const handleImportPdfChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -676,10 +1223,18 @@ function App() {
       const buffer = await file.arrayBuffer();
       const parsedData = await parseHealthFormPDF(buffer);
       methods.reset(parsedData as any);
-      alert("Form successfully loaded from the PDF! Please review the form fields and draw/verify signatures before downloading.");
+      setAppAlert({
+        title: "Import Successful",
+        message: "Form successfully loaded from the PDF! Please review the form fields and draw/verify signatures before downloading.",
+        type: "success"
+      });
     } catch (error) {
       console.error("Failed to parse PDF", error);
-      alert("Failed to parse the PDF file. Please verify it is a valid completed medical form generated by this app.");
+      setAppAlert({
+        title: "Import Failed",
+        message: "Failed to parse the PDF file. Please verify it is a valid completed medical form generated by this app.",
+        type: "error"
+      });
     } finally {
       setIsGenerating(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -714,7 +1269,11 @@ function App() {
     } catch (error: any) {
       console.error("Failed to generate PDF", error);
       const errMsg = error instanceof Error ? error.message : String(error);
-      alert(`An error occurred while generating the PDF:\n\n${errMsg}\n\nPlease try again.`);
+      setAppAlert({
+        title: "Download Failed",
+        message: `An error occurred while generating the PDF:\n\n${errMsg}\n\nPlease try again.`,
+        type: "error"
+      });
     } finally {
       setIsGenerating(false);
     }
@@ -742,6 +1301,28 @@ function App() {
           pendingData={pendingFormData}
           onConfirm={executePdfDownload}
           onCancel={() => setPendingFormData(null)}
+        />
+      )}
+      {showLeaderModal && (
+        <LeaderLinkModal onClose={() => setShowLeaderModal(false)} />
+      )}
+      {appAlert && (
+        <AlertModal
+          title={appAlert.title}
+          message={appAlert.message}
+          type={appAlert.type}
+          onClose={() => setAppAlert(null)}
+        />
+      )}
+      {showImportConfirm && (
+        <ConfirmModal
+          title="Overwrite Existing Data?"
+          message="Importing a new PDF will completely overwrite any data you have already entered in this form. Are you sure you want to continue?"
+          onConfirm={() => {
+            setShowImportConfirm(false);
+            fileInputRef.current?.click();
+          }}
+          onCancel={() => setShowImportConfirm(false)}
         />
       )}
       <div className="app-container">
@@ -787,6 +1368,15 @@ function App() {
               style={{ width: 'auto', padding: '0.75rem 1.5rem' }}
             >
               Import Completed PDF for Editing
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowLeaderModal(true)}
+              className="btn btn-secondary"
+              style={{ width: 'auto', padding: '0.75rem 1.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
+            >
+              <LinkIcon size={18} />
+              Share Pre-filled Link (For Leaders)
             </button>
             <input
               type="file"
