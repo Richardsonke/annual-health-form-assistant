@@ -11,8 +11,8 @@ interface FormFieldProps {
   maxLength?: number;
   disabled?: boolean;
   showErrorMsg?: boolean;
-  min?: number;
-  max?: number;
+  min?: number | string;
+  max?: number | string;
   options?: { value: string; label: string }[];
 }
 

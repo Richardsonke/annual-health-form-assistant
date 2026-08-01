@@ -7,6 +7,8 @@ interface ConditionRowProps {
   label: string;
   expName?: string;
   dateName?: string;
+  dateType?: string;
+  dateMin?: string | number;
   datePlaceholder?: string;
   extraContent?: React.ReactNode;
   expMaxLength?: number;
@@ -18,6 +20,8 @@ const ConditionRow: React.FC<ConditionRowProps> = ({
   label,
   expName,
   dateName,
+  dateType,
+  dateMin,
   datePlaceholder,
   extraContent,
   expMaxLength = 100,
@@ -63,6 +67,8 @@ const ConditionRow: React.FC<ConditionRowProps> = ({
           {dateName && isChecked === true && (
             <FormField
               name={dateName}
+              type={dateType}
+              min={dateMin}
               placeholder={datePlaceholder || "Date/Result"}
               containerClass="form-table-group"
               maxLength={dateMaxLength}
@@ -87,6 +93,7 @@ export const FormSectionPartB = () => {
   const { setValue, formState: { errors } } = useFormContext();
   const isInsulinChecked = useWatch({ name: 'condInsulin' });
   const isCPAPChecked = useWatch({ name: 'condCPAP' });
+  const currentMonthStr = new Date().toISOString().slice(0, 7);
 
   return (
     <div className="form-card">
@@ -119,7 +126,40 @@ export const FormSectionPartB = () => {
       </div>
 
       <h3 className="section-title" style={{ fontSize: '1.2rem', marginTop: '2rem', color: 'var(--text-main)', borderBottom: '1px solid var(--border-color)' }}>
-        Allergies / Medical Alerts
+        Medical Alerts
+      </h3>
+      <p style={{ marginBottom: '1rem', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+        Do you require or carry any of the following medical alert items?
+      </p>
+      <table className="form-table table-responsive-yesno">
+        <thead>
+          <tr>
+            <th style={{ width: '60px' }}>Yes</th>
+            <th style={{ width: '60px' }}>No</th>
+            <th style={{ width: '35%' }}>Medical Alert</th>
+            <th>Expiration Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ConditionRow
+            name="epinephrine"
+            label="Epinephrine Auto-injector"
+            dateName="autoinjectorExpDate"
+            dateType="month"
+            dateMin={currentMonthStr}
+          />
+          <ConditionRow
+            name="rescueInhaler"
+            label="Rescue Inhaler"
+            dateName="inhalerExpDate"
+            dateType="month"
+            dateMin={currentMonthStr}
+          />
+        </tbody>
+      </table>
+
+      <h3 className="section-title" style={{ fontSize: '1.2rem', marginTop: '2.5rem', color: 'var(--text-main)', borderBottom: '1px solid var(--border-color)' }}>
+        Allergies
       </h3>
       <p style={{ marginBottom: '1rem', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
         Are you allergic to or do you have any adverse reaction to any of the following?
@@ -129,7 +169,7 @@ export const FormSectionPartB = () => {
           <tr>
             <th style={{ width: '60px' }}>Yes</th>
             <th style={{ width: '60px' }}>No</th>
-            <th style={{ width: '35%' }}>Allergy/Alert</th>
+            <th style={{ width: '35%' }}>Allergy</th>
             <th>Explain / Details</th>
           </tr>
         </thead>
@@ -138,8 +178,6 @@ export const FormSectionPartB = () => {
           <ConditionRow name="allergyMedication" label="Medicines" expName="allergyMedicationExp" expMaxLength={38} />
           <ConditionRow name="allergyPlants" label="Plants" expName="allergyPlantsExp" expMaxLength={38} />
           <ConditionRow name="allergyBugs" label="Insect Bites/Stings" expName="allergyBugsExp" expMaxLength={38} />
-          <ConditionRow name="epinephrine" label="Epinephrine Auto-injector" dateName="autoinjectorExpDate" datePlaceholder="Auto-injector Exp. Date (MM/YYYY)" dateMaxLength={25} />
-          <ConditionRow name="rescueInhaler" label="Rescue Inhaler" dateName="inhalerExpDate" datePlaceholder="Inhaler Expiration Date (MM/YYYY)" dateMaxLength={25} />
         </tbody>
       </table>
 

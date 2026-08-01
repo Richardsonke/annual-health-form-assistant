@@ -72,14 +72,13 @@ const ImmRow: React.FC<ImmRowProps> = ({
         )}
       </td>
       <td className="col-details" style={{ width: '30%' }}>
-        {dateName && (
+        {dateName && isChecked === true && (
           <div>
             <input
               type="text"
               placeholder={datePlaceholder}
               className={`form-input form-table-group${hasDateError ? ' error' : ''}`}
               style={{ padding: '0.4rem 0.75rem' }}
-              disabled={isChecked !== true}
               maxLength={35}
               {...register(dateName)}
             />

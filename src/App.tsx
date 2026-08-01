@@ -442,10 +442,97 @@ function AlertModal({ title, message, type, onClose }: AlertModalProps) {
   );
 }
 
-const getHashParam = (name: string): string => {
-  if (typeof window === 'undefined') return '';
-  const hash = window.location.hash.replace(/^#/, '');
-  return new URLSearchParams(hash).get(name) || '';
+export interface ParsedUrlHash {
+  unitNo: string;
+  councilName: string;
+  unitLeader: string;
+  unitLeaderPhone: string;
+}
+
+const UNIT_PREFIX_EXPANSION: Record<string, string> = {
+  T: 'Troop',
+  P: 'Pack',
+  C: 'Crew',
+  O: 'Post',
+  S: 'Ship',
+};
+
+export const parseUrlHash = (hashStr?: string): ParsedUrlHash => {
+  const emptyResult: ParsedUrlHash = {
+    unitNo: '',
+    councilName: '',
+    unitLeader: '',
+    unitLeaderPhone: '',
+  };
+
+  const rawHash = hashStr !== undefined
+    ? hashStr.replace(/^#/, '')
+    : (typeof window !== 'undefined' ? window.location.hash.replace(/^#/, '') : '');
+
+  if (!rawHash) return emptyResult;
+
+  if (rawHash.startsWith('v2.')) {
+    try {
+      const encoded = rawHash.slice(3);
+      let base64 = encoded.replace(/-/g, '+').replace(/_/g, '/');
+      while (base64.length % 4 !== 0) {
+        base64 += '=';
+      }
+      const decoded = atob(base64);
+      const parts = decoded.split('~');
+
+      let unitNo = '';
+      const pos0 = parts[0] || '';
+      if (pos0) {
+        const unitMatch = pos0.match(/^([TPCOS])(\d+)$/);
+        if (unitMatch) {
+          const prefixName = UNIT_PREFIX_EXPANSION[unitMatch[1]];
+          unitNo = `${prefixName} ${unitMatch[2]}`;
+        } else {
+          unitNo = pos0;
+        }
+      }
+
+      let councilName = '';
+      const pos1 = parts[1] || '';
+      if (pos1.trim()) {
+        const councilNum = Number(pos1.trim());
+        const foundCouncil = COUNCILS.find((c) => c.number === councilNum);
+        if (foundCouncil) {
+          councilName = `${foundCouncil.name} (#${foundCouncil.number})`;
+        } else {
+          councilName = `Council #${pos1.trim()}`;
+        }
+      }
+
+      let unitLeader = parts[2] || '';
+
+      let unitLeaderPhone = '';
+      const pos3 = parts[3] || '';
+      if (pos3) {
+        const digits = pos3.replace(/\D/g, '');
+        if (digits.length === 10) {
+          unitLeaderPhone = `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+        } else {
+          unitLeaderPhone = pos3;
+        }
+      }
+
+      return { unitNo, councilName, unitLeader, unitLeaderPhone };
+    } catch {
+      return emptyResult;
+    }
+  } else if (rawHash.includes('=')) {
+    const params = new URLSearchParams(rawHash);
+    return {
+      unitNo: params.get('unitNo') || '',
+      councilName: params.get('councilName') || '',
+      unitLeader: params.get('unitLeader') || '',
+      unitLeaderPhone: params.get('unitLeaderPhone') || '',
+    };
+  }
+
+  return emptyResult;
 };
 
 // --- Leader Link Builder Modal ---
@@ -485,15 +572,46 @@ function LeaderLinkModal({ onClose }: LeaderLinkModalProps) {
       }
     }
 
+    let unitShort = '';
+    const trimmedUnit = unitNo.trim();
+    if (trimmedUnit) {
+      const unitMatch = trimmedUnit.match(/^(Troop|Pack|Crew|Post|Ship)\s+(\d+)$/i);
+      if (unitMatch) {
+        const prefixMap: Record<string, string> = {
+          troop: 'T',
+          pack: 'P',
+          crew: 'C',
+          post: 'O',
+          ship: 'S',
+        };
+        const code = prefixMap[unitMatch[1].toLowerCase()];
+        unitShort = `${code}${unitMatch[2]}`;
+      } else {
+        unitShort = trimmedUnit;
+      }
+    }
+
+    let councilNumStr = '';
+    if (councilName) {
+      const match = councilName.match(/#(\d+)\)/);
+      if (match) {
+        councilNumStr = match[1];
+      } else {
+        councilNumStr = councilName;
+      }
+    }
+
+    const leaderNameStr = unitLeader.trim();
+    const phoneRawStr = unitLeaderPhone.replace(/\D/g, '');
+
+    const payload = `${unitShort}~${councilNumStr}~${leaderNameStr}~${phoneRawStr}`;
+    const rawBase64 = btoa(payload);
+    const urlSafeBase64 = rawBase64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
     const origin = window.location.origin;
     const pathname = window.location.pathname;
-    const params = new URLSearchParams();
-    if (unitNo.trim()) params.set('unitNo', unitNo.trim());
-    if (councilName) params.set('councilName', councilName);
-    if (unitLeader.trim()) params.set('unitLeader', unitLeader.trim());
-    if (unitLeaderPhone.trim()) params.set('unitLeaderPhone', unitLeaderPhone.trim());
 
-    const url = `${origin}${pathname}#${params.toString()}`;
+    const url = `${origin}${pathname}#v2.${urlSafeBase64}`;
     setGeneratedLink(url);
     setCopied(false);
 
@@ -749,10 +867,7 @@ function App() {
       willSignLater: false,
       parentSignatureDate: getTodayDateString(),
       participantSignatureDate: getTodayDateString(),
-      unitNo: getHashParam('unitNo'),
-      councilName: getHashParam('councilName'),
-      unitLeader: getHashParam('unitLeader'),
-      unitLeaderPhone: getHashParam('unitLeaderPhone')
+      ...parseUrlHash()
     }
   });
 
@@ -820,7 +935,7 @@ function App() {
       allergyBugs: true,
       allergyBugsExp: 'Bug Allergy (Bee Stings) Explanation',
       epinephrine: true,
-      autoinjectorExpDate: '12/28',
+      autoinjectorExpDate: '2028-12',
       heightFt: '5',
       heightIn: '5',
       weight: '120',
@@ -887,7 +1002,7 @@ function App() {
         { medication: 'Med 6 Name', dose: '250mg', frequency: 'Weekly', reason: 'Reason 6' }
       ],
       rescueInhaler: true,
-      inhalerExpDate: '10/27',
+      inhalerExpDate: '2027-10',
       exemptionToImmunizations: false,
       immTetanus: true,
       immTetanusDate: '08/15/2022',
@@ -1089,7 +1204,7 @@ function App() {
       allergyBugs: true,
       allergyBugsExp: 'Bug Allergy (Bee Stings) Explanations',
       epinephrine: true,
-      autoinjectorExpDate: '12/28 (Auto-inject Exp) ',
+      autoinjectorExpDate: '2028-12',
       heightFt: '5',
       heightIn: '5',
       weight: '120',
@@ -1156,7 +1271,7 @@ function App() {
         { medication: 'Montelukast Sodium Tab 10mg 1', dose: '10mg tab  ', frequency: 'Once daily in the evening', reason: 'Control chronic asthma symptoms and prevent seasonal allergy flareups during event OK' }
       ],
       rescueInhaler: true,
-      inhalerExpDate: '10/27 (Rescue Inh. Exp) ',
+      inhalerExpDate: '2027-10',
       exemptionToImmunizations: false,
       immTetanus: true,
       immTetanusDate: '08/15/2022 (Current Tetanus Vac) OK',

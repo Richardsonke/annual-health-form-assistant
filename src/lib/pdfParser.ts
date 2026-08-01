@@ -161,12 +161,12 @@ export async function parseHealthFormPDF(fileBuffer: ArrayBuffer): Promise<Parti
   );
 
   data.epinephrine = getYesNoCheckVal('Epinephrine');
-  data.autoinjectorExpDate = getTextFieldVal('Autoinjector exp date');
+  data.autoinjectorExpDate = normalizeMonthYear(getTextFieldVal('Autoinjector exp date'));
 
   // Conditions
   data.condAsthma = getYesNoCheckVal('Asthma');
   data.rescueInhaler = getYesNoCheckVal('Rescue inhaler');
-  data.inhalerExpDate = getTextFieldVal('Inhaler exp date');
+  data.inhalerExpDate = normalizeMonthYear(getTextFieldVal('Inhaler exp date'));
   data.lastAsthmaAttack = getTextFieldVal('Last attack date');
   data.condDiabetes = getYesNoCheckVal('Diabetes');
   data.diabetesExplanation = getTextFieldVal('Diabetes explanation');
@@ -220,9 +220,10 @@ export async function parseHealthFormPDF(fileBuffer: ArrayBuffer): Promise<Parti
 
   // Medications
   data.noMedications = getCheckBoxVal('No medications');
+  data.nonPrescriptionExceptions = getYesNoCheckVal('Non-prescription exceptions');
+  data.nonPrescriptionExceptionsText = getTextFieldVal('Non-prescrip exceptions');
+
   if (!data.noMedications) {
-    data.nonPrescriptionExceptions = getYesNoCheckVal('Non-prescription exceptions');
-    data.nonPrescriptionExceptionsText = getTextFieldVal('Non-prescrip exceptions');
     data.medicationsAdditionalSpace = getCheckBoxVal('Additional space');
 
     const meds = [];
@@ -311,4 +312,26 @@ export async function parseHealthFormPDF(fileBuffer: ArrayBuffer): Promise<Parti
   data.participantSignatureDate = parsedParticipantDate || today;
 
   return data;
+}
+
+export function normalizeMonthYear(val: string): string {
+  if (!val) return '';
+  const trimmed = val.trim();
+  if (/^\d{4}-(0[1-9]|1[0-2])$/.test(trimmed)) {
+    return trimmed;
+  }
+  const match1 = trimmed.match(/\b(0?[1-9]|1[0-2])[\/.-](\d{4}|\d{2})\b/);
+  if (match1) {
+    const m = parseInt(match1[1], 10);
+    let y = parseInt(match1[2], 10);
+    if (y < 100) y += 2000;
+    return `${y}-${String(m).padStart(2, '0')}`;
+  }
+  const match2 = trimmed.match(/\b(\d{4})[\/.-](0?[1-9]|1[0-2])\b/);
+  if (match2) {
+    const y = parseInt(match2[1], 10);
+    const m = parseInt(match2[2], 10);
+    return `${y}-${String(m).padStart(2, '0')}`;
+  }
+  return trimmed;
 }

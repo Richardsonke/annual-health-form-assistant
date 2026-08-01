@@ -410,5 +410,93 @@ describe('formSchema Validation', () => {
       expect(resultUndefined.success).toBe(true);
     });
   });
+
+  describe('Medical Alerts Expiration Date Validation', () => {
+    it('should require expiration date when Epinephrine Auto-injector is Yes', () => {
+      const dataWithoutExp = {
+        ...baseValidYouthData,
+        epinephrine: true,
+        autoinjectorExpDate: ''
+      };
+      const result = formSchema.safeParse(dataWithoutExp);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues.some(i => i.path[0] === 'autoinjectorExpDate')).toBe(true);
+      }
+    });
+
+    it('should fail if Epinephrine Auto-injector expiration date is in the past', () => {
+      const dataWithExpired = {
+        ...baseValidYouthData,
+        epinephrine: true,
+        autoinjectorExpDate: '2025-12'
+      };
+      const result = formSchema.safeParse(dataWithExpired);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues.some(i => i.path[0] === 'autoinjectorExpDate')).toBe(true);
+      }
+    });
+
+    it('should pass if Epinephrine Auto-injector expiration date is current month or future', () => {
+      const currentMonth = new Date().toISOString().slice(0, 7);
+      const dataWithCurrent = {
+        ...baseValidYouthData,
+        epinephrine: true,
+        autoinjectorExpDate: currentMonth
+      };
+      expect(formSchema.safeParse(dataWithCurrent).success).toBe(true);
+
+      const dataWithFuture = {
+        ...baseValidYouthData,
+        epinephrine: true,
+        autoinjectorExpDate: '2028-12'
+      };
+      expect(formSchema.safeParse(dataWithFuture).success).toBe(true);
+    });
+
+    it('should require expiration date when Rescue Inhaler is Yes', () => {
+      const dataWithoutExp = {
+        ...baseValidYouthData,
+        rescueInhaler: true,
+        inhalerExpDate: ''
+      };
+      const result = formSchema.safeParse(dataWithoutExp);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues.some(i => i.path[0] === 'inhalerExpDate')).toBe(true);
+      }
+    });
+
+    it('should fail if Rescue Inhaler expiration date is in the past', () => {
+      const dataWithExpired = {
+        ...baseValidYouthData,
+        rescueInhaler: true,
+        inhalerExpDate: '2024-01'
+      };
+      const result = formSchema.safeParse(dataWithExpired);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues.some(i => i.path[0] === 'inhalerExpDate')).toBe(true);
+      }
+    });
+
+    it('should pass if Rescue Inhaler expiration date is current month or future', () => {
+      const currentMonth = new Date().toISOString().slice(0, 7);
+      const dataWithCurrent = {
+        ...baseValidYouthData,
+        rescueInhaler: true,
+        inhalerExpDate: currentMonth
+      };
+      expect(formSchema.safeParse(dataWithCurrent).success).toBe(true);
+
+      const dataWithFuture = {
+        ...baseValidYouthData,
+        rescueInhaler: true,
+        inhalerExpDate: '2027-10'
+      };
+      expect(formSchema.safeParse(dataWithFuture).success).toBe(true);
+    });
+  });
 });
 

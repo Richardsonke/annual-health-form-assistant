@@ -1,6 +1,16 @@
 import { PDFDocument, PDFName } from 'pdf-lib';
 import type { HealthFormData } from '../schema/formSchema';
 
+function formatMonthForPdf(val?: string): string {
+  if (!val) return '';
+  const trimmed = val.trim();
+  const yyyyMmMatch = trimmed.match(/^(\d{4})-(0[1-9]|1[0-2])$/);
+  if (yyyyMmMatch) {
+    return `${yyyyMmMatch[2]}/${yyyyMmMatch[1]}`;
+  }
+  return trimmed;
+}
+
 export function wrapText(text: string, maxLineLength: number = 70): string[] {
   if (!text) return [];
   const lines: string[] = [];
@@ -218,102 +228,102 @@ export async function generateHealthFormPDF(data: HealthFormData): Promise<Blob>
   setText('Height', heightTotal);
   setText('Weight', data.weight || '');
 
-  // Part B Allergies
+  // Part B Allergies & Alerts
   setYesNoCheck('Food', data.allergyFood);
-  setText('Food explanation', data.allergyFoodExp || '');
+  setText('Food explanation', data.allergyFood === true ? (data.allergyFoodExp || '') : '');
   setYesNoCheck('Medication', data.allergyMedication);
-  setText('Medication explanation', data.allergyMedicationExp || '');
+  setText('Medication explanation', data.allergyMedication === true ? (data.allergyMedicationExp || '') : '');
   setYesNoCheck('Plants', data.allergyPlants);
-  setText('Plants explanation', data.allergyPlantsExp || '');
+  setText('Plants explanation', data.allergyPlants === true ? (data.allergyPlantsExp || '') : '');
   setYesNoCheck('Bugs', data.allergyBugs);
-  setText('Bugs explanation', data.allergyBugsExp || '');
+  setText('Bugs explanation', data.allergyBugs === true ? (data.allergyBugsExp || '') : '');
   setYesNoCheck('Epinephrine', data.epinephrine);
-  setText('Autoinjector exp date', data.autoinjectorExpDate || '');
+  setText('Autoinjector exp date', data.epinephrine === true ? formatMonthForPdf(data.autoinjectorExpDate) : '');
 
   // Part B Conditions
   setYesNoCheck('Asthma', data.condAsthma);
   setYesNoCheck('Rescue inhaler', data.rescueInhaler);
-  setText('Inhaler exp date', data.inhalerExpDate || '');
-  setText('Last attack date', data.lastAsthmaAttack || '');
+  setText('Inhaler exp date', data.rescueInhaler === true ? formatMonthForPdf(data.inhalerExpDate) : '');
+  setText('Last attack date', data.condAsthma === true ? (data.lastAsthmaAttack || '') : '');
   
   setYesNoCheck('Diabetes', data.condDiabetes);
-  setText('Diabetes explanation', data.diabetesExplanation || '');
-  setCheck('Insuliln', data.condInsulin === true);
-  setText('Last HbA1c', data.lastHbA1c || '');
+  setText('Diabetes explanation', data.condDiabetes === true ? (data.diabetesExplanation || '') : '');
+  setCheck('Insuliln', data.condDiabetes === true && data.condInsulin === true);
+  setText('Last HbA1c', data.condDiabetes === true ? (data.lastHbA1c || '') : '');
   
   setYesNoCheck('Heart disease', data.condHeartDisease);
-  setText('Heart explanation', data.heartDiseaseExplanation || '');
+  setText('Heart explanation', data.condHeartDisease === true ? (data.heartDiseaseExplanation || '') : '');
   
   setYesNoCheck('Hypertension', data.condHypertension);
-  setText('Hypertension explanation', data.hypertensionExplanation || '');
+  setText('Hypertension explanation', data.condHypertension === true ? (data.hypertensionExplanation || '') : '');
 
   setYesNoCheck('Stroke', data.condStroke);
-  setText('Stroke explanation', data.strokeExplanation || '');
+  setText('Stroke explanation', data.condStroke === true ? (data.strokeExplanation || '') : '');
 
   setYesNoCheck('Respiratory', data.condRespiratory);
-  setText('Lung explanation', data.lungExplanation || '');
+  setText('Lung explanation', data.condRespiratory === true ? (data.lungExplanation || '') : '');
 
   setYesNoCheck('COPD', data.condCOPD);
-  setText('COPD explanation', data.copdExplanation || '');
+  setText('COPD explanation', data.condCOPD === true ? (data.copdExplanation || '') : '');
 
   setYesNoCheck('Sleep', data.condSleep);
-  setCheck('CPAP 2', data.condCPAP === true);
-  setText('Sleep explanation', data.sleepExplanation || '');
+  setCheck('CPAP 2', data.condSleep === true && data.condCPAP === true);
+  setText('Sleep explanation', data.condSleep === true ? (data.sleepExplanation || '') : '');
   
   setYesNoCheck('Psychiatric', data.condPsychiatric);
-  setText('Psychiatric explanation', data.psychiatricExplanation || '');
+  setText('Psychiatric explanation', data.condPsychiatric === true ? (data.psychiatricExplanation || '') : '');
   
   setYesNoCheck('Neurological', data.condNeurological);
-  setText('Neurological explanation', data.neurologicalExplanation || '');
+  setText('Neurological explanation', data.condNeurological === true ? (data.neurologicalExplanation || '') : '');
 
   setYesNoCheck('Seizures', data.condSeizures);
-  setText('Last seizure date', data.lastSeizureDate || '');
+  setText('Last seizure date', data.condSeizures === true ? (data.lastSeizureDate || '') : '');
   
   setYesNoCheck('Fainting', data.condFainting);
-  setText('Fainting explanation', data.faintingExplanation || '');
+  setText('Fainting explanation', data.condFainting === true ? (data.faintingExplanation || '') : '');
   
   setYesNoCheck('Stomach', data.condStomach);
-  setText('Stomach explanation', data.stomachExplanation || '');
+  setText('Stomach explanation', data.condStomach === true ? (data.stomachExplanation || '') : '');
 
   setYesNoCheck('Kidney', data.condKidney);
-  setText('Kidney explanation', data.kidneyExplanation || '');
+  setText('Kidney explanation', data.condKidney === true ? (data.kidneyExplanation || '') : '');
   
   setYesNoCheck('Skin issues', data.condSkin);
-  setText('Skin explanation', data.skinExplanation || '');
+  setText('Skin explanation', data.condSkin === true ? (data.skinExplanation || '') : '');
 
   setYesNoCheck('Thyroid', data.condThyroid);
-  setText('Thyroid explanation', data.thyroidExplanation || '');
+  setText('Thyroid explanation', data.condThyroid === true ? (data.thyroidExplanation || '') : '');
 
   setYesNoCheck('Blood disorders', data.condBlood);
-  setText('Blood explanation', data.bloodExplanation || '');
+  setText('Blood explanation', data.condBlood === true ? (data.bloodExplanation || '') : '');
 
   setYesNoCheck('EENSP', data.condEENSP);
-  setText('EENS explanation', data.eenspExplanation || '');
+  setText('EENS explanation', data.condEENSP === true ? (data.eenspExplanation || '') : '');
 
   setYesNoCheck('Muscular/skeletal', data.condMuscular);
-  setText('MSM explanation', data.muscularExplanation || '');
+  setText('MSM explanation', data.condMuscular === true ? (data.muscularExplanation || '') : '');
 
   setYesNoCheck('Head injury', data.condHeadInjury);
-  setText('Head explanation', data.headExplanation || '');
+  setText('Head explanation', data.condHeadInjury === true ? (data.headExplanation || '') : '');
   
   setYesNoCheck('Altitude', data.condAltitude);
-  setText('Altitude sickness explanation', data.altitudeExplanation || '');
+  setText('Altitude sickness explanation', data.condAltitude === true ? (data.altitudeExplanation || '') : '');
 
   setYesNoCheck('Surgeries', data.condSurgeries);
-  setText('Last surgery date', data.lastSurgeryDate || '');
+  setText('Last surgery date', data.condSurgeries === true ? (data.lastSurgeryDate || '') : '');
 
   setYesNoCheck('Family history', data.condFamilyHistory);
-  setText('Heart disease explanation', data.familyHistoryExplanation || '');
+  setText('Heart disease explanation', data.condFamilyHistory === true ? (data.familyHistoryExplanation || '') : '');
 
   setYesNoCheck('Other', data.condOther);
-  if (data.otherExplanation) setText('Other explanation', data.otherExplanation);
+  setText('Other explanation', data.condOther === true ? (data.otherExplanation || '') : '');
 
   // Medications
   setCheck('No medications', data.noMedications);
+  setYesNoCheck('Non-prescription exceptions', data.nonPrescriptionExceptions);
+  setText('Non-prescrip exceptions', data.nonPrescriptionExceptions === true ? (data.nonPrescriptionExceptionsText || '') : '');
 
   if (!data.noMedications) {
-    setYesNoCheck('Non-prescription exceptions', data.nonPrescriptionExceptions);
-    setText('Non-prescrip exceptions', data.nonPrescriptionExceptionsText || '');
     setCheck('Additional space', data.medicationsAdditionalSpace);
 
     for (let idx = 1; idx <= 6; idx++) {
@@ -327,51 +337,51 @@ export async function generateHealthFormPDF(data: HealthFormData): Promise<Blob>
 
   // Immunizations
   setYesNoCheck('Exemption to immunizations', data.exemptionToImmunizations);
-  setText('Exemption to other', data.immOtherExemption || '');
-  setText('Exemption date', data.immOtherExemptionDate || '');
+  setText('Exemption to other', data.exemptionToImmunizations === true ? (data.immOtherExemption || '') : '');
+  setText('Exemption date', data.exemptionToImmunizations === true ? (data.immOtherExemptionDate || '') : '');
 
   setYesNoCheck('Tetanus', data.immTetanus);
-  setText('Tetanus date', data.immTetanusDate || '');
+  setText('Tetanus date', data.immTetanus === true ? (data.immTetanusDate || '') : '');
   setText('Had tetanus', data.hadTetanus || '');
 
   setYesNoCheck('Pertussis', data.immPertussis);
-  setText('Pertussis date', data.immPertussisDate || '');
+  setText('Pertussis date', data.immPertussis === true ? (data.immPertussisDate || '') : '');
   setText('Had pertussis', data.hadPertussis || '');
 
   setYesNoCheck('Diphtheria', data.immDiphtheria);
-  setText('Diphtheria date', data.immDiphtheriaDate || '');
+  setText('Diphtheria date', data.immDiphtheria === true ? (data.immDiphtheriaDate || '') : '');
   setText('Had diphtheria', data.hadDiphtheria || '');
 
   setYesNoCheck('Polio', data.immPolio);
-  setText('Polio date', data.immPolioDate || '');
+  setText('Polio date', data.immPolio === true ? (data.immPolioDate || '') : '');
   setText('Had Polio', data.hadPolio || '');
 
   setYesNoCheck('Measles/mumps/rubella', data.immMMR);
-  setText('MMR date', data.immMMRDate || '');
+  setText('MMR date', data.immMMR === true ? (data.immMMRDate || '') : '');
   setText('Had MMR', data.hadMMR || '');
 
   setYesNoCheck('Chicken Pox', data.immChickenPox);
-  setText('Chicken pox date', data.immChickenPoxDate || '');
+  setText('Chicken pox date', data.immChickenPox === true ? (data.immChickenPoxDate || '') : '');
   setText('Had chicken pox', data.hadChickenPox || '');
 
   setYesNoCheck('Hepatitis A', data.immHepA);
-  setText('Hep A date', data.immHepADate || '');
+  setText('Hep A date', data.immHepA === true ? (data.immHepADate || '') : '');
   setText('Had HA', data.hadHepA || '');
 
   setYesNoCheck('Hepatitis B', data.immHepB);
-  setText('Hep B date', data.immHepBDate || '');
+  setText('Hep B date', data.immHepB === true ? (data.immHepBDate || '') : '');
   setText('Had HB', data.hadHepB || '');
 
   setYesNoCheck('Meningitis', data.immMeningitis);
-  setText('Meningitis date', data.immMeningitisDate || '');
+  setText('Meningitis date', data.immMeningitis === true ? (data.immMeningitisDate || '') : '');
   setText('Had Pertussis', data.hadMeningitis || '');
 
   setYesNoCheck('Influenza', data.immInfluenza);
-  setText('Influenza date', data.immInfluenzaDate || '');
+  setText('Influenza date', data.immInfluenza === true ? (data.immInfluenzaDate || '') : '');
   setText('Had Meningitis', data.hadInfluenza || '');
 
   setYesNoCheck('Other (i.e. HIB)', data.immOther);
-  setText('Other date', data.immOtherDate || '');
+  setText('Other date', data.immOther === true ? (data.immOtherDate || '') : '');
   setText('Had other', data.hadOther || '');
 
   // Split and map additional medical history to Med history 1 through Med history 7
@@ -420,7 +430,7 @@ export async function generateHealthFormPDF(data: HealthFormData): Promise<Blob>
     await embedSignature(data.signatureData, data.willSignLater, 'Parent/guardian signature', 0);
   }
   await embedSignature(data.participantSignatureData, data.willParticipantSignLater, "Participant's Signature", 0);
-  if (data.participantType !== 'adult') {
+  if (data.participantType !== 'adult' && data.nonPrescriptionExceptions === true) {
     await embedSignature(data.medicationsSignature, data.willSignMedsLater, 'Parent/guardian medications', 2);
   }
 

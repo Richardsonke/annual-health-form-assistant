@@ -412,6 +412,73 @@ export const formSchema = z.object({
       }
     }
   }
+
+  // 8. Medical Alerts expiration date validation
+  if (data.epinephrine === true) {
+    const res = validateExpirationDate(data.autoinjectorExpDate);
+    if (!res.valid) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: res.message || 'Expiration date must be this month or later',
+        path: ['autoinjectorExpDate']
+      });
+    }
+  }
+
+  if (data.rescueInhaler === true) {
+    const res = validateExpirationDate(data.inhalerExpDate);
+    if (!res.valid) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: res.message || 'Expiration date must be this month or later',
+        path: ['inhalerExpDate']
+      });
+    }
+  }
 });
+
+export function validateExpirationDate(dateStr: string | undefined): { valid: boolean; message?: string } {
+  const str = String(dateStr ?? '').trim();
+  if (!str) {
+    return { valid: false, message: 'Expiration date is required' };
+  }
+
+  let year: number | undefined;
+  let month: number | undefined;
+
+  const yyyyMmMatch = str.match(/^(\d{4})-(0[1-9]|1[0-2])(?:-\d{2})?/);
+  if (yyyyMmMatch) {
+    year = parseInt(yyyyMmMatch[1], 10);
+    month = parseInt(yyyyMmMatch[2], 10);
+  } else {
+    const mmYyyyMatch = str.match(/^(0?[1-9]|1[0-2])[\/.-](\d{4}|\d{2})$/);
+    if (mmYyyyMatch) {
+      month = parseInt(mmYyyyMatch[1], 10);
+      let rawYear = parseInt(mmYyyyMatch[2], 10);
+      year = rawYear < 100 ? 2000 + rawYear : rawYear;
+    } else {
+      const flexMatch = str.match(/(0?[1-9]|1[0-2])[\/.-](\d{4}|\d{2})/);
+      if (flexMatch) {
+        month = parseInt(flexMatch[1], 10);
+        let rawYear = parseInt(flexMatch[2], 10);
+        year = rawYear < 100 ? 2000 + rawYear : rawYear;
+      }
+    }
+  }
+
+  if (!year || !month || month < 1 || month > 12) {
+    return { valid: false, message: 'Please enter a valid expiration date (MM/YYYY)' };
+  }
+
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth() + 1;
+
+  if (year < currentYear || (year === currentYear && month < currentMonth)) {
+    return { valid: false, message: 'Expiration date must be this month or later' };
+  }
+
+  return { valid: true };
+}
 
 export type HealthFormData = z.infer<typeof formSchema>;
