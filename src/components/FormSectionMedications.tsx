@@ -94,6 +94,7 @@ export const FormSectionMedications = () => {
                       <FormField 
                         name={`medications.${index}.medication`} 
                         placeholder="Medication name" 
+                        ariaLabel={`Medication ${index + 1} Name`}
                         containerClass="form-table-group"
                         maxLength={30}
                       />
@@ -102,6 +103,7 @@ export const FormSectionMedications = () => {
                       <FormField 
                         name={`medications.${index}.dose`} 
                         placeholder="Dose" 
+                        ariaLabel={`Medication ${index + 1} Dose`}
                         containerClass="form-table-group"
                         maxLength={10}
                       />
@@ -110,6 +112,7 @@ export const FormSectionMedications = () => {
                       <FormField 
                         name={`medications.${index}.frequency`} 
                         placeholder="Frequency" 
+                        ariaLabel={`Medication ${index + 1} Frequency`}
                         containerClass="form-table-group"
                         maxLength={25}
                       />
@@ -118,6 +121,7 @@ export const FormSectionMedications = () => {
                       <FormField 
                         name={`medications.${index}.reason`} 
                         placeholder="Reason" 
+                        ariaLabel={`Medication ${index + 1} Reason`}
                         containerClass="form-table-group"
                         maxLength={85}
                       />
@@ -128,6 +132,7 @@ export const FormSectionMedications = () => {
                         className="btn-remove"
                         onClick={() => remove(index)}
                         title="Remove medication"
+                        aria-label={`Remove medication ${index + 1}`}
                       >
                         <Trash2 size={18} />
                       </button>
@@ -190,6 +195,7 @@ export const FormSectionMedications = () => {
                 className="checkbox-input" 
                 checked={isNonPrescExceptions === true} 
                 onChange={() => setValue('nonPrescriptionExceptions', isNonPrescExceptions === true ? undefined : true, { shouldDirty: true, shouldValidate: true })} 
+                aria-label="Non-prescription medication administration authorized: Yes"
               />
               Yes
             </label>
@@ -199,6 +205,7 @@ export const FormSectionMedications = () => {
                 className="checkbox-input" 
                 checked={isNonPrescExceptions === false} 
                 onChange={() => setValue('nonPrescriptionExceptions', isNonPrescExceptions === false ? undefined : false, { shouldDirty: true, shouldValidate: true })} 
+                aria-label="Non-prescription medication administration authorized: No"
               />
               No
             </label>

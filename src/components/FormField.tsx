@@ -14,6 +14,8 @@ interface FormFieldProps {
   min?: number | string;
   max?: number | string;
   options?: { value: string; label: string }[];
+  ariaLabel?: string;
+  'aria-label'?: string;
 }
 
 // Simple helper to resolve nested paths like "medications.0.medication"
@@ -33,10 +35,14 @@ export const FormField: React.FC<FormFieldProps> = ({
   showErrorMsg = true,
   min,
   max,
-  options
+  options,
+  ariaLabel,
+  'aria-label': explicitAriaLabel
 }) => {
   const { register, formState: { errors }, watch } = useFormContext();
   const error = getNestedValue(errors, name);
+  const errorId = error ? `${name}-error` : undefined;
+  const computedAriaLabel = explicitAriaLabel || ariaLabel || (!label ? placeholder : undefined);
 
   const currentValue = watch ? watch(name) : undefined;
   let resolvedOptions = options;
@@ -76,6 +82,9 @@ export const FormField: React.FC<FormFieldProps> = ({
           id={name}
           className={`form-input ${error ? 'error' : ''}`}
           disabled={disabled}
+          aria-label={computedAriaLabel}
+          aria-invalid={!!error}
+          aria-describedby={errorId}
           {...registerRest}
           onChange={handleCustomChange}
         >
@@ -94,6 +103,9 @@ export const FormField: React.FC<FormFieldProps> = ({
           style={{ minHeight: '100px', resize: 'vertical', fontFamily: 'inherit' }}
           maxLength={maxLength}
           disabled={disabled}
+          aria-label={computedAriaLabel}
+          aria-invalid={!!error}
+          aria-describedby={errorId}
           {...registerRest}
           onChange={handleCustomChange}
         />
@@ -107,12 +119,15 @@ export const FormField: React.FC<FormFieldProps> = ({
           disabled={disabled}
           min={min}
           max={max}
+          aria-label={computedAriaLabel}
+          aria-invalid={!!error}
+          aria-describedby={errorId}
           {...registerRest}
           onChange={handleCustomChange}
         />
       )}
       {error && showErrorMsg && (
-        <span className="error-message">
+        <span id={errorId} className="error-message" role="alert">
           <AlertCircle size={16} />
           {error.message?.toString()}
         </span>

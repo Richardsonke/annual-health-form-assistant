@@ -88,6 +88,8 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
               penColor="black"
               canvasProps={{
                 className: 'sigCanvas',
+                role: 'img',
+                'aria-label': `${label} drawing area`,
                 style: { width: '100%', height: '75px', cursor: 'crosshair', display: 'block' }
               }}
             />
@@ -96,6 +98,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
             type="button" 
             className="btn btn-secondary" 
             onClick={clearSignature} 
+            aria-label={`Clear ${label}`}
             style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem', marginTop: '0.5rem' }}
           >
             Clear Signature
@@ -104,7 +107,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
       )}
 
       {error && !willSignLater && (
-        <span className="error-message">
+        <span className="error-message" role="alert">
           <AlertCircle size={16} />
           {error.message?.toString()}
         </span>

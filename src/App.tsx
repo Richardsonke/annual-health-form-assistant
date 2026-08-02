@@ -69,7 +69,11 @@ function ReminderModal({ pendingData, onConfirm, onCancel }: ReminderModalProps)
         animation: 'fadeInUp 0.2s ease-out'
       }}
     >
-      <div style={{
+      <div 
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="reminder-modal-title"
+        style={{
         background: 'var(--surface-color)',
         borderRadius: 'var(--radius-lg)',
         boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
@@ -88,7 +92,7 @@ function ReminderModal({ pendingData, onConfirm, onCancel }: ReminderModalProps)
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <Download size={22} color="white" />
-            <h2 style={{ color: 'white', fontSize: '1.2rem', fontWeight: 600, margin: 0 }}>
+            <h2 id="reminder-modal-title" style={{ color: 'white', fontSize: '1.2rem', fontWeight: 600, margin: 0 }}>
               Before You Download
             </h2>
           </div>
@@ -258,7 +262,11 @@ function ConfirmModal({ title, message, onConfirm, onCancel }: ConfirmModalProps
         animation: 'fadeInUp 0.2s ease-out'
       }}
     >
-      <div style={{
+      <div 
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="confirm-modal-title"
+        style={{
         background: 'var(--surface-color)',
         borderRadius: 'var(--radius-lg)',
         boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
@@ -276,7 +284,7 @@ function ConfirmModal({ title, message, onConfirm, onCancel }: ConfirmModalProps
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <AlertCircle size={24} color="white" />
-            <h2 style={{ color: 'white', fontSize: '1.15rem', fontWeight: 600, margin: 0 }}>
+            <h2 id="confirm-modal-title" style={{ color: 'white', fontSize: '1.15rem', fontWeight: 600, margin: 0 }}>
               {title}
             </h2>
           </div>
@@ -383,7 +391,11 @@ function AlertModal({ title, message, type, onClose }: AlertModalProps) {
         animation: 'fadeInUp 0.2s ease-out'
       }}
     >
-      <div style={{
+      <div 
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="alert-modal-title"
+        style={{
         background: 'var(--surface-color)',
         borderRadius: 'var(--radius-lg)',
         boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
@@ -401,7 +413,7 @@ function AlertModal({ title, message, type, onClose }: AlertModalProps) {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             {getIcon()}
-            <h2 style={{ color: 'white', fontSize: '1.15rem', fontWeight: 600, margin: 0 }}>
+            <h2 id="alert-modal-title" style={{ color: 'white', fontSize: '1.15rem', fontWeight: 600, margin: 0 }}>
               {title}
             </h2>
           </div>
@@ -665,7 +677,11 @@ function LeaderLinkModal({ onClose }: LeaderLinkModalProps) {
         animation: 'fadeInUp 0.2s ease-out'
       }}
     >
-      <div style={{
+      <div 
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="leader-modal-title"
+        style={{
         background: 'var(--surface-color)',
         borderRadius: 'var(--radius-lg)',
         boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
@@ -684,7 +700,7 @@ function LeaderLinkModal({ onClose }: LeaderLinkModalProps) {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <LinkIcon size={22} color="white" />
-            <h2 style={{ color: 'white', fontSize: '1.2rem', fontWeight: 600, margin: 0 }}>
+            <h2 id="leader-modal-title" style={{ color: 'white', fontSize: '1.2rem', fontWeight: 600, margin: 0 }}>
               Leader Pre-filled Link Builder
             </h2>
           </div>
@@ -704,8 +720,9 @@ function LeaderLinkModal({ onClose }: LeaderLinkModalProps) {
           </p>
 
           <div className="form-group" style={{ marginBottom: '1rem' }}>
-            <label className="form-label">Unit Number</label>
+            <label className="form-label" htmlFor="leader-unitNo">Unit Number</label>
             <input
+              id="leader-unitNo"
               type="text"
               className="form-input"
               placeholder="e.g., Troop/Pack/Crew 123"
@@ -716,8 +733,9 @@ function LeaderLinkModal({ onClose }: LeaderLinkModalProps) {
           </div>
 
           <div className="form-group" style={{ marginBottom: '1rem' }}>
-            <label className="form-label">Council Name/Number</label>
+            <label className="form-label" htmlFor="leader-councilName">Council Name/Number</label>
             <select
+              id="leader-councilName"
               className="form-input"
               value={councilName}
               onChange={e => { setCouncilName(e.target.value); setGeneratedLink(''); }}
@@ -732,8 +750,9 @@ function LeaderLinkModal({ onClose }: LeaderLinkModalProps) {
           </div>
 
           <div className="form-group" style={{ marginBottom: '1rem' }}>
-            <label className="form-label">Unit Leader Name</label>
+            <label className="form-label" htmlFor="leader-unitLeader">Unit Leader Name</label>
             <input
+              id="leader-unitLeader"
               type="text"
               className="form-input"
               placeholder="e.g., John Smith"
@@ -744,17 +763,20 @@ function LeaderLinkModal({ onClose }: LeaderLinkModalProps) {
           </div>
 
           <div className="form-group" style={{ marginBottom: '1rem' }}>
-            <label className="form-label">Unit Leader Mobile #</label>
+            <label className="form-label" htmlFor="leader-unitLeaderPhone">Unit Leader Mobile #</label>
             <input
+              id="leader-unitLeaderPhone"
               type="tel"
               className={`form-input ${phoneError ? 'error' : ''}`}
               placeholder="XXX-XXX-XXXX"
               value={unitLeaderPhone}
               onChange={handlePhoneChange}
               maxLength={12}
+              aria-invalid={!!phoneError}
+              aria-describedby={phoneError ? 'leader-phone-error' : undefined}
             />
             {phoneError && (
-              <span className="error-message">
+              <span id="leader-phone-error" className="error-message" role="alert">
                 <AlertCircle size={16} />
                 {phoneError}
               </span>
@@ -1441,8 +1463,11 @@ function App() {
         />
       )}
       <div className="app-container">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <header className="header">
-          <img src="./headericon.png" width="64" height="64" style={{ marginBottom: '1rem' }} />
+          <img src="./headericon.webp" alt="Scouting Health Form Filler logo" width="64" height="64" decoding="async" fetchPriority="high" style={{ marginBottom: '1rem' }} />
           <h1>Health Form Filler</h1>
           <p>Complete the Scouting America <a href="https://www.scouting.org/health-and-safety/ahmr/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary-color)', textDecoration: 'underline' }}>Medical Release Form</a> (Parts A & B).<br /><br /></p>
           <p><strong>Private & Secure:</strong> All data is processed entirely in your browser.<br />No information you enter is ever sent to any server.</p>
@@ -1503,41 +1528,43 @@ function App() {
           </div>
         </header>
 
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit, onInvalidSubmit)}>
-            <FormSectionPartA />
-            <FormSectionPartB />
-            <FormSectionMedications />
-            <FormSectionImmunizations />
-            <FormSectionSignature />
+        <main id="main-content">
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit, onInvalidSubmit)}>
+              <FormSectionPartA />
+              <FormSectionPartB />
+              <FormSectionMedications />
+              <FormSectionImmunizations />
+              <FormSectionSignature />
 
-            <div className="form-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={isGenerating}
-                style={{ fontSize: '1.125rem', padding: '1.25rem 2rem' }}
-              >
-                <Download size={24} style={{ marginRight: '0.5rem' }} />
-                {isGenerating ? 'Generating PDF...' : 'Download Completed PDF'}
-              </button>
+              <div className="form-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={isGenerating}
+                  style={{ fontSize: '1.125rem', padding: '1.25rem 2rem' }}
+                >
+                  <Download size={24} style={{ marginRight: '0.5rem' }} />
+                  {isGenerating ? 'Generating PDF...' : 'Download Completed PDF'}
+                </button>
 
-              {isSuccess && (
-                <div style={{ marginTop: '1rem', color: 'var(--secondary-color)', display: 'flex', alignItems: 'center', gap: '0.5rem', animation: 'fadeInUp 0.3s ease-out' }}>
-                  <CheckCircle2 size={20} />
-                  <span>PDF generated successfully!</span>
-                </div>
-              )}
+                {isSuccess && (
+                  <div role="status" style={{ marginTop: '1rem', color: 'var(--secondary-color)', display: 'flex', alignItems: 'center', gap: '0.5rem', animation: 'fadeInUp 0.3s ease-out' }}>
+                    <CheckCircle2 size={20} />
+                    <span>PDF generated successfully!</span>
+                  </div>
+                )}
 
-              {Object.keys(methods.formState.errors).length > 0 && (
-                <div style={{ marginTop: '1rem', color: 'var(--error-color)', display: 'flex', alignItems: 'center', gap: '0.5rem', animation: 'fadeInUp 0.3s ease-out' }}>
-                  <AlertCircle size={20} />
-                  <span>Please fix the errors above before downloading.</span>
-                </div>
-              )}
-            </div>
-          </form>
-        </FormProvider>
+                {Object.keys(methods.formState.errors).length > 0 && (
+                  <div role="alert" style={{ marginTop: '1rem', color: 'var(--error-color)', display: 'flex', alignItems: 'center', gap: '0.5rem', animation: 'fadeInUp 0.3s ease-out' }}>
+                    <AlertCircle size={20} />
+                    <span>Please fix the errors above before downloading.</span>
+                  </div>
+                )}
+              </div>
+            </form>
+          </FormProvider>
+        </main>
 
         <footer style={{
           marginTop: '3rem',

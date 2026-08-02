@@ -35,6 +35,8 @@ const ImmRow: React.FC<ImmRowProps> = ({
     if (extraTriggerFields?.length) trigger(extraTriggerFields as any);
   };
 
+  const labelText = typeof label === 'string' ? label : name;
+
   return (
     <tr>
       <td className={`col-yes text-center${hasError ? ' row-required-error' : ''}`} style={{ width: '60px' }}>
@@ -47,6 +49,7 @@ const ImmRow: React.FC<ImmRowProps> = ({
             className="checkbox-input" 
             checked={isChecked === true} 
             onChange={handleYesChange} 
+            aria-label={`${labelText}: Immunized (Yes)`}
           />
         </label>
       </td>
@@ -60,13 +63,14 @@ const ImmRow: React.FC<ImmRowProps> = ({
             className="checkbox-input" 
             checked={isChecked === false} 
             onChange={handleNoChange} 
+            aria-label={`${labelText}: Not Immunized (No)`}
           />
         </label>
       </td>
       <td className="col-label" style={{ fontWeight: 500, width: '30%' }}>
         {label}
         {hasError && errorMsg && (
-          <span style={{ display: 'block', color: 'var(--error-color)', fontSize: '0.8rem', fontWeight: 400, marginTop: '0.25rem' }}>
+          <span style={{ display: 'block', color: 'var(--error-color)', fontSize: '0.8rem', fontWeight: 400, marginTop: '0.25rem' }} role="alert">
             {errorMsg}
           </span>
         )}
@@ -77,13 +81,15 @@ const ImmRow: React.FC<ImmRowProps> = ({
             <input
               type="text"
               placeholder={datePlaceholder}
+              aria-label={`${labelText} Immunization Date(s)`}
+              aria-invalid={hasDateError}
               className={`form-input form-table-group${hasDateError ? ' error' : ''}`}
               style={{ padding: '0.4rem 0.75rem' }}
               maxLength={35}
               {...register(dateName)}
             />
             {hasDateError && (
-              <span style={{ color: 'var(--error-color)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
+              <span style={{ color: 'var(--error-color)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }} role="alert">
                 {dateErrorMsg}
               </span>
             )}
@@ -92,7 +98,7 @@ const ImmRow: React.FC<ImmRowProps> = ({
       </td>
       <td className="col-details" style={{ width: '30%' }}>
         {hadDiseaseName ? (
-          <FormField name={hadDiseaseName} placeholder="Had Disease (Year)" containerClass="form-table-group" maxLength={10} />
+          <FormField name={hadDiseaseName} placeholder="Had Disease (Year)" ariaLabel={`${labelText} Had Disease (Year)`} containerClass="form-table-group" maxLength={10} />
         ) : (
           <div style={{ background: 'var(--border-color)', height: '42px', borderRadius: 'var(--radius-md)', opacity: 0.25 }}></div>
         )}
@@ -140,6 +146,7 @@ export const FormSectionImmunizations = () => {
                   href="https://filestore.scouting.org/filestore/pdf/680-451.pdf" 
                   target="_blank" 
                   rel="noopener noreferrer"
+                  aria-label="Immunization Exemption Request Form (PDF, opens in new tab)"
                   style={{ color: 'var(--primary-color)', textDecoration: 'underline' }}
                 >
                   form required

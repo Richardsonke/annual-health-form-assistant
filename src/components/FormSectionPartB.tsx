@@ -48,6 +48,7 @@ const ConditionRow: React.FC<ConditionRowProps> = ({
             className="checkbox-input"
             checked={isChecked === true}
             onChange={handleYesChange}
+            aria-label={`${label}: Yes`}
           />
         </label>
       </td>
@@ -58,6 +59,7 @@ const ConditionRow: React.FC<ConditionRowProps> = ({
             className="checkbox-input"
             checked={isChecked === false}
             onChange={handleNoChange}
+            aria-label={`${label}: No`}
           />
         </label>
       </td>
@@ -70,6 +72,7 @@ const ConditionRow: React.FC<ConditionRowProps> = ({
               type={dateType}
               min={dateMin}
               placeholder={datePlaceholder || "Date/Result"}
+              ariaLabel={`${label} ${datePlaceholder || "Date/Result"}`}
               containerClass="form-table-group"
               maxLength={dateMaxLength}
             />
@@ -78,6 +81,7 @@ const ConditionRow: React.FC<ConditionRowProps> = ({
             <FormField
               name={expName}
               placeholder={`Explain...`}
+              ariaLabel={`${label} Details/Explanation`}
               containerClass="form-table-group"
               maxLength={expMaxLength}
             />
@@ -107,11 +111,11 @@ export const FormSectionPartB = () => {
           <label className="form-label">Height</label>
           <div style={{ display: 'flex', gap: '1.25rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1 }}>
-              <FormField name="heightFt" type="number" placeholder="Ft" containerClass="" showErrorMsg={false} min={0} max={10} />
+              <FormField name="heightFt" type="number" placeholder="Ft" ariaLabel="Height (Feet)" containerClass="" showErrorMsg={false} min={0} max={10} />
               <span style={{ fontSize: '0.95rem', color: 'var(--text-muted)', fontWeight: 500 }}>Feet</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1 }}>
-              <FormField name="heightIn" type="number" placeholder="In" containerClass="" showErrorMsg={false} min={0} max={11} />
+              <FormField name="heightIn" type="number" placeholder="In" ariaLabel="Height (Inches)" containerClass="" showErrorMsg={false} min={0} max={11} />
               <span style={{ fontSize: '0.95rem', color: 'var(--text-muted)', fontWeight: 500 }}>Inches</span>
             </div>
           </div>
@@ -212,6 +216,7 @@ export const FormSectionPartB = () => {
                     className="checkbox-input"
                     checked={isInsulinChecked === true}
                     onChange={() => setValue('condInsulin', isInsulinChecked === true ? undefined : true, { shouldDirty: true })}
+                    aria-label="Insulin pump: Yes"
                   />
                   Yes
                 </label>
@@ -221,6 +226,7 @@ export const FormSectionPartB = () => {
                     className="checkbox-input"
                     checked={isInsulinChecked === false}
                     onChange={() => setValue('condInsulin', isInsulinChecked === false ? undefined : false, { shouldDirty: true })}
+                    aria-label="Insulin pump: No"
                   />
                   No
                 </label>
@@ -260,6 +266,7 @@ export const FormSectionPartB = () => {
                     className="checkbox-input"
                     checked={isCPAPChecked === true}
                     onChange={() => setValue('condCPAP', isCPAPChecked === true ? undefined : true, { shouldDirty: true })}
+                    aria-label="CPAP: Yes"
                   />
                   Yes
                 </label>
@@ -269,6 +276,7 @@ export const FormSectionPartB = () => {
                     className="checkbox-input"
                     checked={isCPAPChecked === false}
                     onChange={() => setValue('condCPAP', isCPAPChecked === false ? undefined : false, { shouldDirty: true })}
+                    aria-label="CPAP: No"
                   />
                   No
                 </label>

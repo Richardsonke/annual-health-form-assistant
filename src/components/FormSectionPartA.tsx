@@ -19,9 +19,9 @@ export const FormSectionPartA: React.FC = () => {
       <h2 className="section-title">Part A: Informed Consent, Release Agreement, and Authorization</h2>
 
       {/* Youth vs Adult Selector */}
-      <div className="form-group" style={{ marginBottom: '2rem' }}>
-        <label className="form-label" style={{ fontWeight: 600 }}>Participant Type</label>
-        <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+      <fieldset className="form-group" style={{ marginBottom: '2rem', border: 'none', padding: 0, margin: '0 0 2rem 0' }}>
+        <legend className="form-label" style={{ fontWeight: 600, padding: 0, marginBottom: '0.5rem', float: 'left', width: '100%' }}>Participant Type</legend>
+        <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.5rem', flexWrap: 'wrap', clear: 'both' }}>
           <label className="checkbox-group" style={{
             padding: '0.85rem 1.5rem',
             border: '2px solid var(--border-color)',
@@ -58,7 +58,7 @@ export const FormSectionPartA: React.FC = () => {
             {errors.participantType.message?.toString()}
           </span>
         )}
-      </div>
+      </fieldset>
 
       <h3 className="section-title" style={{ fontSize: '1.2rem', marginTop: '1.5rem', color: 'var(--text-main)', borderBottom: '1px solid var(--border-color)' }}>
         Participant Information
@@ -190,28 +190,28 @@ export const FormSectionPartA: React.FC = () => {
               <tr>
                 <td className="col-auth">
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <FormField name="authPickupName1" placeholder="1. Full Name (Required)" containerClass="form-table-group" maxLength={65} />
-                    <FormField name="authPickupPhone1" placeholder="Phone Number (Required)" containerClass="form-table-group" maxLength={65} />
+                    <FormField name="authPickupName1" placeholder="1. Full Name (Required)" ariaLabel="Authorized Pickup Person 1 Full Name (Required)" containerClass="form-table-group" maxLength={65} />
+                    <FormField name="authPickupPhone1" placeholder="Phone Number (Required)" ariaLabel="Authorized Pickup Person 1 Phone Number (Required)" containerClass="form-table-group" maxLength={65} />
                   </div>
                 </td>
                 <td className="col-not-auth" style={{ backgroundColor: '#F1F5F9' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <FormField name="notAuthPickupName1" placeholder="1. Full Name" containerClass="form-table-group" maxLength={65} />
-                    <FormField name="notAuthPickupPhone1" placeholder="Phone Number" containerClass="form-table-group" maxLength={65} />
+                    <FormField name="notAuthPickupName1" placeholder="1. Full Name" ariaLabel="NOT Authorized Pickup Person 1 Full Name" containerClass="form-table-group" maxLength={65} />
+                    <FormField name="notAuthPickupPhone1" placeholder="Phone Number" ariaLabel="NOT Authorized Pickup Person 1 Phone Number" containerClass="form-table-group" maxLength={65} />
                   </div>
                 </td>
               </tr>
               <tr>
                 <td className="col-auth">
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <FormField name="authPickupName2" placeholder="2. Full Name" containerClass="form-table-group" maxLength={65} />
-                    <FormField name="authPickupPhone2" placeholder="Phone Number" containerClass="form-table-group" maxLength={65} />
+                    <FormField name="authPickupName2" placeholder="2. Full Name" ariaLabel="Authorized Pickup Person 2 Full Name" containerClass="form-table-group" maxLength={65} />
+                    <FormField name="authPickupPhone2" placeholder="Phone Number" ariaLabel="Authorized Pickup Person 2 Phone Number" containerClass="form-table-group" maxLength={65} />
                   </div>
                 </td>
                 <td className="col-not-auth" style={{ backgroundColor: '#F1F5F9' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <FormField name="notAuthPickupName2" placeholder="2. Full Name" containerClass="form-table-group" maxLength={65} />
-                    <FormField name="notAuthPickupPhone2" placeholder="Phone Number" containerClass="form-table-group" maxLength={65} />
+                    <FormField name="notAuthPickupName2" placeholder="2. Full Name" ariaLabel="NOT Authorized Pickup Person 2 Full Name" containerClass="form-table-group" maxLength={65} />
+                    <FormField name="notAuthPickupPhone2" placeholder="Phone Number" ariaLabel="NOT Authorized Pickup Person 2 Phone Number" containerClass="form-table-group" maxLength={65} />
                   </div>
                 </td>
               </tr>
