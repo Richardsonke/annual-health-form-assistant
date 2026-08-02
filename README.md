@@ -6,4 +6,4 @@
 * User Responsibility: While this tool is designed to accurately populate Parts A and B of the official 680-001 form, parents and guardians are solely responsible for ensuring the accuracy of the final printed document and that it meets their local council's specific requirements.
 
 # Accessing Health Form Assistant
-The Health Form Assistant can be accessed here: <https://health.masonpack323.org/>
+The Health Form Assistant can be accessed here: <https://health.camptools.org/>
